@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -36,42 +35,62 @@
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                             </div>
-                            <form class="user">
+
+<!--      form 태그                      -->
+                            <form class="user" th:action="@{/register/new}" method="post" th:object="${member}">
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" id="exampleFirstName"
-                                            placeholder="First Name">
+                                        <input type="text" class="form-control form-control-user" name="userName"
+                                            placeholder="이름을 입력해주세요" th:field="*{userName}">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control form-control-user" id="exampleLastName"
-                                            placeholder="Last Name">
+                                        <select class="form-group" th:field="*{deptName}">
+                                            <option selected value="null">부서선택</option>
+                                            <option value="인사총무부">인사총무부</option>
+                                            <option value="경영회계부">경영회계부</option>
+                                            <option value="IT솔루션개발부">IT솔루션개발부</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="text" class="form-control form-control-user" name="userId" id="userId"
+                                            placeholder="email을 입력해주세요" th:field="*{email}">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input class="btn btn-primary" type="button" id="usernameOverlay" onclick="usernameCheck()" value="중복 체크"/>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <input type="email" class="form-control form-control-user" id="exampleInputEmail"
-                                        placeholder="Email Address">
-                                </div>
+
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input type="password" class="form-control form-control-user"
-                                            id="exampleInputPassword" placeholder="Password">
+                                            id="password" placeholder="비밀번호를 입력해주세요" th:field="*{password}">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="password" class="form-control form-control-user"
-                                            id="exampleRepeatPassword" placeholder="Repeat Password">
+                                    <select class="form-group" th:field="*{chiefName}">
+                                        <option selected value="">직책</option>
+                                        <option value="부서장">부서장</option>
+                                        <option value="파트장">파트장</option>
+                                        <option value="null">해당없음</option>
+                                    </select>
+                                    <select class="form-group" th:field="*{position}">
+                                        <option selected value="">직급</option>
+                                        <option value="사원">사원</option>
+                                        <option value="대리">대리</option>
+                                        <option value="과장">과장</option>
+                                        <option value="부장">부장</option>
+                                    </select>
                                     </div>
+
                                 </div>
-                                <a href="login.html" class="btn btn-primary btn-user btn-block">
-                                    Register Account
-                                </a>
                                 <hr>
-                                <a href="index.html" class="btn btn-google btn-user btn-block">
-                                    <i class="fab fa-google fa-fw"></i> Register with Google
-                                </a>
-                                <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                                    <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
-                                </a>
+                                <button class="btn btn-primary btn-user btn-block" id="registerButton">
+                                    Register Account
+                                </button>
                             </form>
+
                             <hr>
                             <div class="text-center">
                                 <a class="small" href="forgot-password.html">Forgot Password?</a>
@@ -88,7 +107,7 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
@@ -97,6 +116,67 @@
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
 
+
+<!--    <script type="text/javascript">-->
+<!--    function usernameCheck() {-->
+<!--        const username = $("#userName").val();-->
+<!--        if (userName == "") {-->
+<!--            alert("아이디를 입력해주세요!. 필수항목입니다.");-->
+<!--            $("#userName").focus();-->
+<!--            return false;-->
+<!--        }-->
+<!--        $.ajax({-->
+<!--            type: "get",-->
+<!--            url: "/api/overlap/usernameRegister",-->
+<!--            data: {"username": username},-->
+<!--            dataType: "JSON",-->
+
+<!--            success: function (result) {-->
+<!--                if (result.result == "0") {-->
+<!--                    if (confirm("이 아이디는 사용 가능합니다. \n사용하시겠습니까?")) {-->
+<!--                        usernameOverlapCheck = 1;-->
+<!--                        $("#username").attr("readonly", true);-->
+<!--                        $("#usernameOverlay").attr("disabled", true);-->
+<!--                        $("#usernameOverlay").css("display", "none");-->
+<!--                        $("#resetUsername").attr("disabled", false);-->
+<!--                        $("#resetUsername").css("display", "inline-block");-->
+<!--                    }-->
+<!--                    return false;-->
+<!--                } else if (result.result == "1") {-->
+<!--                    alert("이미 사용중인 아이디입니다.");-->
+<!--                    $("#username").focus();-->
+<!--                } else {-->
+<!--                    alert("success이지만 result 값이 undefined 잘못됨");-->
+<!--                }-->
+<!--            },-->
+<!--            error: function (request, status,error) {-->
+<!--                alert("ajax 실행 실패");-->
+<!--                alert("code:" + request.status + "\n" + "error :" + error);-->
+<!--            }-->
+<!--        });-->
+
+<!--    }-->
+<!--        $('button#registerButton').on('click', function(){-->
+<!--  		  	var userForm = $('#registerForm').serialize();-->
+
+<!--  			$.ajax({-->
+<!--  				url : '/register/userForm',-->
+<!--  				type: 'post',-->
+<!--  				data: userForm-->
+
+<!--  				success: function(){-->
+<!--  						alert('회원가입이 완료됐습니다');-->
+<!--                        location.replace('/');-->
+<!--  				},-->
+<!--  				error : function(){-->
+<!--  					alert('이미 해당하는 ID가 존재합니다. 다시 입력해주세요');-->
+<!--  					$("#registerForm")[0].reset();-->
+<!--  				}-->
+
+<!--  			});-->
+
+<!--  		});-->
+<!--    </script>-->
 </body>
 
 </html>
