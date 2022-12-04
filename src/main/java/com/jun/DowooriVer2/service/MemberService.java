@@ -11,7 +11,6 @@ import java.util.Optional;
 @Transactional
 public class MemberService {
 
-
     private MemberRepository memberRepository;
 
     public MemberService(MemberRepository memberRepository) {
@@ -22,6 +21,10 @@ public class MemberService {
     public Member join(Member member) {
         memberRepository.save(member);
         return member;
+    }
+
+    public Optional<Member> existsByUserEmail(String userEmail){
+        return memberRepository.existsByUserEmail(userEmail);
     }
 
 }

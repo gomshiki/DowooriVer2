@@ -15,7 +15,7 @@ public class Member {
     @Id // PK
     @GeneratedValue(strategy = GenerationType.IDENTITY) // DBMS의 INCREMENT AUTO 사용할 경우
     private Long empNum;
-    @Column(name = "email") //이름이 동일하면 생략가능
+    @Column(name = "email", unique = true) // unique 설정으로 에러발생할 것
     private String email;
 
     private String password;

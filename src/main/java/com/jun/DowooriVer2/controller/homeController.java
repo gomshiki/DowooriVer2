@@ -15,10 +15,6 @@ public class homeController {
         return "index";
     }
 
-
-    // 기안문 출력용으로 사용
-    @GetMapping("/tables")
-    public String table(){
-        return "tables";
-    }
+    @GetMapping("/login")
+    public String login(){ return "login";}
 }
