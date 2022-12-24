@@ -21,63 +21,24 @@ public class MemberService {
         this.memberRepository = memberRepository;
     }
 
-    public Member findById(Long empNum) {
+    public Optional<Member> findById(Long empNum) {
         return memberRepository.findById(empNum);
     }
 
-    public List<Member> save(){
-
-        List<Member> members = new ArrayList<>();
-        members.add(memberRepository.save(associate()));
-        members.add(memberRepository.save(manager()));
-        members.add(memberRepository.save(boss()));
-
-        return members;
+    public List<Member> findAll() {
+        return memberRepository.findAll();
     }
 
-    public void deleteMember(){
-        memberRepository.deleteMember();
-    }
+//    public List<Member> save(){
+//
+//        List<Member> members = new ArrayList<>();
+//
+//        return members;
+//    }
 
-
-    // 회원정보
-    private static Member associate(){
-
-        Member associate = new Member();
-        associate.setEmail("jskim@gmail.com");
-        associate.setUserName("김준성");
-        associate.setPosition("사원");
-        associate.setPassword("1234");
-        associate.setDeptName("IT솔루션개발부");
-        associate.setChiefName("김병준");
-
-        return associate;
-    }
-
-    private static Member manager(){
-
-        Member manager = new Member();
-        manager.setEmail("bjkim@gmail.com");
-        manager.setUserName("김병준");
-        manager.setPosition("과장");
-        manager.setPassword("qwer");
-        manager.setDeptName("IT솔루션개발부");
-        manager.setChiefName("이영춘");
-
-        return manager;
-    }
-
-    private static Member boss(){
-
-        Member boss = new Member();
-        boss.setEmail("gomshiki@gmail.com");
-        boss.setUserName("이영춘");
-        boss.setPosition("부장");
-        boss.setPassword("zxcv");
-        boss.setDeptName("IT솔루션개발부");
-
-        return boss;
-    }
+//    public void deleteMember(){
+//        memberRepository.deleteMember();
+//    }
 
 
 

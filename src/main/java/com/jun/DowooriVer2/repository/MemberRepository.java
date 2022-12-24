@@ -4,6 +4,7 @@ import com.jun.DowooriVer2.domain.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -19,11 +20,15 @@ public interface MemberRepository {
 //
 //    Member findByLoginEmail(String email);
 
-    // DB에서 로그인 정보 가져오기
-    Member save(Member member);
+    // DB에서 회원가입
+   // Member save(Member member);
 
-    Member findById(Long empNum);
+    // 회원정보가져오기
+    Optional<Member> findById(Long empNum);
 
-    void deleteMember();
+    List<Member> findAll();
+
+    // 회원삭제
+//    void deleteMember();
 
 }

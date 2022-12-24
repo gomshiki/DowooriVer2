@@ -14,11 +14,6 @@ create table dept_table(
 
 select * from dept_table;
 
-CREATE TABLE Dowoori_ver2.dayoff_table (
-	totalDayoff DATETIME NOT NULL,
-	usedDayoff DATETIME NOT NULL,
-	remainDayoff DATETIME NOT NULL,
-	empNum BIGINT NULL,
-	deptNum TINYINT NULL,
-	CONSTRAINT dayoff_table_FK FOREIGN KEY (deptNum) REFERENCES Dowoori_ver2.dept_table(deptNum)
-)
+select * from board_table;
+
+select * from `Dowoori_ver2`.`Board_table` where emp_num=1;

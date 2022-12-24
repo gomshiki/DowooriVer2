@@ -8,20 +8,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
 public class LoginController {
     private final MemberService memberService;
+    private final EntityManager entityManager;
 
     @PostMapping("/login.do")
-    public String login(@RequestParam("empNumber") Long empNumber, HttpServletResponse response, HttpServletRequest request) {
+    public String login(@RequestParam("empNumber") Long empNumber, HttpServletRequest request) {
 
 
-        Member loginMember = memberService.findById(empNumber);
+        // 회원정보 조회
+        Optional<Member> loginMembers = memberService.findById(empNumber);
+        Member loginMember = loginMembers.get();
 
         // 로그인 성공처리
         // 세션이 있으면 기존 세션 반환, 없으면 신규 세션 생성 후 반환

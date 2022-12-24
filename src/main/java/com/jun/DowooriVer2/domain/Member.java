@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.util.Date;
 
 
 // data :getter, setter, constructer 등 한꺼번에 생성해주는 어노테이
@@ -36,7 +37,7 @@ public class Member {
     @Column(name = "chief_name")
     private String chiefName;
 
-    public Member(Long empNum, String email, String password, String userName, String deptName, String position, String chiefName) {
+    protected Member(Long empNum, String email, String password, String userName, String deptName, String position, String chiefName) {
         this.empNum = empNum;
         this.email = email;
         this.password = password;
