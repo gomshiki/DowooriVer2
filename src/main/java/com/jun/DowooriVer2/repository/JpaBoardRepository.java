@@ -25,9 +25,6 @@ public class JpaBoardRepository implements BoardRepository {
 
         List<Board> results = queryResult.getResultList();
 
-        for (Board result : results) {
-            System.out.println("result = " + result);
-        }
         return results;
     }
 }

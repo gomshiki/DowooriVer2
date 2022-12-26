@@ -20,6 +20,10 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
+    <!-- Custom styles for this page -->
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+
 </head>
 
 <body id="page-top">
@@ -358,7 +362,7 @@
                 </nav>
                 <!-- End of Topbar -->
 
-                <!-- Begin Page Content -->
+                <!-- Begin Page Content1 -->
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
@@ -454,73 +458,135 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Content Row -->
-
-
-
                 </div>
 
-                <!-- Begin Page Content -->
+                <!-- Begin Page Content2 -->
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">기안문</h1>
 
-                    <!-- DataTales Example -->
+                    <!-- 기안문 테이블 -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">기안문 현황</h6>
                         </div>
+
+                        <!--    card-body         -->
                         <div class="card-body">
+
+                            <!-- table-reponsive -->
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
-                                    <tr>
-                                        <th>문서번호</th>
-                                        <th>문서종류</th>
-                                        <th>작성날짜</th>
-                                        <th>결재현황</th>
-                                    </tr>
+                                        <tr>
+                                            <th>문서번호</th>
+                                            <th>문서종류</th>
+                                            <th>작성날짜</th>
+                                            <th>더보기</th>
+                                        </tr>
                                     </thead>
                                     <tfoot>
-                                    <tr>
-                                        <th>문서번호</th>
-                                        <th>문서종류</th>
-                                        <th>작성날짜</th>
-                                        <th>결재현황</th>
-                                    </tr>
+                                        <tr>
+                                            <th>문서번호</th>
+                                            <th>문서종류</th>
+                                            <th>작성날짜</th>
+                                            <th>진행상태</th>
+                                        </tr>
                                     </tfoot>
                                     <tbody>
-                                    <tr th:each="board : ${boards}">
-                                        <td th:text="${board.id}">문서번호</td>
-                                        <td th:text="${board.title}">김준성</td>
-                                        <td> 테스트날짜 </td>
-                                        <td>작성중</td>
-                                    </tr>
-<!--                                    <tr>-->
-<!--                                        <td>반차</td>-->
-<!--                                        <td>김준성</td>-->
-<!--                                        <td>IT솔루션개발부</td>-->
-<!--                                        <td>2022/12/24</td>-->
-<!--                                        <td>결재중</td>-->
-<!--                                    </tr>-->
-<!--                                    <tr>-->
-<!--                                        <td>연차</td>-->
-<!--                                        <td>김준성</td>-->
-<!--                                        <td>IT솔루션개발부</td>-->
-<!--                                        <td>2022/12/26</td>-->
-<!--                                        <td>결재완료</td>-->
-<!--                                    </tr>-->
+                                        <th:block th:each="board : ${boards}">
+                                            <tr data-toggle="collapse" th:attr="data-target='#accordion_'+${board.id}" class="clickable" >
+                                                <td th:text="${board.id}">문서번호</td>
+                                                <td th:text="${board.title}">문서종류</td>
+                                                <td th:text="${board.writeDate}"> 작성날짜 </td>
+                                                <td>
+                                                    <span class="text btn btn-primary" th:text="${board.status}">
+                                                        결재현황
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            <form action="/" method="post">
+                                            <tr>
+                                                <td colspan="4" class="collapse" th:id="'accordion_'+${board.id}">
+                                                    <!-- detail information -->
+                                                    <div class="row">
+                                                        <div class="col-xl-12 col-md-12 mb-4">
+                                                            <div class="card border-left-primary shadow h-100 py-2">
+                                                                <div class="card-body" style="display: flex;">
 
+                                                                        <div style="width: 50%;">
+                                                                            <div class="row no-gutters align-items-center">
+                                                                                <div class="col mr-2">
+                                                                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">시작일</div>
+                                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                                                        <input th:value="*{board.startDate}" />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row no-gutters align-items-center">
+                                                                                <div class="col mr-2">
+                                                                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">종료일</div>
+                                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                                                        <input th:value="*{board.endDate}" />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div style="width: 50%;">
+                                                                            <div class="row no-gutters align-items-center">
+                                                                                <div class="col mr-2">
+                                                                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">분류</div>
+                                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                                                        <input th:value="*{board.ampm}" />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row no-gutters align-items-center">
+                                                                                <div class="col mr-2">
+                                                                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">사유</div>
+                                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                                                        <input th:value="*{board.reason}" />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    <!-- End of detail information -->
+                                                    </div>
+                                                    <div  style="display: flex; justify-content: center;align-items: center;">
+                                                        <div class="mb-4" style="padding-left: 0.5rem;">
+                                                            <button type="button" class="btn btn-primary btn-icon-split col-xl-auto">
+                                                                <span class="text">결재하기</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="mb-4" style="padding-left: 0.5rem;">
+                                                            <button type="button" class="btn btn-danger btn-icon-split col-xl-auto">
+                                                                <span class="text">삭제하기</span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </form>
+                                        </th:block>
                                     </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
 
+                                <!-- End of table  -->
+                                </table>
+
+                            <!-- End of table-reponsive -->
+                            </div>
+                        <!-- End of card-body -->
+                        </div>
+                    <!-- End of 기안문 테이블 -->
+                    </div>
+                <!-- End of Page Content -->
                 </div>
-                <!-- /.container-fluid -->
+                <!-- End of container-fluid -->
 
             </div>
             <!-- End of Main Content -->
@@ -578,12 +644,16 @@
 
     <!-- Page level plugins -->
     <script src="vendor/chart.js/Chart.min.js"></script>
+
+        <!--  추가  -->
     <script src="vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
+
+        <!-- 추가   -->
     <script src="js/demo/datatables-demo.js"></script>
 
 </body>

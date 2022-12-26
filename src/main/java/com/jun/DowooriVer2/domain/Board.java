@@ -19,16 +19,9 @@ public class Board {
     @Column(name = "Board_id")
     private Long id;
 
-    @Column(name = "title")
     private String title;
-
-    @Column(name = "emp_num")
     private String empNum;
-
-    @Column(name = "dept_num")
     private String deptNum;
-
-    @Column(name = "reason")
     private String reason;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -37,8 +30,12 @@ public class Board {
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
 
-    @Column(name="ampm")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date writeDate;
+
     private String ampm;
+
+    private String status;
 
 
 }
