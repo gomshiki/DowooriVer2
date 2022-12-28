@@ -18,7 +18,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class LoginController {
     private final MemberService memberService;
-    private final EntityManager entityManager;
 
     @PostMapping("/login.do")
     public String login(@RequestParam("empNumber") Long empNumber, HttpServletRequest request) {

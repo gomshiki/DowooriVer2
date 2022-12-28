@@ -59,6 +59,7 @@ public class HomeController {
 
         model.addAttribute("boards", boards);
         model.addAttribute("member", loginMember);
+        model.addAttribute("newBoard", new Board());
 
         return "home";
     }

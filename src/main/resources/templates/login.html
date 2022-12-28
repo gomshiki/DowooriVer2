@@ -49,10 +49,10 @@
                                                     <p th:text="${member.position}">position</p>
                                                     <p th:text="${member.deptName}">deptName</p>
 
-                                                    <input type="text" class="form-control form-control-user"
+                                                    <input type="hidden" class="form-control form-control-user"
                                                            th:name="empNumber" th:value="*{member.empNum}"/>
                                                     <button class="btn btn-primary btn-user btn-block" id="registerButton">
-                                                        Register Account
+                                                        Login
                                                     </button>
                                                     <hr>
                                                 </form>

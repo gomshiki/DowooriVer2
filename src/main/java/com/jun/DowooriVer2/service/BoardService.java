@@ -1,5 +1,6 @@
 package com.jun.DowooriVer2.service;
 
+import com.jun.DowooriVer2.DTO.BoardDTO;
 import com.jun.DowooriVer2.domain.Board;
 import com.jun.DowooriVer2.repository.BoardRepository;
 import com.jun.DowooriVer2.repository.JpaBoardRepository;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class BoardService {
 
     private BoardRepository boardRepository;
@@ -25,4 +26,7 @@ public class BoardService {
         return boardRepository.findAll(empNum);
     }
 
+    public void createBoard(Board board) {
+        boardRepository.createBoard(board);
+    }
 }

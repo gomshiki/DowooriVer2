@@ -23,7 +23,6 @@
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
-
 </head>
 
 <body id="page-top">
@@ -164,8 +163,7 @@
                     </button>
 
                     <!-- Topbar Search -->
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
                             <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
                                 aria-label="Search" aria-describedby="basic-addon2">
@@ -469,11 +467,20 @@
                     <!-- 기안문 테이블 -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">기안문 현황</h6>
+                                <h6 class="m-0 font-weight-bold text-primary">기안문 현황</h6>
                         </div>
+
+                      
 
                         <!--    card-body         -->
                         <div class="card-body">
+
+                                <!-- modal trigger 기안문 작성-->
+                            <div style="float: right; padding-bottom: 0.5rem;">
+                                <button id="myModal" class="btn btn-primary btn-icon-split" data-toggle="modal" data-target="#exampleModal">
+                                    <span class="text">기안문 작성하기</span>
+                                </button>
+                            </div>
 
                             <!-- table-reponsive -->
                             <div class="table-responsive">
@@ -496,6 +503,7 @@
                                     </tfoot>
                                     <tbody>
                                         <th:block th:each="board : ${boards}">
+                                            <form action="#" method="post" >
                                             <tr data-toggle="collapse" th:attr="data-target='#accordion_'+${board.id}" class="clickable" >
                                                 <td th:text="${board.id}">문서번호</td>
                                                 <td th:text="${board.title}">문서종류</td>
@@ -506,29 +514,26 @@
                                                     </span>
                                                 </td>
                                             </tr>
-                                            <form action="/" method="post">
                                             <tr>
                                                 <td colspan="4" class="collapse" th:id="'accordion_'+${board.id}">
+
                                                     <!-- detail information -->
                                                     <div class="row">
                                                         <div class="col-xl-12 col-md-12 mb-4">
                                                             <div class="card border-left-primary shadow h-100 py-2">
                                                                 <div class="card-body" style="display: flex;">
-
                                                                         <div style="width: 50%;">
                                                                             <div class="row no-gutters align-items-center">
                                                                                 <div class="col mr-2">
                                                                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">시작일</div>
-                                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                                                        <input th:value="*{board.startDate}" />
+                                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${board.startDate}">
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="row no-gutters align-items-center">
                                                                                 <div class="col mr-2">
                                                                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">종료일</div>
-                                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                                                        <input th:value="*{board.endDate}" />
+                                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${board.endDate}" >
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -537,16 +542,14 @@
                                                                             <div class="row no-gutters align-items-center">
                                                                                 <div class="col mr-2">
                                                                                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">분류</div>
-                                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                                                        <input th:value="*{board.ampm}" />
+                                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${board.ampm}">
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="row no-gutters align-items-center">
                                                                                 <div class="col mr-2">
                                                                                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">사유</div>
-                                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                                                        <input th:value="*{board.reason}" />
+                                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${board.reason}">
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -555,16 +558,17 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+
                                                     <!-- End of detail information -->
                                                     </div>
                                                     <div  style="display: flex; justify-content: center;align-items: center;">
                                                         <div class="mb-4" style="padding-left: 0.5rem;">
-                                                            <button type="button" class="btn btn-primary btn-icon-split col-xl-auto">
+                                                            <button type="submit" class="btn btn-primary btn-icon-split col-xl-auto" th:formaction="@{/approveBoard.do}">
                                                                 <span class="text">결재하기</span>
                                                             </button>
                                                         </div>
                                                         <div class="mb-4" style="padding-left: 0.5rem;">
-                                                            <button type="button" class="btn btn-danger btn-icon-split col-xl-auto">
+                                                            <button type="button" class="btn btn-danger btn-icon-split col-xl-auto" th:formaction="@{/delete.do}">
                                                                 <span class="text">삭제하기</span>
                                                             </button>
                                                         </div>
@@ -632,6 +636,62 @@
         </div>
     </div>
 
+    <!-- 게시글 작성 Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">기안문 작성하기</h1>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form action="#" id="boardForm">
+                    <div class="form-group" style="display:none;">
+                        <label for="empNum">사원번호</label>
+                        <input="hidden" th:name="empNum" th:value="${session.loginMember.getEmpNum}">
+                    </div>
+                    <div class="form-group">
+                        <label for="title">문서 종류</label>
+                        <select class="form-control" name="title">
+                            <option value="연차">연차</option>
+                            <option value="반차">반차</option>
+                        </select>
+                    </div>
+                
+                    <div class="form-group">
+                        <label for="startDate">시작일</label>
+                        <input type="date" class="form-control" name="startDate"></input>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="endDate">종료일</label>
+                        <input type="date" class="form-control" name="endDate"></input>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ampm">사용시간 구분</label>
+                        <select class="form-control" name="ampm">
+                            <option value="오전">오전</option>
+                            <option value="오후">오후</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reason">사유</label>
+                        <input type="text" class="form-control" name="reason"></input>
+                    </div>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">종료</button>
+                <button type="button" class="btn btn-primary" id="submitBoard">작성완료</button>
+            </div>
+            </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -656,6 +716,35 @@
         <!-- 추가   -->
     <script src="js/demo/datatables-demo.js"></script>
 
+    <!-- 기안문 작성 비동기방식 처리하기-->
+    <script th:inline="javascript">
+        $('button#submitBoard').on('click',function writeBoard(){
+
+            var boardData = $('#boardForm').serialize();
+
+            console.log(boardData)
+
+            $.ajax({
+                    url : "/board/write.do",
+                    type : "POST",
+                    data: boardData,
+                    dataType : "JSON",
+                    success: function(data){
+                        if(data != null)
+                        alert("등록이 완료됐습니다");
+                        console.log(data.msg)
+                        let url = '/home';
+                        location.replace(url);
+
+                    },
+                    error: function(){
+                        alert("등록 에러");
+                    }
+
+            })
+    })
+        
+    </script>
 </body>
 
 </html>
