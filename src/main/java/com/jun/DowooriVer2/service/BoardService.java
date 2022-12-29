@@ -29,4 +29,16 @@ public class BoardService {
     public void createBoard(Board board) {
         boardRepository.createBoard(board);
     }
+
+    public void deleteBoard(Long deptNum) {
+        boardRepository.deleteBoard(deptNum);
+    }
+
+    public Optional<Board> findById(Long boardId){
+        return boardRepository.findById(boardId);
+    }
+
+    public void updateBoard(Long boardId) {
+        boardRepository.updateBoard(boardId);
+    }
 }

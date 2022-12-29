@@ -10,6 +10,7 @@ import java.util.Date;
 @Data
 public class BoardDTO {
 
+    private Long id;
     private String title;
     private String empNum;
     private String deptName;

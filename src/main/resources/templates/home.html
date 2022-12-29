@@ -503,7 +503,7 @@
                                     </tfoot>
                                     <tbody>
                                         <th:block th:each="board : ${boards}">
-                                            <form action="#" method="post" >
+                                            
                                             <tr data-toggle="collapse" th:attr="data-target='#accordion_'+${board.id}" class="clickable" >
                                                 <td th:text="${board.id}">문서번호</td>
                                                 <td th:text="${board.title}">문서종류</td>
@@ -516,7 +516,7 @@
                                             </tr>
                                             <tr>
                                                 <td colspan="4" class="collapse" th:id="'accordion_'+${board.id}">
-
+                                                    
                                                     <!-- detail information -->
                                                     <div class="row">
                                                         <div class="col-xl-12 col-md-12 mb-4">
@@ -554,7 +554,6 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -563,19 +562,20 @@
                                                     </div>
                                                     <div  style="display: flex; justify-content: center;align-items: center;">
                                                         <div class="mb-4" style="padding-left: 0.5rem;">
-                                                            <button type="submit" class="btn btn-primary btn-icon-split col-xl-auto" th:formaction="@{/approveBoard.do}">
+                                                            <button type="submit" class="btn btn-primary btn-icon-split col-xl-auto">
                                                                 <span class="text">결재하기</span>
                                                             </button>
                                                         </div>
                                                         <div class="mb-4" style="padding-left: 0.5rem;">
-                                                            <button type="button" class="btn btn-danger btn-icon-split col-xl-auto" th:formaction="@{/delete.do}">
+                                                            <button type="button" class="btn btn-danger btn-icon-split col-xl-auto" th:value="${board.id}" id="deleteBoard">
                                                                 <span class="text">삭제하기</span>
                                                             </button>
                                                         </div>
                                                     </div>
+                                                    
                                                 </td>
                                             </tr>
-                                            </form>
+                                            
                                         </th:block>
                                     </tbody>
 
@@ -733,6 +733,36 @@
                         if(data != null)
                         alert("등록이 완료됐습니다");
                         console.log(data.msg)
+                        let url = '/home';
+                        location.replace(url);
+
+                    },
+                    error: function(){
+                        alert("등록 에러");
+                    }
+
+            })
+    })
+        
+
+     <!-- 기안문 삭제 비동기방식 처리하기-->
+    
+        $('button#deleteBoard').on('click', function deleteBoard(){
+
+            var boardId = {'id' : $(this).val()};
+
+            console.log(boardId)
+
+            $.ajax({
+                    url : "/board/delete.do",
+                    type : "POST",
+                    data: boardId,
+                    dataType :"JSON",
+                    success: function(data){
+                        if(data != null)
+                        alert("삭제가 완료됐습니다");
+                        console.log(data.msg)
+
                         let url = '/home';
                         location.replace(url);
 

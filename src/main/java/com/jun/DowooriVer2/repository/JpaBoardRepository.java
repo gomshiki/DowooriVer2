@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Repository
@@ -34,11 +35,26 @@ public class JpaBoardRepository implements BoardRepository {
 
     @Override
     public void createBoard(Board board) {
-
-//        String sqlQuery = "insert into board_table values(ampm =: ampm, dept_name, emp_num, end_date, reason, start_date, status, title)";
-//        System.out.println(sqlQuery);
-
-
         em.persist(board);
+    }
+
+    @Override
+    public void deleteBoard(Long boardId) {
+        log.info("repository에서 받은 bordId", boardId);
+
+        Board board = em.find(Board.class, boardId);
+        em.remove(board);
+    }
+
+    @Override
+    public Optional<Board> findById(Long id) {
+        Board board = em.find(Board.class, id);
+        return Optional.ofNullable(board);
+    }
+
+    @Override
+    public void updateBoard(Long boardId) {
+        Board board = em.find(Board.class, boardId);
+
     }
 }

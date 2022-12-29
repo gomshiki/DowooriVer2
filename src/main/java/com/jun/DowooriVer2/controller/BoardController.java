@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,9 +27,9 @@ public class BoardController {
 
     private final BoardService boardService;
 
-    @PostMapping("/approveBoard.do")
-    public void updateBoard(Board testBoard){
-        testBoard.toString();
+    @PostMapping("/board/approve.do")
+    public void updateBoard(@RequestParam("boardId") Long boardId){
+        boardService.updateBoard(boardId);
     }
 
     @PostMapping("/board/write.do")
@@ -59,7 +60,26 @@ public class BoardController {
         return msg;
     }
 
-    private Board replaceDTOtoBoard(BoardDTO dto){
+    @PostMapping("/board/delete.do")
+    public HashMap<String, String> deleteBoard(Board board){
+
+        System.out.println("board.getId() = " + board.getId());
+
+        boardService.deleteBoard(board.getId());
+
+        /** hashmap이용해 ajax로 리턴할 데이터 입력**/
+        HashMap<String, String> msg = new HashMap<>();
+        msg.put("msg", "기안문 삭제완료");
+        return msg;
+    }
+
+    @PostMapping("/board/find")
+    public Optional<Board> findBoardById(Long deptNum) {
+
+        return boardService.findById(deptNum);
+    }
+
+    private Board replaceDTOtoBoard(BoardDTO dto) {
 
         Board board = new Board();
 
