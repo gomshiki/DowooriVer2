@@ -64,7 +64,7 @@ public class HomeController {
         return "home";
     }
 
-    @GetMapping("/tables")
+    @GetMapping("/board")
     public String table(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession(false); //false : 새로 생성 X
 
@@ -78,9 +78,17 @@ public class HomeController {
         if(loginMember == null){
             return "/";
         }
-        model.addAttribute("member", loginMember);
 
-        return "tables";
+        Long empNum = loginMember.getEmpNum();
+
+        List<Board> boards = boardService.findAll(empNum);
+
+
+        model.addAttribute("boards", boards);
+        model.addAttribute("member", loginMember);
+        model.addAttribute("newBoard", new Board());
+
+        return "board";
     }
 
 }

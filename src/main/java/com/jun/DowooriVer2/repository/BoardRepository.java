@@ -19,5 +19,5 @@ public interface BoardRepository {
 
     Optional<Board> findById(Long boardId);
 
-    void updateBoard(Long boardId);
+    void updateBoard(Board board);
 }

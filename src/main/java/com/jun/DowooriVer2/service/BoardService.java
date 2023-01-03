@@ -38,7 +38,7 @@ public class BoardService {
         return boardRepository.findById(boardId);
     }
 
-    public void updateBoard(Long boardId) {
-        boardRepository.updateBoard(boardId);
+    public void updateBoard(Board board) {
+        boardRepository.updateBoard(board);
     }
 }

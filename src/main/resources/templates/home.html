@@ -132,7 +132,7 @@
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="tables.html" th:href="@{/tables}">
+                <a class="nav-link" href="tables.html" th:href="@{/board}">
                     <i class="fas fa-fw fa-table"></i>
                     <span>기안문 리스트</span></a>
             </li>
@@ -560,17 +560,26 @@
 
                                                     <!-- End of detail information -->
                                                     </div>
-                                                    <div  style="display: flex; justify-content: center;align-items: center;">
+                                                    <div  style="display: flex; justify-content: space-between; align-items: space-between;">
                                                         <div class="mb-4" style="padding-left: 0.5rem;">
                                                             <button type="submit" class="btn btn-primary btn-icon-split col-xl-auto">
                                                                 <span class="text">결재하기</span>
                                                             </button>
                                                         </div>
-                                                        <div class="mb-4" style="padding-left: 0.5rem;">
-                                                            <button type="button" class="btn btn-danger btn-icon-split col-xl-auto" th:value="${board.id}" id="deleteBoard">
-                                                                <span class="text">삭제하기</span>
-                                                            </button>
+                                                        <div style="float: right;display: flex;">
+                                                            <div class="mb-4" style="padding-left: 0.5rem;">
+                                                                <button type="button" class="btn btn-danger btn-icon-split col-xl-auto" th:value="${board.id}" id="deleteBoard">
+                                                                    <span class="text">삭제하기</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="mb-4" style="padding-left: 0.5rem;">
+                                                                <button type="button" class="btn btn-success btn-icon-split col-xl-auto" th:value="${board.id}" id="selectBoard"
+                                                                       data-toggle="modal" data-target="#updateModal">
+                                                                    <span class="text">수정하기</span>
+                                                                </button>
+                                                            </div>
                                                         </div>
+
                                                     </div>
                                                     
                                                 </td>
@@ -666,7 +675,7 @@
 
                     <div class="form-group">
                         <label for="endDate">종료일</label>
-                        <input type="date" class="form-control" name="endDate"></input>
+                        <input type="date" class="form-control" name="endDate" value=""></input>
                     </div>
 
                     <div class="form-group">
@@ -674,6 +683,7 @@
                         <select class="form-control" name="ampm">
                             <option value="오전">오전</option>
                             <option value="오후">오후</option>
+                            <option value="종일">종일</option>
                         </select>
                     </div>
 
@@ -691,6 +701,64 @@
             </div>
         </div>
     </div>
+
+        <!-- 게시글 수정 Modal -->
+        <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">기안문 수정하기</h1>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <form action="#" id="updateBoardForm">
+                        <div class="form-group" style="display:none;">
+                            <label for="boardId">문서번호</label>
+                            <input type="hidden" name="id" id="findId"></input>
+                        </div>
+                        <div class="form-group">
+                            <label for="title">문서 종류</label>
+                            <select class="form-control" name="title" id="findTitle">
+                                <option value="연차">연차</option>
+                                <option value="반차">반차</option>
+                            </select>
+                        </div>
+                    
+                        <div class="form-group">
+                            <label for="startDate">시작일</label>
+                            <input type="date" class="form-control" name="startDate" id="findStartDate"></input>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="endDate">종료일</label>
+                            <input type="date" class="form-control" name="endDate" id="findEndDate"></input>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ampm">사용시간 구분</label>
+                            <select class="form-control" name="ampm" id="findAmpm">
+                                <option value="오전">오전</option>
+                                <option value="오후">오후</option>
+                                <option value="종일">종일</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reason">사유</label>
+                            <input type="text" class="form-control" name="reason" id="findReason"></input>
+                        </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">종료</button>
+                    <button type="button" class="btn btn-primary" id="updateBoard">수정완료</button>
+                </div>
+                </form>
+                </div>
+            </div>
+        </div>
+
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
@@ -718,7 +786,9 @@
 
     <!-- 기안문 작성 비동기방식 처리하기-->
     <script th:inline="javascript">
-        $('button#submitBoard').on('click',function writeBoard(){
+
+    <!--  modal에서 작성된 기안문 저장  -->
+    $('button#submitBoard').on('click',function writeBoard(){
 
             var boardData = $('#boardForm').serialize();
 
@@ -745,7 +815,7 @@
     })
         
 
-     <!-- 기안문 삭제 비동기방식 처리하기-->
+     <!-- 기안문 삭제 -->
     
         $('button#deleteBoard').on('click', function deleteBoard(){
 
@@ -773,7 +843,81 @@
 
             })
     })
-        
+
+     <!-- 기안문 수정 해당 게시글 가져오기 -->
+
+        $('button#selectBoard').on('click', function selectBoard(){
+            event.preventDefault(); // 고유 이벤트 중지
+
+            var boardId = {'id' : $(this).val()};
+
+            console.log(boardId)
+
+            $.ajax({
+                    url : "/board/find.do",
+                    type : "POST",
+                    data: boardId,
+                    dataType :"JSON",
+                    success: function(data){
+
+                        console.log(data);
+
+                        if(data != null)
+
+                        boardId=data.id;
+                        title = data.title;
+                        startDate = data.startDate;
+                        endDate = data.endDate;
+                        ampm = data.ampm;
+                        reason = data.reason;
+
+                        $("#findId").val(boardId);
+                        $('#findTitle').val(title);
+                        $('#findStartDate').val(startDate);
+                        $('#findEndDate').val(endDate);
+                        $('#findAmpm').val(ampm);
+                        $('#findReason').val(reason);
+
+                        alert("해당 기안문 정보를 불러왔습니다.");
+
+                        $("#updateModal").modal('show');
+
+                    },
+                    error: function(){
+                        alert("기안문을 불러오지 못했습니다.");
+                    }
+
+            })
+    })
+      
+    <!-- 기안문 수정 저장하기-->
+    $('button#updateBoard').on('click',function writeBoard(){
+
+        var boardData = $('#updateBoardForm').serialize();
+
+        console.log(boardData)
+
+        $.ajax({
+                url : "/board/update.do",
+                type : "POST",
+                data: boardData,
+                dataType : "JSON",
+                success: function(data){
+                    if(data != null)
+                    alert("수정이 완료됐습니다");
+                    console.log(data.msg)
+                    let url = '/home';
+                    location.replace(url);
+
+                },
+                error: function(){
+                    alert("등록 에러");
+                }
+
+        })
+})
+
+    
     </script>
 </body>
 

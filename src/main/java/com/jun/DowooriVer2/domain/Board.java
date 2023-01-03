@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -15,7 +16,8 @@ import java.util.Date;
 @Entity
 @Data
 @Table(name = "Board_table")
-@DynamicInsert // inert 시 null인 필드 제외
+@DynamicInsert // insert 시 null인 필드 제외
+@DynamicUpdate // update 시 null인 필드 제외
 public class Board {
 
     @Id

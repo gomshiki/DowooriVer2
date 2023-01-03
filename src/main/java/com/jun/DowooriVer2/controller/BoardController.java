@@ -27,10 +27,10 @@ public class BoardController {
 
     private final BoardService boardService;
 
-    @PostMapping("/board/approve.do")
-    public void updateBoard(@RequestParam("boardId") Long boardId){
-        boardService.updateBoard(boardId);
-    }
+//    @PostMapping("/board/approve.do")
+//    public void updateBoard(@RequestParam("boardId") Long boardId){
+//        boardService.updateBoard(boardId);
+//    }
 
     @PostMapping("/board/write.do")
     public HashMap<String, String> writeBoard(HttpServletRequest request, BoardDTO boardDTO){
@@ -38,7 +38,6 @@ public class BoardController {
         /** 값 확인**/
         System.out.println("boardDTO = " + boardDTO);
 
-        
         /** Session을 이용해 로그인 회원정보 가젹오기 **/
         HttpSession session = request.getSession(false);
         Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
@@ -73,21 +72,64 @@ public class BoardController {
         return msg;
     }
 
-    @PostMapping("/board/find")
-    public Optional<Board> findBoardById(Long deptNum) {
+    /** 기안문 1개 조회 **/
+    @PostMapping("/board/find.do")
+    public Optional<Board> findBoardById(Board board) {
 
-        return boardService.findById(deptNum);
+        System.out.println("board.getId = " + board.getId());
+
+        return boardService.findById(board.getId());
+
     }
 
+    @PostMapping("/board/update.do")
+    public HashMap<String, String> updateBoard(HttpServletRequest request, BoardDTO boardDTO) {
+
+        /** 값 확인**/
+        System.out.println("boardDTO = " + boardDTO);
+
+        /** Session을 이용해 로그인 회원정보 가젹오기 **/
+        HttpSession session = request.getSession(false);
+        Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+
+        /** 로그인정보를 이용해 기안문 DB 사번정보 매핑 및 저장 **/
+        boardDTO.setEmpNum(String.valueOf(loginMember.getEmpNum()));
+        boardDTO.setDeptName(loginMember.getDeptName());
+
+        Board board = replaceDTOtoBoard(boardDTO);
+
+        System.out.println("board = " + board);
+
+        boardService.updateBoard(board);
+
+        /** hashmap이용해 ajax로 리턴할 데이터 입력 **/
+        HashMap<String, String> msg = new HashMap<>();
+        msg.put("msg", "기안문 저장완료");
+
+        return msg;
+    }
+
+    /** DTO를 Board에 맞게 수정하는 함수 **/
     private Board replaceDTOtoBoard(BoardDTO dto) {
 
         Board board = new Board();
+
+        if(dto.getId() != null){
+            board.setId(dto.getId());
+        }
 
         board.setAmpm(dto.getAmpm());
         board.setReason(dto.getReason());
         board.setTitle(dto.getTitle());
         board.setStartDate(Date.valueOf(dto.getStartDate()));
-        board.setEndDate(Date.valueOf(dto.getEndDate()));
+
+        // 반차 : 종료일 == 시작일
+        if(dto.getEndDate().isEmpty() || dto.getEndDate().length() == 0 || dto.getEndDate() == null) {
+            board.setEndDate(Date.valueOf(dto.getStartDate()));
+        }else{
+            board.setEndDate(Date.valueOf(dto.getEndDate()));
+        }
+
         board.setEmpNum(dto.getEmpNum());
         board.setDeptName(dto.getDeptName());
         board.setStatus("작성중");
