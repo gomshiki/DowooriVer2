@@ -68,6 +68,14 @@ public class JpaBoardRepository implements BoardRepository {
         findBoard.setStartDate(board.getStartDate());
         findBoard.setEndDate(board.getEndDate());
         findBoard.setAmpm(board.getAmpm());
+        findBoard.setReason(board.getReason());
+        findBoard.setApproveLevel(board.getApproveLevel());
+        findBoard.setStatus(board.getStatus());
+
+    }
+
+    @Override
+    public void approveBoard(Board board) {
 
     }
 }

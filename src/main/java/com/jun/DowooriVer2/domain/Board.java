@@ -41,6 +41,7 @@ public class Board {
 
     private String ampm;
     private String status;
+    private String approveLevel;
 
     public Board() {
     }

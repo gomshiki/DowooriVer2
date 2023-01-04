@@ -490,7 +490,7 @@
                                             <th>문서번호</th>
                                             <th>문서종류</th>
                                             <th>작성날짜</th>
-                                            <th>더보기</th>
+                                            <th>진행상태</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -509,8 +509,14 @@
                                                 <td th:text="${board.title}">문서종류</td>
                                                 <td th:text="${board.writeDate}"> 작성날짜 </td>
                                                 <td>
-                                                    <span class="text btn btn-primary" th:text="${board.status}">
-                                                        결재현황
+                                                    <span class="text btn btn-secondary" th:text="${board.status}" th:if="${board.status.equals('작성중')}">
+                                                        결재현황1
+                                                    </span>
+                                                    <span class="text btn btn-primary" th:text="${board.status}" th:if="${board.status.equals('결재중')}">
+                                                        결재현황2
+                                                    </span>
+                                                    <span class="text btn btn-btn-success" th:text="${board.status}" th:if="${board.status.equals('결재완료')}">
+                                                        결재현황3
                                                     </span>
                                                 </td>
                                             </tr>
@@ -560,9 +566,10 @@
 
                                                     <!-- End of detail information -->
                                                     </div>
-                                                    <div  style="display: flex; justify-content: space-between; align-items: space-between;">
+                                                    <!-- start of 기안문 결재, 수정, 삭제 버튼  -->
+                                                    <div th:if="${board.status.equals('작성중')}" style="display: flex; justify-content: space-between; align-items: space-between;" >
                                                         <div class="mb-4" style="padding-left: 0.5rem;">
-                                                            <button type="submit" class="btn btn-primary btn-icon-split col-xl-auto">
+                                                            <button type="submit" class="btn btn-primary btn-icon-split col-xl-auto" th:value="${board.id}" id="approveBoard">
                                                                 <span class="text">결재하기</span>
                                                             </button>
                                                         </div>
@@ -581,6 +588,7 @@
                                                         </div>
 
                                                     </div>
+                                                    <!-- End of 기안문 결재, 수정, 삭제 버튼  -->
                                                     
                                                 </td>
                                             </tr>
@@ -838,7 +846,7 @@
 
                     },
                     error: function(){
-                        alert("등록 에러");
+                        alert("삭제 에러");
                     }
 
             })
@@ -915,7 +923,37 @@
                 }
 
         })
-})
+    })
+
+    <!-- 기안문 결재하기 -->
+    
+        $('button#approveBoard').on('click', function deleteBoard(){
+
+            var boardId = {'id' : $(this).val()};
+
+            console.log(boardId)
+
+            $.ajax({
+                    url : "/board/approve.do",
+                    type : "GET",
+                    data: boardId,
+                    dataType :"JSON",
+                    success: function(data){
+                        if(data != null)
+                        alert("결재가 완료됐습니다");
+
+                        console.log(data.msg)
+                        
+                        let url = '/home';
+                        location.replace(url);
+
+                    },
+                    error: function(){
+                        alert("결재 에러");
+                    }
+
+            })
+    })
 
     
     </script>

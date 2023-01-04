@@ -41,4 +41,8 @@ public class BoardService {
     public void updateBoard(Board board) {
         boardRepository.updateBoard(board);
     }
+
+    public void approveBoard(Board board) {
+        boardRepository.approveBoard(board);
+    }
 }

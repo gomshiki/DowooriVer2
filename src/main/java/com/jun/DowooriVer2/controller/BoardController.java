@@ -27,10 +27,35 @@ public class BoardController {
 
     private final BoardService boardService;
 
-//    @PostMapping("/board/approve.do")
-//    public void updateBoard(@RequestParam("boardId") Long boardId){
-//        boardService.updateBoard(boardId);
-//    }
+    @GetMapping("/board/approve.do")
+    public HashMap<String, String> approveBoard(Board board){
+
+        Board findBoard = boardService.findById(board.getId()).get();
+
+        if(findBoard.getApproveLevel().equals("사원")){
+            findBoard.setApproveLevel("직책과장");
+        }else if(findBoard.getApproveLevel().equals("직책과장")){
+            findBoard.setApproveLevel("부서장");
+        }
+
+        if(findBoard.getStatus().equals("작성중")){
+            findBoard.setStatus("결재중");
+        }else if(findBoard.getApproveLevel().equals("부서장") && findBoard.getStatus().equals("결재중")){
+            findBoard.setStatus("결재완료");
+        }
+
+        System.out.println("findBoard = " + findBoard.toString());
+
+        boardService.updateBoard(findBoard);
+
+        /** hashmap이용해 ajax로 리턴할 데이터 입력**/
+        HashMap<String, String> msg = new HashMap<>();
+
+        msg.put("mgs", "기안문 결재 성공");
+
+        return msg;
+
+    }
 
     @PostMapping("/board/write.do")
     public HashMap<String, String> writeBoard(HttpServletRequest request, BoardDTO boardDTO){
@@ -47,8 +72,8 @@ public class BoardController {
         boardDTO.setDeptName(loginMember.getDeptName());
         
         Board board = replaceDTOtoBoard(boardDTO);
-
-        System.out.println("board = " + board);
+        board.setApproveLevel(loginMember.getPosition());
+        board.setStatus("작성중");
 
         boardService.createBoard(board);
 
@@ -92,9 +117,9 @@ public class BoardController {
         HttpSession session = request.getSession(false);
         Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
 
-        /** 로그인정보를 이용해 기안문 DB 사번정보 매핑 및 저장 **/
-        boardDTO.setEmpNum(String.valueOf(loginMember.getEmpNum()));
-        boardDTO.setDeptName(loginMember.getDeptName());
+//        /** 로그인정보를 이용해 기안문 DB 사번정보 매핑 및 저장 **/
+//        boardDTO.setEmpNum(String.valueOf(loginMember.getEmpNum()));
+//        boardDTO.setDeptName(loginMember.getDeptName());
 
         Board board = replaceDTOtoBoard(boardDTO);
 

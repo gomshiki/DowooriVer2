@@ -20,4 +20,6 @@ public interface BoardRepository {
     Optional<Board> findById(Long boardId);
 
     void updateBoard(Board board);
+
+    void approveBoard(Board board);
 }
