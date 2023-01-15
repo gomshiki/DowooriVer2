@@ -1,10 +1,9 @@
 package com.jun.DowooriVer2.repository;
 
+import com.jun.DowooriVer2.DTO.homeDTO;
 import com.jun.DowooriVer2.domain.Member;
-import com.jun.DowooriVer2.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j; //로그기록용
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,8 +28,13 @@ public class JpaMemberRepository implements MemberRepository {
 
 
     @Override
-    public List<Member> findAll() {
-        return em.createQuery("select m from Member m", Member.class).getResultList();
+    public List<homeDTO> findAll() {
+        List<homeDTO> resultList = em.createQuery("SELECT NEW com.jun.DowooriVer2.DTO.homeDTO(m.userName, m.empNum, m.email, m.position, d.deptName) " +
+                "FROM Member m LEFT JOIN m.department d", homeDTO.class).getResultList();
+
+
+
+        return resultList;
     }
 
     @Override

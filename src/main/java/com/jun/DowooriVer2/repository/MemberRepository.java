@@ -1,7 +1,7 @@
 package com.jun.DowooriVer2.repository;
 
+import com.jun.DowooriVer2.DTO.homeDTO;
 import com.jun.DowooriVer2.domain.Member;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -26,7 +26,7 @@ public interface MemberRepository {
     // 회원정보가져오기
     Optional<Member> findById(Long empNum);
 
-    List<Member> findAll();
+    List<homeDTO> findAll();
 
     // 회원삭제
 //    void deleteMember();

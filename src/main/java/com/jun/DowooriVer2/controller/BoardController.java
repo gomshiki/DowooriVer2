@@ -69,7 +69,7 @@ public class BoardController {
 
         /** 로그인정보를 이용해 기안문 DB 사번정보 매핑 및 저장 **/
         boardDTO.setEmpNum(String.valueOf(loginMember.getEmpNum()));
-        boardDTO.setDeptName(loginMember.getDeptName());
+        boardDTO.setDeptNum(loginMember.getDeptNum());
         
         Board board = replaceDTOtoBoard(boardDTO);
         board.setApproveLevel(loginMember.getPosition());
@@ -156,7 +156,7 @@ public class BoardController {
         }
 
         board.setEmpNum(dto.getEmpNum());
-        board.setDeptName(dto.getDeptName());
+        board.setDeptNum(dto.getDeptNum());
         board.setStatus("작성중");
         return board;
 

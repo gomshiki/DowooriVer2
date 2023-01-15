@@ -27,7 +27,10 @@ public class Board {
 
     private String title;
     private String empNum;
-    private String deptName;
+
+    @Column(name = "dept_num")
+    private Long deptNum;
+
     private String reason;
 
     @Temporal(TemporalType.DATE)
@@ -42,6 +45,10 @@ public class Board {
     private String ampm;
     private String status;
     private String approveLevel;
+
+    @ManyToOne
+    @JoinColumn(name = "dept_num", updatable = false, insertable = false)
+    private Department department;
 
     public Board() {
     }

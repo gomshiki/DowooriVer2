@@ -1,5 +1,6 @@
 package com.jun.DowooriVer2.controller;
 
+import com.jun.DowooriVer2.DTO.homeDTO;
 import com.jun.DowooriVer2.Session.SessionConst;
 import com.jun.DowooriVer2.domain.Board;
 import com.jun.DowooriVer2.domain.Member;
@@ -26,9 +27,9 @@ public class HomeController {
     @GetMapping("/")
     public String login(Model model) {
 
-        List<Member> members = memberService.findAll();
+        List<homeDTO> homeDTOS = memberService.findAll();
 
-        model.addAttribute("members", members);
+        model.addAttribute("homeDTOS", homeDTOS);
         model.addAttribute("member", new Member());
 
         return "login";

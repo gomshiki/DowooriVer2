@@ -42,15 +42,15 @@
                                         <h1 class="h4 text-gray-900 mb-4">로그인하실 계정을 선택해주세요</h1>
                                     </div>
                                     <!--                 선택할 계정 선택하기위한 form 태그                   -->
-                                        <div th:each="member : ${members}">
+                                        <div th:each="homeDTO : ${homeDTOS}">
 
                                                 <form class="user" th:action="@{/login.do}" method="post">
-                                                    <p th:text="${member.userName}">userName</p>
-                                                    <p th:text="${member.position}">position</p>
-                                                    <p th:text="${member.deptName}">deptName</p>
+                                                    <p th:text="${homeDTO.userName}">userName</p>
+                                                    <p th:text="${homeDTO.position}">position</p>
+                                                    <p th:text="${homeDTO.deptName}">deptName</p>
 
                                                     <input type="hidden" class="form-control form-control-user"
-                                                           th:name="empNumber" th:value="*{member.empNum}"/>
+                                                           th:name="empNumber" th:value="*{homeDTO.empNum}"/>
                                                     <button class="btn btn-primary btn-user btn-block" id="registerButton">
                                                         Login
                                                     </button>

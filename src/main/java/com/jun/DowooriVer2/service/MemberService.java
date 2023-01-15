@@ -1,5 +1,6 @@
 package com.jun.DowooriVer2.service;
 
+import com.jun.DowooriVer2.DTO.homeDTO;
 import com.jun.DowooriVer2.domain.Member;
 import com.jun.DowooriVer2.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ public class MemberService {
         return memberRepository.findById(empNum);
     }
 
-    public List<Member> findAll() {
+    public List<homeDTO> findAll() {
         return memberRepository.findAll();
     }
 

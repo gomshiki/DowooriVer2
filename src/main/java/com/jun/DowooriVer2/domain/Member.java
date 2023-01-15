@@ -31,20 +31,22 @@ public class Member {
     @Column(name = "user_name")
     private String userName;
 
-    @Column(name = "dept_name")
-    private String deptName;
+    @Column(name = "dept_num")
+    private Long deptNum;
     private String position;
-    @Column(name = "chief_name")
-    private String chiefName;
 
-    protected Member(Long empNum, String email, String password, String userName, String deptName, String position, String chiefName) {
+    @ManyToOne // Member 입장에서는 Many, Department 입장에서는 one
+    @JoinColumn(name = "dept_num", updatable = false, insertable = false)
+    private Department department;
+
+    protected Member(Long empNum, String email, String password, String userName, Long deptNum, String position, Department department) {
         this.empNum = empNum;
         this.email = email;
         this.password = password;
         this.userName = userName;
-        this.deptName = deptName;
+        this.deptNum = deptNum;
         this.position = position;
-        this.chiefName = chiefName;
+        this.department = department;
     }
 
 
