@@ -12,7 +12,7 @@ public class BoardDTO {
 
     private Long id;
     private String title;
-    private String empNum;
+    private Long empNum;
     private Long deptNum;
     private String reason;
     private String startDate;

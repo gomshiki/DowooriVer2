@@ -68,7 +68,7 @@ public class BoardController {
         Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
 
         /** 로그인정보를 이용해 기안문 DB 사번정보 매핑 및 저장 **/
-        boardDTO.setEmpNum(String.valueOf(loginMember.getEmpNum()));
+        boardDTO.setEmpNum(loginMember.getEmpNum());
         boardDTO.setDeptNum(loginMember.getDeptNum());
         
         Board board = replaceDTOtoBoard(boardDTO);
@@ -155,7 +155,7 @@ public class BoardController {
             board.setEndDate(Date.valueOf(dto.getEndDate()));
         }
 
-  //      board.setEmpNum(dto.getEmpNum());
+        board.setEmpNum(dto.getEmpNum());
         board.setDeptNum(dto.getDeptNum());
         board.setStatus("작성중");
         return board;

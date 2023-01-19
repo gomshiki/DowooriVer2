@@ -1,7 +1,5 @@
 package com.jun.DowooriVer2.controller;
 
-import com.jun.DowooriVer2.DTO.BoardDTO;
-import com.jun.DowooriVer2.DTO.WriterDTO;
 import com.jun.DowooriVer2.DTO.homeDTO;
 import com.jun.DowooriVer2.Session.SessionConst;
 import com.jun.DowooriVer2.domain.Board;
@@ -58,8 +56,6 @@ public class HomeController {
         Long empNum = loginMember.getEmpNum();
 
         List<Board> boards = boardService.findAll(empNum);
-
-
 
         model.addAttribute("boards", boards);
         model.addAttribute("member", loginMember);

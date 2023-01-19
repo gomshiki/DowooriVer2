@@ -1,6 +1,7 @@
 package com.jun.DowooriVer2.repository;
 
 import com.jun.DowooriVer2.domain.Board;
+import com.jun.DowooriVer2.domain.Member;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.Nullable;
@@ -27,14 +28,35 @@ public class JpaBoardRepository implements BoardRepository {
     @Transactional(readOnly = true)
     public List<Board> findAll(Long empNum) {
 
-        TypedQuery<Board> queryResult = em.createQuery("select b from Board b join fetch b.member where b.empNum = :number", Board.class)
-                .setParameter("number", empNum); // Long -> String으로!!
+        String sql;
+
+        Object checkSpot = em.createQuery("select m.spot from Member m where m.empNum = :number")
+                .setParameter("number", empNum).getSingleResult();
+
+        Object checkDeptNum = em.createQuery("select m.deptNum from Member m where m.empNum = :number")
+                .setParameter("number", empNum).getSingleResult();
+
+        if (checkSpot.equals("사원")) {
+            sql = "select b from Board b join fetch b.member where b.empNum = :number";
+            List<Board> resultList = em.createQuery(sql, Board.class)
+                    .setParameter("number", empNum).getResultList();
+            return resultList;
+
+        } else {
+            sql = "select b from Board b join fetch b.member where b.empNum = :number or b.approveLevel='부서장' and b.deptNum = :deptNum or b.status='결재중' or b.status='결재완료'";
+            List<Board> resultList = em.createQuery(sql, Board.class)
+                    .setParameter("number", empNum)
+                    .setParameter("deptNum", checkDeptNum)
+                    .getResultList();
+            return resultList;
+        }
 
 
-        List<Board> resultList = queryResult.getResultList();
 
 
-        return resultList;
+
+
+
     }
 
     /** 기안문 작성 **/
