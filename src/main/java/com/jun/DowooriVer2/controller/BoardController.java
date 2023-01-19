@@ -33,18 +33,18 @@ public class BoardController {
         Board findBoard = boardService.findById(board.getId()).get();
 
         if(findBoard.getApproveLevel().equals("사원")){
-            findBoard.setApproveLevel("직책과장");
-        }else if(findBoard.getApproveLevel().equals("직책과장")){
             findBoard.setApproveLevel("부서장");
         }
 
         if(findBoard.getStatus().equals("작성중")){
             findBoard.setStatus("결재중");
-        }else if(findBoard.getApproveLevel().equals("부서장") && findBoard.getStatus().equals("결재중")){
+        }
+        if(findBoard.getApproveLevel().equals("부서장") && findBoard.getStatus().equals("결재중")){
             findBoard.setStatus("결재완료");
         }
-
-        System.out.println("findBoard = " + findBoard.toString());
+        if (findBoard.getApproveLevel().equals("작성중") && findBoard.getApproveLevel().equals("부서장")) {
+            findBoard.setStatus("결재완료");
+        }
 
         boardService.updateBoard(findBoard);
 
@@ -72,7 +72,7 @@ public class BoardController {
         boardDTO.setDeptNum(loginMember.getDeptNum());
         
         Board board = replaceDTOtoBoard(boardDTO);
-        board.setApproveLevel(loginMember.getPosition());
+        board.setApproveLevel(loginMember.getSpot());
         board.setStatus("작성중");
 
         boardService.createBoard(board);
@@ -155,7 +155,7 @@ public class BoardController {
             board.setEndDate(Date.valueOf(dto.getEndDate()));
         }
 
-        board.setEmpNum(dto.getEmpNum());
+  //      board.setEmpNum(dto.getEmpNum());
         board.setDeptNum(dto.getDeptNum());
         board.setStatus("작성중");
         return board;

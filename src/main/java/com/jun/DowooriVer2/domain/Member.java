@@ -34,12 +34,13 @@ public class Member {
     @Column(name = "dept_num")
     private Long deptNum;
     private String position;
+    private String spot;
 
     @ManyToOne // Member 입장에서는 Many, Department 입장에서는 one
     @JoinColumn(name = "dept_num", updatable = false, insertable = false)
     private Department department;
 
-    protected Member(Long empNum, String email, String password, String userName, Long deptNum, String position, Department department) {
+    protected Member(Long empNum, String email, String password, String userName, Long deptNum, String position, Department department, String spot) {
         this.empNum = empNum;
         this.email = email;
         this.password = password;
@@ -47,6 +48,7 @@ public class Member {
         this.deptNum = deptNum;
         this.position = position;
         this.department = department;
+        this.spot = spot;
     }
 
 

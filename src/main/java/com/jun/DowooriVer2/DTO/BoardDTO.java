@@ -18,5 +18,6 @@ public class BoardDTO {
     private String startDate;
     private String endDate;
     private String ampm;
+    private String userName;
 
 }

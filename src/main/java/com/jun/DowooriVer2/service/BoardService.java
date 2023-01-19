@@ -1,11 +1,7 @@
 package com.jun.DowooriVer2.service;
 
-import com.jun.DowooriVer2.DTO.BoardDTO;
 import com.jun.DowooriVer2.domain.Board;
 import com.jun.DowooriVer2.repository.BoardRepository;
-import com.jun.DowooriVer2.repository.JpaBoardRepository;
-import com.jun.DowooriVer2.repository.MemberRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,7 +38,4 @@ public class BoardService {
         boardRepository.updateBoard(board);
     }
 
-    public void approveBoard(Board board) {
-        boardRepository.approveBoard(board);
-    }
 }

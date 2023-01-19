@@ -489,6 +489,7 @@
                                         <tr>
                                             <th>문서번호</th>
                                             <th>문서종류</th>
+                                            <th>작성자</th>
                                             <th>작성날짜</th>
                                             <th>진행상태</th>
                                         </tr>
@@ -497,6 +498,7 @@
                                         <tr>
                                             <th>문서번호</th>
                                             <th>문서종류</th>
+                                            <th>작성자</th>
                                             <th>작성날짜</th>
                                             <th>진행상태</th>
                                         </tr>
@@ -507,6 +509,7 @@
                                             <tr data-toggle="collapse" th:attr="data-target='#accordion_'+${board.id}" class="clickable" >
                                                 <td th:text="${board.id}">문서번호</td>
                                                 <td th:text="${board.title}">문서종류</td>
+                                                <td th:text="${board.getMember.userName}">작성자이름</td>
                                                 <td th:text="${board.writeDate}"> 작성날짜 </td>
                                                 <td>
                                                     <span class="text btn btn-secondary" th:text="${board.status}" th:if="${board.status.equals('작성중')}">
@@ -521,7 +524,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td colspan="4" class="collapse" th:id="'accordion_'+${board.id}">
+                                                <td colspan="5" class="collapse" th:id="'accordion_'+${board.id}">
                                                     
                                                     <!-- detail information -->
                                                     <div class="row">
@@ -566,6 +569,7 @@
 
                                                     <!-- End of detail information -->
                                                     </div>
+
                                                     <!-- start of 기안문 결재, 수정, 삭제 버튼  -->
                                                     <div th:if="${board.status.equals('작성중')}" style="display: flex; justify-content: space-between; align-items: space-between;" >
                                                         <div class="mb-4" style="padding-left: 0.5rem;">
@@ -588,7 +592,7 @@
                                                         </div>
 
                                                     </div>
-                                                    <div th:if="${board.status.equals('결재중')} and ${board.approveLevel.equals('직책과장')}" style="display: flex; justify-content: space-between; align-items: space-between;" >
+                                                    <div th:if="${board.status.equals('결재중')} and ${board.approveLevel.equals(session.loginMember.getSpot)}" style="display: flex; justify-content: space-between; align-items: space-between;" >
                                                         <div class="mb-4" style="padding-left: 0.5rem;">
                                                             <button type="submit" class="btn btn-primary btn-icon-split col-xl-auto" th:value="${board.id}" id="approveBoard">
                                                                 <span class="text">결재하기</span>
@@ -609,7 +613,7 @@
                                                         </div>
 
                                                     </div>
-                                                    <div th:if="${board.status.equals('결재중')} and ${board.approveLevel.equals('부서장')}" style="display: flex; justify-content: space-between; align-items: space-between;" >
+                                                    <div th:if="${board.status.equals('결재완료')}" style="display: none;" >
                                                         <div class="mb-4" style="padding-left: 0.5rem;">
                                                             <button type="submit" class="btn btn-primary btn-icon-split col-xl-auto" th:value="${board.id}" id="approveBoard">
                                                                 <span class="text">결재하기</span>

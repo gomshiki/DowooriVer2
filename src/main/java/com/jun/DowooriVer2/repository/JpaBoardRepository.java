@@ -1,10 +1,8 @@
 package com.jun.DowooriVer2.repository;
 
-import com.jun.DowooriVer2.DTO.BoardDTO;
 import com.jun.DowooriVer2.domain.Board;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,17 +20,21 @@ public class JpaBoardRepository implements BoardRepository {
 
     private final EntityManager em;
 
-    /** 해당 회원의 작성된 기안문 전체 조회**/
+    /**
+     * 해당 회원의 작성된 기안문 전체 조회
+     **/
     @Override
     @Transactional(readOnly = true)
     public List<Board> findAll(Long empNum) {
 
-        TypedQuery<Board> queryResult = em.createQuery("select b from Board b where b.empNum = :number", Board.class)
-                .setParameter("number", String.valueOf(empNum)); // Long -> String으로!!
+        TypedQuery<Board> queryResult = em.createQuery("select b from Board b join fetch b.member where b.empNum = :number", Board.class)
+                .setParameter("number", empNum); // Long -> String으로!!
 
-        List<Board> results = queryResult.getResultList();
 
-        return results;
+        List<Board> resultList = queryResult.getResultList();
+
+
+        return resultList;
     }
 
     /** 기안문 작성 **/
@@ -74,8 +76,4 @@ public class JpaBoardRepository implements BoardRepository {
 
     }
 
-    @Override
-    public void approveBoard(Board board) {
-
-    }
 }

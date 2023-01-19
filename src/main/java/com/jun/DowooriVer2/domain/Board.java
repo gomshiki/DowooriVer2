@@ -26,10 +26,12 @@ public class Board {
     private Long id;
 
     private String title;
-    private String empNum;
 
     @Column(name = "dept_num")
     private Long deptNum;
+
+    @Column(name = "emp_num")
+    private Long empNum;
 
     private String reason;
 
@@ -50,7 +52,26 @@ public class Board {
     @JoinColumn(name = "dept_num", updatable = false, insertable = false)
     private Department department;
 
+    @ManyToOne
+    @JoinColumn(name = "emp_num", updatable = false, insertable = false)
+    private Member member;
+
     public Board() {
     }
 
+    public Board(Long id, String title, Long deptNum, Long empNum, String reason, Date startDate, Date endDate, Date writeDate, String ampm, String status, String approveLevel, Department department, Member member) {
+        this.id = id;
+        this.title = title;
+        this.deptNum = deptNum;
+        this.empNum = empNum;
+        this.reason = reason;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.writeDate = writeDate;
+        this.ampm = ampm;
+        this.status = status;
+        this.approveLevel = approveLevel;
+        this.department = department;
+        this.member = member;
+    }
 }
