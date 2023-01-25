@@ -43,7 +43,7 @@ public class JpaBoardRepository implements BoardRepository {
             return resultList;
 
         } else {
-            sql = "select b from Board b join fetch b.member where b.empNum = :number or b.approveLevel='부서장' and b.deptNum = :deptNum or b.status='결재중' or b.status='결재완료'";
+            sql = "select b from Board b join fetch b.member where b.empNum = :number or b.approveLevel='부서장' and b.deptNum = :deptNum and b.status in ('결재중','결재완료')";
             List<Board> resultList = em.createQuery(sql, Board.class)
                     .setParameter("number", empNum)
                     .setParameter("deptNum", checkDeptNum)
