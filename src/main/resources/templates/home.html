@@ -27,15 +27,46 @@
     <script src='/fullcalendar/dist/index.global.js'></script>
     <script>
 
-      document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-          initialView: 'dayGridMonth'
-        });
-        calendar.render();
-      });
+        document.addEventListener('DOMContentLoaded', function() {
+
+            var calendarButton = document.getElementById('calendarButton');
+            var calendarEl = document.getElementById('calendar');
+        
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+              editable: false,
+              selectable: false,
+              businessHours: true,
+              dayMaxEvents: true, // allow "more" link when too many events
+              events: [
+                {
+                  title: 'Conference',
+                  start: '2023-01-11',
+                  end: '2020-09-13'
+                },
+                {
+                  title: 'Meeting',
+                  start: '2023-01-12T10:30:00',
+                  end: '2023-01-12T12:30:00'
+                },
+                {
+                  title: 'Dinner',
+                  start: '2023-01-12T20:00:00'
+                },
+                {
+                  title: 'Birthday Party',
+                  start: '2023-01-13T07:00:00'
+                }
+              ]
+            });
+        
+            calendarButton.addEventListener('click', e => {
+                setTimeout(() => {calendar.render()}, 1);
+            });
+            
+          });
 
     </script>
+
 </head>
 
 <body id="page-top">
@@ -373,225 +404,239 @@
                 </nav>
                 <!-- End of Topbar -->
 
-                <!-- Begin Page Content1 -->
-                <div class="container-fluid">
+               
+                    <!-- Begin Page Content -->
+                    <div class="container-fluid">
 
-                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
-                    </div>
-
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">연차 달력</h6>
+                        <!-- Page Heading -->
+                        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                    class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
                         </div>
 
-                        <!--    card-body         -->
-                        <div class="card-body">
-                            <div id="calendar"></div>
-                        </div>
-
-
-                    </div>
-
-                <!-- Begin Page Content2 -->
-                <div class="container-fluid">
-
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">기안문</h1>
-
-                    <!-- 기안문 테이블 -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">기안문 현황</h6>
-                        </div>
-
-                      
-
-                        <!--    card-body         -->
-                        <div class="card-body">
-
-                                <!-- modal trigger 기안문 작성-->
-                            <div style="float: right; padding-bottom: 0.5rem;">
-                                <button id="myModal" class="btn btn-primary btn-icon-split" data-toggle="modal" data-target="#exampleModal">
-                                    <span class="text">기안문 작성하기</span>
-                                </button>
+                        <!-- card -->
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-tabs" id="calendarTab">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" data-toggle="tab" href="#tab1">
+                                            <h6 class="m-0 font-weight-bold text-primary">기안문</h6>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="calendarButton"data-toggle="tab" href="#tab2">
+                                            <h6 class="m-0 font-weight-bold text-primary">연차 달력</h6>
+                                        </a>
+                                    </li>
+                                </ul>
+            
                             </div>
 
-                            <!-- table-reponsive -->
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>문서번호</th>
-                                            <th>문서종류</th>
-                                            <th>작성자</th>
-                                            <th>작성날짜</th>
-                                            <th>진행상태</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>문서번호</th>
-                                            <th>문서종류</th>
-                                            <th>작성자</th>
-                                            <th>작성날짜</th>
-                                            <th>진행상태</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                        <th:block th:each="board : ${boards}">
-                                            
-                                            <tr data-toggle="collapse" th:attr="data-target='#accordion_'+${board.id}" class="clickable" >
-                                                <td th:text="${board.id}">문서번호</td>
-                                                <td th:text="${board.title}">문서종류</td>
-                                                <td th:text="${board.getMember.userName}">작성자이름</td>
-                                                <td th:text="${board.writeDate}"> 작성날짜 </td>
-                                                <td>
-                                                    <span class="text btn btn-secondary" th:text="${board.status}" th:if="${board.status.equals('작성중')}">
-                                                        결재현황1
-                                                    </span>
-                                                    <span class="text btn btn-primary" th:text="${board.status}" th:if="${board.status.equals('결재중')}">
-                                                        결재현황2
-                                                    </span>
-                                                    <span class="text btn btn-btn-success" th:text="${board.status}" th:if="${board.status.equals('결재완료')}">
-                                                        결재현황3
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="5" class="collapse" th:id="'accordion_'+${board.id}">
-                                                    
-                                                    <!-- detail information -->
-                                                    <div class="row">
-                                                        <div class="col-xl-12 col-md-12 mb-4">
-                                                            <div class="card border-left-primary shadow h-100 py-2">
-                                                                <div class="card-body" style="display: flex;">
-                                                                        <div style="width: 50%;">
-                                                                            <div class="row no-gutters align-items-center">
-                                                                                <div class="col mr-2">
-                                                                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">시작일</div>
-                                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${board.startDate}">
+                           
+
+                                <!-- card-body -->
+                                <div class="card-body">
+
+                                     <!-- tab-content -->
+                                    <div class="tab-content">
+                                
+                                    <!-- tab-content1 -->
+                                    <div class="tab-pane active" id="tab1">
+                                        
+                                        <!-- modal trigger 기안문 작성-->
+                                        <div style="float: right; padding-bottom: 0.5rem;">
+                                            <button id="myModal" class="btn btn-primary btn-icon-split" data-toggle="modal" data-target="#exampleModal">
+                                                <span class="text">기안문 작성하기</span>
+                                            </button>
+                                        </div>
+
+                                        <!-- table-reponsive -->
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>문서번호</th>
+                                                        <th>문서종류</th>
+                                                        <th>작성자</th>
+                                                        <th>작성날짜</th>
+                                                        <th>진행상태</th>
+                                                    </tr>
+                                                </thead>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th>문서번호</th>
+                                                        <th>문서종류</th>
+                                                        <th>작성자</th>
+                                                        <th>작성날짜</th>
+                                                        <th>진행상태</th>
+                                                    </tr>
+                                                </tfoot>
+                                                <tbody>
+                                                    <th:block th:each="board : ${boards}">
+                                                        
+                                                        <tr data-toggle="collapse" th:attr="data-target='#accordion_'+${board.id}" class="clickable" >
+                                                            <td th:text="${board.id}">문서번호</td>
+                                                            <td th:text="${board.title}">문서종류</td>
+                                                            <td th:text="${board.getMember.userName}">작성자이름</td>
+                                                            <td th:text="${board.writeDate}"> 작성날짜 </td>
+                                                            <td>
+                                                                <span class="text btn btn-secondary" th:text="${board.status}" th:if="${board.status.equals('작성중')}">
+                                                                    결재현황1
+                                                                </span>
+                                                                <span class="text btn btn-primary" th:text="${board.status}" th:if="${board.status.equals('결재중')}">
+                                                                    결재현황2
+                                                                </span>
+                                                                <span class="text btn btn-btn-success" th:text="${board.status}" th:if="${board.status.equals('결재완료')}">
+                                                                    결재현황3
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="5" class="collapse" th:id="'accordion_'+${board.id}">
+                                                                
+                                                                <!-- detail information -->
+                                                                <div class="row">
+                                                                    <div class="col-xl-12 col-md-12 mb-4">
+                                                                        <div class="card border-left-primary shadow h-100 py-2">
+                                                                            <div class="card-body" style="display: flex;">
+                                                                                    <div style="width: 50%;">
+                                                                                        <div class="row no-gutters align-items-center">
+                                                                                            <div class="col mr-2">
+                                                                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">시작일</div>
+                                                                                                <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${board.startDate}">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="row no-gutters align-items-center">
+                                                                                            <div class="col mr-2">
+                                                                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">종료일</div>
+                                                                                                <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${board.endDate}" >
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
                                                                                     </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="row no-gutters align-items-center">
-                                                                                <div class="col mr-2">
-                                                                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">종료일</div>
-                                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${board.endDate}" >
+                                                                                    <div style="width: 50%;">
+                                                                                        <div class="row no-gutters align-items-center">
+                                                                                            <div class="col mr-2">
+                                                                                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">분류</div>
+                                                                                                <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${board.ampm}">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="row no-gutters align-items-center">
+                                                                                            <div class="col mr-2">
+                                                                                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">사유</div>
+                                                                                                <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${board.reason}">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
                                                                                     </div>
-                                                                                </div>
                                                                             </div>
                                                                         </div>
-                                                                        <div style="width: 50%;">
-                                                                            <div class="row no-gutters align-items-center">
-                                                                                <div class="col mr-2">
-                                                                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">분류</div>
-                                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${board.ampm}">
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="row no-gutters align-items-center">
-                                                                                <div class="col mr-2">
-                                                                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">사유</div>
-                                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${board.reason}">
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
+                                                                    </div>
+
+                                                                <!-- End of detail information -->
                                                                 </div>
-                                                            </div>
-                                                        </div>
 
-                                                    <!-- End of detail information -->
-                                                    </div>
+                                                                <!-- start of 기안문 결재, 수정, 삭제 버튼  -->
+                                                                <div th:if="${board.status.equals('작성중')}" style="display: flex; justify-content: space-between; align-items: space-between;" >
+                                                                    <div class="mb-4" style="padding-left: 0.5rem;">
+                                                                        <button type="submit" class="btn btn-primary btn-icon-split col-xl-auto" th:value="${board.id}" id="approveBoard">
+                                                                            <span class="text">결재하기</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div style="float: right;display: flex;">
+                                                                        <div class="mb-4" style="padding-left: 0.5rem;">
+                                                                            <button type="button" class="btn btn-danger btn-icon-split col-xl-auto" th:value="${board.id}" id="deleteBoard">
+                                                                                <span class="text">삭제하기</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="mb-4" style="padding-left: 0.5rem;">
+                                                                            <button type="button" class="btn btn-success btn-icon-split col-xl-auto" th:value="${board.id}" id="selectBoard"
+                                                                                data-toggle="modal" data-target="#updateModal">
+                                                                                <span class="text">수정하기</span>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
 
-                                                    <!-- start of 기안문 결재, 수정, 삭제 버튼  -->
-                                                    <div th:if="${board.status.equals('작성중')}" style="display: flex; justify-content: space-between; align-items: space-between;" >
-                                                        <div class="mb-4" style="padding-left: 0.5rem;">
-                                                            <button type="submit" class="btn btn-primary btn-icon-split col-xl-auto" th:value="${board.id}" id="approveBoard">
-                                                                <span class="text">결재하기</span>
-                                                            </button>
-                                                        </div>
-                                                        <div style="float: right;display: flex;">
-                                                            <div class="mb-4" style="padding-left: 0.5rem;">
-                                                                <button type="button" class="btn btn-danger btn-icon-split col-xl-auto" th:value="${board.id}" id="deleteBoard">
-                                                                    <span class="text">삭제하기</span>
-                                                                </button>
-                                                            </div>
-                                                            <div class="mb-4" style="padding-left: 0.5rem;">
-                                                                <button type="button" class="btn btn-success btn-icon-split col-xl-auto" th:value="${board.id}" id="selectBoard"
-                                                                       data-toggle="modal" data-target="#updateModal">
-                                                                    <span class="text">수정하기</span>
-                                                                </button>
-                                                            </div>
-                                                        </div>
+                                                                </div>
+                                                                <div th:if="${board.status.equals('결재중')} and ${board.approveLevel.equals(session.loginMember.getSpot)}" style="display: flex; justify-content: space-between; align-items: space-between;" >
+                                                                    <div class="mb-4" style="padding-left: 0.5rem;">
+                                                                        <button type="submit" class="btn btn-primary btn-icon-split col-xl-auto" th:value="${board.id}" id="approveBoard">
+                                                                            <span class="text">결재하기</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div style="float: right;display: flex;">
+                                                                        <div class="mb-4" style="padding-left: 0.5rem;">
+                                                                            <button type="button" class="btn btn-danger btn-icon-split col-xl-auto" th:value="${board.id}" id="deleteBoard">
+                                                                                <span class="text">삭제하기</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="mb-4" style="padding-left: 0.5rem;">
+                                                                            <button type="button" class="btn btn-success btn-icon-split col-xl-auto" th:value="${board.id}" id="selectBoard"
+                                                                                data-toggle="modal" data-target="#updateModal">
+                                                                                <span class="text">수정하기</span>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
 
-                                                    </div>
-                                                    <div th:if="${board.status.equals('결재중')} and ${board.approveLevel.equals(session.loginMember.getSpot)}" style="display: flex; justify-content: space-between; align-items: space-between;" >
-                                                        <div class="mb-4" style="padding-left: 0.5rem;">
-                                                            <button type="submit" class="btn btn-primary btn-icon-split col-xl-auto" th:value="${board.id}" id="approveBoard">
-                                                                <span class="text">결재하기</span>
-                                                            </button>
-                                                        </div>
-                                                        <div style="float: right;display: flex;">
-                                                            <div class="mb-4" style="padding-left: 0.5rem;">
-                                                                <button type="button" class="btn btn-danger btn-icon-split col-xl-auto" th:value="${board.id}" id="deleteBoard">
-                                                                    <span class="text">삭제하기</span>
-                                                                </button>
-                                                            </div>
-                                                            <div class="mb-4" style="padding-left: 0.5rem;">
-                                                                <button type="button" class="btn btn-success btn-icon-split col-xl-auto" th:value="${board.id}" id="selectBoard"
-                                                                       data-toggle="modal" data-target="#updateModal">
-                                                                    <span class="text">수정하기</span>
-                                                                </button>
-                                                            </div>
-                                                        </div>
+                                                                </div>
+                                                                <div th:if="${board.status.equals('결재완료')}" style="display: none;" >
+                                                                    <div class="mb-4" style="padding-left: 0.5rem;">
+                                                                        <button type="submit" class="btn btn-primary btn-icon-split col-xl-auto" th:value="${board.id}" id="approveBoard">
+                                                                            <span class="text">결재하기</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div style="float: right;display: flex;">
+                                                                        <div class="mb-4" style="padding-left: 0.5rem;">
+                                                                            <button type="button" class="btn btn-danger btn-icon-split col-xl-auto" th:value="${board.id}" id="deleteBoard">
+                                                                                <span class="text">삭제하기</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="mb-4" style="padding-left: 0.5rem;">
+                                                                            <button type="button" class="btn btn-success btn-icon-split col-xl-auto" th:value="${board.id}" id="selectBoard"
+                                                                                data-toggle="modal" data-target="#updateModal">
+                                                                                <span class="text">수정하기</span>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
 
-                                                    </div>
-                                                    <div th:if="${board.status.equals('결재완료')}" style="display: none;" >
-                                                        <div class="mb-4" style="padding-left: 0.5rem;">
-                                                            <button type="submit" class="btn btn-primary btn-icon-split col-xl-auto" th:value="${board.id}" id="approveBoard">
-                                                                <span class="text">결재하기</span>
-                                                            </button>
-                                                        </div>
-                                                        <div style="float: right;display: flex;">
-                                                            <div class="mb-4" style="padding-left: 0.5rem;">
-                                                                <button type="button" class="btn btn-danger btn-icon-split col-xl-auto" th:value="${board.id}" id="deleteBoard">
-                                                                    <span class="text">삭제하기</span>
-                                                                </button>
-                                                            </div>
-                                                            <div class="mb-4" style="padding-left: 0.5rem;">
-                                                                <button type="button" class="btn btn-success btn-icon-split col-xl-auto" th:value="${board.id}" id="selectBoard"
-                                                                       data-toggle="modal" data-target="#updateModal">
-                                                                    <span class="text">수정하기</span>
-                                                                </button>
-                                                            </div>
-                                                        </div>
+                                                                </div>
+                                                                <!-- End of 기안문 결재, 수정, 삭제 버튼  -->
+                                                                
+                                                            </td>
+                                                        </tr>
+                                                        
+                                                    </th:block>
+                                                </tbody>
 
-                                                    </div>
-                                                    <!-- End of 기안문 결재, 수정, 삭제 버튼  -->
-                                                    
-                                                </td>
-                                            </tr>
-                                            
-                                        </th:block>
-                                    </tbody>
+                                            <!-- End of table  -->
+                                            </table>
 
-                                <!-- End of table  -->
-                                </table>
+                                        <!-- End of table-reponsive -->
+                                        </div>
+                                    <!-- End of tab-content1 -->
+                                    </div>
 
-                            <!-- End of table-reponsive -->
+                                    <!-- tab-content2 -->
+                                    <div class="tab-pane" id="tab2">
+                                        
+                                        <div id="calendar"></div>
+                                    
+                                    <!-- End of tab-content2 -->
+                                    </div>
+                                <!-- End of tab-content -->
+                                </div>
+
+                                <!-- End of card-body -->
                             </div>
-                        <!-- End of card-body -->
+                        
+                        <!-- End of card -->
                         </div>
-                    <!-- End of 기안문 테이블 -->
+
                     </div>
-                <!-- End of Page Content -->
-                </div>
-                <!-- End of container-fluid -->
 
             </div>
             <!-- End of Main Content -->
@@ -778,6 +823,7 @@
 
     <!-- 기안문 작성 비동기방식 처리하기-->
     <script th:inline="javascript">
+   
 
     <!--  modal에서 작성된 기안문 저장  -->
     $('button#submitBoard').on('click',function writeBoard(){

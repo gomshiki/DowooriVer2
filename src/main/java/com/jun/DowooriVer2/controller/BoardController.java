@@ -32,17 +32,10 @@ public class BoardController {
 
         Board findBoard = boardService.findById(board.getId()).get();
 
-        if(findBoard.getApproveLevel().equals("사원")){
+        if(findBoard.getStatus().equals("작성중") && findBoard.getMember().getPosition().equals("사원")){
             findBoard.setApproveLevel("부서장");
-        }
-
-        if(findBoard.getStatus().equals("작성중")){
             findBoard.setStatus("결재중");
-        }
-        if(findBoard.getApproveLevel().equals("부서장") && findBoard.getStatus().equals("결재중")){
-            findBoard.setStatus("결재완료");
-        }
-        if (findBoard.getApproveLevel().equals("작성중") && findBoard.getApproveLevel().equals("부서장")) {
+        } else if(findBoard.getApproveLevel().equals("부서장")){
             findBoard.setStatus("결재완료");
         }
 
