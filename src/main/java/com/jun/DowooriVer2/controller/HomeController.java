@@ -40,18 +40,18 @@ public class HomeController {
 
         HttpSession session = request.getSession(false); //false : 새로 생성 X
 
-        if(session == null){
+        if (session == null) {
             return "/";
         }
 
         Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
 
         // 세션에 회원데이터가 없으면 로그인창으로
-        if(loginMember == null){
+        if (loginMember == null) {
             return "/";
         }
 
-        log.info("loginMember.getEmpNum >> "+ loginMember.getEmpNum());
+        log.info("loginMember.getEmpNum >> " + loginMember.getEmpNum());
 
         Long empNum = loginMember.getEmpNum();
 
@@ -68,14 +68,14 @@ public class HomeController {
     public String table(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession(false); //false : 새로 생성 X
 
-        if(session == null){
+        if (session == null) {
             return "/";
         }
 
         Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
 
         // 세션에 회원데이터가 없으면 로그인창으로
-        if(loginMember == null){
+        if (loginMember == null) {
             return "/";
         }
 
@@ -90,5 +90,6 @@ public class HomeController {
 
         return "board";
     }
+
 
 }

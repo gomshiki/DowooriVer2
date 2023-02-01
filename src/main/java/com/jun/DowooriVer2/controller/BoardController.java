@@ -1,6 +1,7 @@
 package com.jun.DowooriVer2.controller;
 
 import com.jun.DowooriVer2.DTO.BoardDTO;
+import com.jun.DowooriVer2.DTO.CalendarDTO;
 import com.jun.DowooriVer2.Session.SessionConst;
 import com.jun.DowooriVer2.domain.Board;
 import com.jun.DowooriVer2.domain.Member;
@@ -8,6 +9,8 @@ import com.jun.DowooriVer2.service.BoardService;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +21,7 @@ import javax.servlet.http.HttpSession;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -126,6 +130,59 @@ public class BoardController {
 
         return msg;
     }
+
+    @GetMapping("/board/findall.do")
+    @ResponseBody
+    public List<Map<String, Object>> finadAllBoard(HttpServletRequest request) {
+
+        /** Session을 이용해 로그인 회원정보 가젹오기 **/
+        HttpSession session = request.getSession(false);
+        Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+
+        List<CalendarDTO> Boards = boardService.findAllByDept(loginMember.getDeptNum());
+
+
+
+        // HashMap으로 저장된 데이터를 JSON으로 변환할 수 있는 라이브러리
+        // 사용방법 1) : JSONObject jsonObj = new JSONObject(hashMap);
+        // 사용방법 2) : JSONObject jo = new JSONObject("{\"city\":\"Seoul\",\"name\":\"Jone\"}");
+        JSONObject jsonObj;
+
+        // Jsonarray 구조 : [{key : value}, {key : value}]
+        // 배열 구조이며, 문자열, 숫자, 배열, 객체 등을 담을 수 있다.
+        JSONArray jsonArr = new JSONArray();
+
+        // HashMap : map collection으로 MAp 인터페이스를 상속받음
+        // Key, value 모두 객체임
+        // put으로 데이터 입력, get(key)로 value 출력함
+        HashMap<String, Object> hash = new HashMap<>();
+
+        for (int i = 0; i < Boards.size(); i++) {
+
+            hash.put("title", Boards.get(i).getUserName() + " " + Boards.get(i).getTitle());
+
+            if (Boards.get(i).getTitle().equals("반차") && Boards.get(i).getAmpm().equals("오전")) {
+                hash.put("start", Boards.get(i).getStartDate() + "T08:00:00");
+                hash.put("end", Boards.get(i).getEndDate() + "T12:00:00");
+            } else if (Boards.get(i).getTitle().equals("반차") && Boards.get(i).getAmpm().equals("오후")) {
+                hash.put("start", Boards.get(i).getStartDate() + "T13:00:00");
+                hash.put("end", Boards.get(i).getEndDate() + "T17:00:00");
+            }else {
+                hash.put("start", Boards.get(i).getStartDate());
+                hash.put("end", Boards.get(i).getEndDate());
+            }
+
+            // hashmap을 JSON화하기
+            jsonObj = new JSONObject(hash);
+
+            // Array형태로 만들기 => [ {key : value}, {key : value} ]
+            jsonArr.add(jsonObj);
+        }
+        log.info("jsonArrCheck: {}", jsonArr);
+        return jsonArr;
+
+    }
+
 
     /** DTO를 Board에 맞게 수정하는 함수 **/
     private Board replaceDTOtoBoard(BoardDTO dto) {

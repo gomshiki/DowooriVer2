@@ -1,5 +1,7 @@
 package com.jun.DowooriVer2.service;
 
+import com.jun.DowooriVer2.DTO.BoardDTO;
+import com.jun.DowooriVer2.DTO.CalendarDTO;
 import com.jun.DowooriVer2.domain.Board;
 import com.jun.DowooriVer2.repository.BoardRepository;
 import org.springframework.stereotype.Service;
@@ -37,5 +39,8 @@ public class BoardService {
     public void updateBoard(Board board) {
         boardRepository.updateBoard(board);
     }
+
+    public List<CalendarDTO> findAllByDept(Long deptNum) {
+        return boardRepository.findAllByDept(deptNum);}
 
 }

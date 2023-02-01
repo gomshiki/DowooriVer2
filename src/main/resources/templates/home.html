@@ -29,41 +29,43 @@
 
         document.addEventListener('DOMContentLoaded', function() {
 
-            var calendarButton = document.getElementById('calendarButton');
-            var calendarEl = document.getElementById('calendar');
+            $(function () {
+
+                // DB에 결재완료된 기안문 가져오기
+                var request = $.ajax({
+                    url: "/board/findall.do", // 변경하기
+                    method: "GET",
+                    dataType: "json"
+                });
+
+                request.done(function (data) {
+
+                    console.log(data); // log 로 데이터 찍어주기.
+                
+
+                    var calendarButton = document.getElementById('calendarButton');
+                    var calendarEl = document.getElementById('calendar');
+                
+                    var calendar = new FullCalendar.Calendar(calendarEl, {
+                        editable: false,
+                        selectable: false,
+                        businessHours: true,
+                        dayMaxEvents: true, // allow "more" link when too many events
+
+                        // 가져온 기안문 정보 event에 넣기  형태 => [ { key : value }, { key : value }]
+                        events: data
+                        
+                        });
+                    <!-- 랜더링 에러 해결방법 : 랜더링 시점 조정 -->
+                    calendarButton.addEventListener('click', e => {
+                        setTimeout(() => {calendar.render()}, 1);
+                    });
+                    
+                });
         
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-              editable: false,
-              selectable: false,
-              businessHours: true,
-              dayMaxEvents: true, // allow "more" link when too many events
-              events: [
-                {
-                  title: 'Conference',
-                  start: '2023-01-11',
-                  end: '2020-09-13'
-                },
-                {
-                  title: 'Meeting',
-                  start: '2023-01-12T10:30:00',
-                  end: '2023-01-12T12:30:00'
-                },
-                {
-                  title: 'Dinner',
-                  start: '2023-01-12T20:00:00'
-                },
-                {
-                  title: 'Birthday Party',
-                  start: '2023-01-13T07:00:00'
-                }
-              ]
-            });
-        
-            calendarButton.addEventListener('click', e => {
-                setTimeout(() => {calendar.render()}, 1);
-            });
-            
+       
           });
+        });
 
     </script>
 
@@ -370,6 +372,7 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${session.loginMember.getUserName}">UserName</span>
+                                <input="hidden" th:name="deptNum" th:value="${session.loginMember.getDeptNum}" id="deptNum">
                                 <img class="img-profile rounded-circle"
                                     src="img/undraw_profile.svg">
                             </a>

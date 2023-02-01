@@ -1,7 +1,8 @@
 package com.jun.DowooriVer2.repository;
 
+import com.jun.DowooriVer2.DTO.BoardDTO;
+import com.jun.DowooriVer2.DTO.CalendarDTO;
 import com.jun.DowooriVer2.domain.Board;
-import com.jun.DowooriVer2.domain.Member;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.Nullable;
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +20,20 @@ import java.util.Optional;
 public class JpaBoardRepository implements BoardRepository {
 
     private final EntityManager em;
+
+    /**
+     * 부서원 기안문 전체 조회
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<CalendarDTO> findAllByDept(Long deptNum) {
+
+        String jpql  = "SELECT NEW com.jun.DowooriVer2.DTO.CalendarDTO(b.title, b.startDate, b.endDate, m.userName, b.ampm) FROM Board b RIGHT JOIN b.member m ON b.empNum = m.empNum WHERE b.status = '결재완료' AND b.deptNum = :deptNum";
+
+        List<CalendarDTO> boards = em.createQuery(jpql, CalendarDTO.class).setParameter("deptNum", deptNum).getResultList();
+
+        return boards;
+    }
 
     /**
      * 해당 회원의 작성된 기안문 전체 조회
@@ -50,11 +64,6 @@ public class JpaBoardRepository implements BoardRepository {
                     .getResultList();
             return resultList;
         }
-
-
-
-
-
 
 
     }
