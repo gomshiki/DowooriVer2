@@ -483,7 +483,8 @@
                                                             <td th:text="${board.id}">문서번호</td>
                                                             <td th:text="${board.title}">문서종류</td>
                                                             <td th:text="${board.getMember.userName}">작성자이름</td>
-                                                            <td th:text="${board.writeDate}"> 작성날짜 </td>
+                                                            <!-- 날짜 포맷 변경 2023-02-01 -->
+                                                            <td th:text="${#dates.format(board.writeDate, 'yyyy년 MM월 dd일')}"> 작성날짜 </td>
                                                             <td>
                                                                 <span class="text btn btn-secondary" th:text="${board.status}" th:if="${board.status.equals('작성중')}">
                                                                     결재현황1
