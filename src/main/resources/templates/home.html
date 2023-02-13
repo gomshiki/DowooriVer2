@@ -40,7 +40,7 @@
 
                 request.done(function (data) {
 
-                    console.log(data); // log 로 데이터 찍어주기.
+                    //console.log(data); // log 로 데이터 찍어주기.
                 
 
                     var calendarButton = document.getElementById('calendarButton');
@@ -94,7 +94,7 @@
             <li class="nav-item active">
                 <a class="nav-link" href="home.html" th:href="@{/home}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>업무 진행률</span></a>
+                    <span>홈페이지 커스텀용 메뉴</span></a>
             </li>
 
             <!-- Divider -->
@@ -211,12 +211,7 @@
                     <!-- Topbar Search -->
                     <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
                             <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
                             </div>
                         </div>
                     </form>
@@ -413,9 +408,6 @@
 
                         <!-- Page Heading -->
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                    class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
                         </div>
 
                         <!-- card -->
@@ -619,6 +611,48 @@
                                             <!-- End of table  -->
                                             </table>
 
+                                            <!-- pagination -->
+
+                                            <nav aria-label="Page navigation example">
+                                                <ul class="pagination justify-content-center">
+
+                                                    <li class="page-item disabled">
+                                                        <a class="page-link"  th:href="@{/?page=1}" aria-label="Previous">처음</a>
+                                                    </li>
+
+                                                    <li class="page-item">
+                                                        <a class="page-link" th:href="@{/home?page={page} (page = ${pagination.prevBlock})}" aria-label="Previous">
+                                                        이전
+                                                        </a>
+                                                    </li>
+                                                    
+                                                    <!-- start of 페이징 버튼 -->
+
+                                                    <!-- thymeleaf 문법 ->>  #numbers.sequence(0,3) : 0~3까지 숫자 생성 -->
+                                                    <th:block  th:with="start = ${pagination.startPage}, end = ${pagination.endPage}">
+                                                        <li class="page-item" 
+                                                                
+                                                                th:each="pageButton : ${#numbers.sequence(start, end)}">
+                                                                <a class="page-link" th:href="@{/home?page={page} (page = ${pageButton})}" th:text=${pageButton}></a>
+                                                        </li>
+                                                    </th:block>
+                                                    <!-- End of 페이징 버튼 -->
+
+                                                    <li class="page-item">
+                                                        <a class="page-link" th:href="@{/home?page={page} (page = ${pagination.nextBlock})}" aria-label="Next">
+                                                        다음
+                                                        </a>
+                                                      </li>
+
+                                                      <li class="page-item">
+                                                        <a class="page-link" th:href="@{/home?page={page} (page = ${pagination.totalPageCnt})}" aria-label="Previous">
+                                                        끝
+                                                        </a>
+                                                      </li>
+
+                                                </ul>
+                                            </nav>
+
                                         <!-- End of table-reponsive -->
                                         </div>
                                     <!-- End of tab-content1 -->
@@ -812,18 +846,21 @@
     <script src="js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
+    <!--
     <script src="vendor/chart.js/Chart.min.js"></script>
-
-        <!--  추가  -->
+    -->
+    <!--  추가  -->
+    <!--
     <script src="vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
+    <script src="js/demo/datatables-demo.js"></script>
+    -->
     <!-- Page level custom scripts -->
+    <!--
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
-
-        <!-- 추가   -->
-    <script src="js/demo/datatables-demo.js"></script>
+    -->
+    
 
     <!-- 기안문 작성 비동기방식 처리하기-->
     <script th:inline="javascript">
@@ -933,6 +970,7 @@
     })
       
     <!-- 기안문 수정 저장하기-->
+
     $('button#updateBoard').on('click',function writeBoard(){
 
         var boardData = $('#updateBoardForm').serialize();
@@ -988,6 +1026,7 @@
 
             })
     })
+
 
     
     </script>

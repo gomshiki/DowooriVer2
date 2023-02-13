@@ -4,10 +4,14 @@ import com.jun.DowooriVer2.DTO.homeDTO;
 import com.jun.DowooriVer2.Session.SessionConst;
 import com.jun.DowooriVer2.domain.Board;
 import com.jun.DowooriVer2.domain.Member;
+import com.jun.DowooriVer2.domain.Pagination;
 import com.jun.DowooriVer2.service.BoardService;
 import com.jun.DowooriVer2.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +19,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -39,7 +42,8 @@ public class HomeController {
     }
 
     @GetMapping("/home")
-    public String homeLogin(HttpServletRequest request, Model model) throws ParseException {
+    public String homeLogin(HttpServletRequest request, Model model, @RequestParam(defaultValue = "1") int page) throws ParseException {
+
 
         HttpSession session = request.getSession(false); //false : 새로 생성 X
 
@@ -58,8 +62,26 @@ public class HomeController {
 
         Long empNum = loginMember.getEmpNum();
 
-        List<Board> boards = boardService.findAll(empNum);
+        // List<Board> boards = boardService.findAll(empNum);
 
+        // 페이징
+
+        // 1. 총 게시물 수
+        int totalListCnt = boardService.findAllCnt(empNum);
+
+        // 2. 생성인자로  총 게시물 수, 현재 페이지를 전달
+        Pagination pagination = new Pagination(totalListCnt, page);
+
+
+        // DB select start index
+        int startIndex = pagination.getStartIndex();
+
+        // 페이지 당 보여지는 게시글의 최대 개수
+        int pageSize = pagination.getPageSize();
+
+        List<Board> boards = boardService.findAllPaging(empNum, startIndex, pageSize);
+
+        model.addAttribute("pagination", pagination);
         model.addAttribute("boards", boards);
         model.addAttribute("member", loginMember);
         model.addAttribute("newBoard", new Board());
@@ -68,7 +90,7 @@ public class HomeController {
     }
 
     @GetMapping("/board")
-    public String table(HttpServletRequest request, Model model) {
+    public String boardView(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession(false); //false : 새로 생성 X
 
         if (session == null) {
@@ -93,6 +115,5 @@ public class HomeController {
 
         return "board";
     }
-
 
 }

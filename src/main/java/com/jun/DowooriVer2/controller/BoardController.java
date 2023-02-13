@@ -5,6 +5,7 @@ import com.jun.DowooriVer2.DTO.CalendarDTO;
 import com.jun.DowooriVer2.Session.SessionConst;
 import com.jun.DowooriVer2.domain.Board;
 import com.jun.DowooriVer2.domain.Member;
+import com.jun.DowooriVer2.domain.Pagination;
 import com.jun.DowooriVer2.service.BoardService;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -98,8 +99,6 @@ public class BoardController {
     @PostMapping("/board/find.do")
     public Optional<Board> findBoardById(Board board) {
 
-        System.out.println("board.getId = " + board.getId());
-
         return boardService.findById(board.getId());
 
     }
@@ -132,16 +131,13 @@ public class BoardController {
     }
 
     @GetMapping("/board/findall.do")
-    @ResponseBody
-    public List<Map<String, Object>> finadAllBoard(HttpServletRequest request) {
+    public List<Map<String, Object>> findAllBoard(HttpServletRequest request) {
 
         /** Session을 이용해 로그인 회원정보 가젹오기 **/
         HttpSession session = request.getSession(false);
         Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
 
         List<CalendarDTO> Boards = boardService.findAllByDept(loginMember.getDeptNum());
-
-
 
         // HashMap으로 저장된 데이터를 JSON으로 변환할 수 있는 라이브러리
         // 사용방법 1) : JSONObject jsonObj = new JSONObject(hashMap);
@@ -211,4 +207,5 @@ public class BoardController {
         return board;
 
     }
+
 }

@@ -1,9 +1,10 @@
 package com.jun.DowooriVer2.service;
 
-import com.jun.DowooriVer2.DTO.BoardDTO;
 import com.jun.DowooriVer2.DTO.CalendarDTO;
 import com.jun.DowooriVer2.domain.Board;
 import com.jun.DowooriVer2.repository.BoardRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,5 +43,14 @@ public class BoardService {
 
     public List<CalendarDTO> findAllByDept(Long deptNum) {
         return boardRepository.findAllByDept(deptNum);}
+
+    public int findAllCnt(Long empNum) {
+        return boardRepository.findAllCnt(empNum);
+    }
+
+    public List<Board> findAllPaging(Long empNum, int startIndex, int pageSize) {
+        return boardRepository.findAllPaging(empNum, startIndex, pageSize);
+    }
+
 
 }
