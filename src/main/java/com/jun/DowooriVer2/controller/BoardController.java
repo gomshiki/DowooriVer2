@@ -37,7 +37,7 @@ public class BoardController {
 
         Board findBoard = boardService.findById(board.getId()).get();
 
-        if(findBoard.getStatus().equals("작성중") && findBoard.getMember().getPosition().equals("사원")){
+        if(findBoard.getStatus().equals("작성중") && findBoard.getMember().getSpot().equals("사원")){
             findBoard.setApproveLevel("부서장");
             findBoard.setStatus("결재중");
         } else if(findBoard.getApproveLevel().equals("부서장")){

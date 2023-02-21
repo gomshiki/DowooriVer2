@@ -105,7 +105,14 @@ public class JpaBoardRepository implements BoardRepository {
         // 데이터 수정
         findBoard.setTitle(board.getTitle());
         findBoard.setStartDate(board.getStartDate());
-        findBoard.setEndDate(board.getEndDate());
+
+        // 반차를 수정할 경우 startDate을 EndDate로 지정
+        if(board.getTitle().equals("반차")){
+            findBoard.setEndDate(board.getStartDate());
+        }else {
+            findBoard.setEndDate(board.getEndDate());
+        }
+
         findBoard.setAmpm(board.getAmpm());
         findBoard.setReason(board.getReason());
         findBoard.setApproveLevel(board.getApproveLevel());
