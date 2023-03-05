@@ -904,7 +904,7 @@
 
             $.ajax({
                     url : "/board/delete.do",
-                    type : "POST",
+                    type : "DELETE",
                     data: boardId,
                     dataType :"JSON",
                     success: function(data){
@@ -934,7 +934,7 @@
 
             $.ajax({
                     url : "/board/find.do",
-                    type : "POST",
+                    type : "GET",
                     data: boardId,
                     dataType :"JSON",
                     success: function(data){
@@ -1007,7 +1007,7 @@
 
             $.ajax({
                     url : "/board/approve.do",
-                    type : "GET",
+                    type : "POST",
                     data: boardId,
                     dataType :"JSON",
                     success: function(data){

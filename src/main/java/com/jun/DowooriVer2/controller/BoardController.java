@@ -32,7 +32,7 @@ public class BoardController {
 
     private final BoardService boardService;
 
-    @GetMapping("/board/approve.do")
+    @PostMapping("/board/approve.do")
     public HashMap<String, String> approveBoard(Board board){
 
         Board findBoard = boardService.findById(board.getId()).get();
@@ -82,7 +82,7 @@ public class BoardController {
         return msg;
     }
 
-    @PostMapping("/board/delete.do")
+    @DeleteMapping("/board/delete.do")
     public HashMap<String, String> deleteBoard(Board board){
 
         System.out.println("board.getId() = " + board.getId());
@@ -96,7 +96,7 @@ public class BoardController {
     }
 
     /** 기안문 1개 조회 **/
-    @PostMapping("/board/find.do")
+    @GetMapping("/board/find.do")
     public Optional<Board> findBoardById(Board board) {
 
         return boardService.findById(board.getId());

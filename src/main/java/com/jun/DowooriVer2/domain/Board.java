@@ -15,7 +15,7 @@ import java.util.Date;
 
 @Entity
 @Data
-@Table(name = "Board_table")
+@Table(name = "board_table")
 @DynamicInsert // insert 시 null인 필드 제외
 @DynamicUpdate // update 시 null인 필드 제외
 public class Board {
