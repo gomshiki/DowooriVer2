@@ -7,7 +7,7 @@
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
-application.properties
+src/main/resources/application.properties
 application-aws.properties
 
 # front단 불필요한 폴더 제거
