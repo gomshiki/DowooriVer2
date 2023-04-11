@@ -112,4 +112,22 @@ public class HomeController {
         return "board";
     }
 
+    @GetMapping("/staticsMonth")
+    public String monthStatics(HttpServletRequest request, Model model) throws Exception {
+
+        HttpSession session = request.getSession(false); //false : 새로 생성 X
+
+        if (session == null) {
+            return "/";
+        }else {
+
+            Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+            model.addAttribute("member", loginMember);
+
+            return "monthStatics";
+
+        }
+
+    }
+
 }

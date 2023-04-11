@@ -27,6 +27,7 @@
     <script src='/fullcalendar/dist/index.global.js'></script>
     <script>
 
+
         document.addEventListener('DOMContentLoaded', function() {
 
             $(function () {
@@ -126,16 +127,14 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
-                    <span>Utilities</span>
+                    <span>통계</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Colors</a>
-                        <a class="collapse-item" href="utilities-border.html">Borders</a>
-                        <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                        <a class="collapse-item" href="utilities-other.html">Other</a>
+                        <a class="collapse-item" href="monthStatics.html" th:href="@{/staticsMonth}" >월별 사용 통계</a>
+                        <a class="collapse-item" href="quaterStatics.html" >분기별 연차 사용 통계</a>
                     </div>
                 </div>
             </li>
@@ -442,7 +441,7 @@
                                         
                                         <!-- modal trigger 기안문 작성-->
                                         <div style="float: right; padding-bottom: 0.5rem;">
-                                            <button id="myModal" class="btn btn-primary btn-icon-split" data-toggle="modal" data-target="#exampleModal">
+                                            <button id="myModal" class="btn btn-primary btn-icon-split" data-toggle="modal" data-target="#exampleModal" >
                                                 <span class="text">기안문 작성하기</span>
                                             </button>
                                         </div>
@@ -737,7 +736,7 @@
                     </div>
                     <div class="form-group">
                         <label for="title">문서 종류</label>
-                        <select class="form-control" name="title">
+                        <select class="form-control" name="title" th:onchange="checkType(this.value)">
                             <option value="연차">연차</option>
                             <option value="반차">반차</option>
                         </select>
@@ -745,20 +744,20 @@
                 
                     <div class="form-group">
                         <label for="startDate">시작일</label>
-                        <input type="date" class="form-control" name="startDate"></input>
+                        <input type="date" class="form-control" name="startDate" id="writeStartDate"></input>
                     </div>
 
                     <div class="form-group">
                         <label for="endDate">종료일</label>
-                        <input type="date" class="form-control" name="endDate" value=""></input>
+                        <input type="date" class="form-control" name="endDate" id="writeEndDate"></input>
                     </div>
 
                     <div class="form-group">
                         <label for="ampm">사용시간 구분</label>
                         <select class="form-control" name="ampm">
+                            <option value="종일" class="allDay">종일</option>
                             <option value="오전">오전</option>
                             <option value="오후">오후</option>
-                            <option value="종일">종일</option>
                         </select>
                     </div>
 
@@ -769,7 +768,7 @@
                 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">종료</button>
+                <button type="button" class="btn btn-secondary close-btn" data-dismiss="modal">종료</button>
                 <button type="button" class="btn btn-primary" id="submitBoard">작성완료</button>
             </div>
             </form>
@@ -794,7 +793,7 @@
                         </div>
                         <div class="form-group">
                             <label for="title">문서 종류</label>
-                            <select class="form-control" name="title" id="findTitle">
+                            <select class="form-control" name="title" id="findTitle" th:onchange="checkType(this.value)">
                                 <option value="연차">연차</option>
                                 <option value="반차">반차</option>
                             </select>
@@ -802,20 +801,20 @@
                     
                         <div class="form-group">
                             <label for="startDate">시작일</label>
-                            <input type="date" class="form-control" name="startDate" id="findStartDate"></input>
+                            <input type="date" class="form-control startDate" name="startDate" id="findStartDate" ></input>
                         </div>
 
                         <div class="form-group">
                             <label for="endDate">종료일</label>
-                            <input type="date" class="form-control" name="endDate" id="findEndDate"></input>
+                            <input type="date" class="form-control endDate" name="endDate" id="findEndDate"></input>
                         </div>
 
                         <div class="form-group">
                             <label for="ampm">사용시간 구분</label>
                             <select class="form-control" name="ampm" id="findAmpm">
+                                <option value="종일" class="allDay">종일</option>
                                 <option value="오전">오전</option>
                                 <option value="오후">오후</option>
-                                <option value="종일">종일</option>
                             </select>
                         </div>
 
@@ -826,7 +825,7 @@
                     
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">종료</button>
+                    <button type="button" class="btn btn-secondary close-btn" data-dismiss="modal">종료</button>
                     <button type="button" class="btn btn-primary" id="updateBoard">수정완료</button>
                 </div>
                 </form>
@@ -862,9 +861,60 @@
     -->
     
 
+    <!-- 2023.04.05 추가 start-->
+    <script src="js/custom.js"></script>
+
+    <script>
+
+        $(document).ready(function(){
+
+            // 2. hidden.bs.modal : 모달 종료 시 form 태그 데이터 초기화 
+            $(".modal").on('hidden.bs.modal', function(){
+                
+                var class_id = $(this).attr('id');
+                
+                if(class_id === 'exampleModal') {
+                    $('#boardForm')[0].reset();
+                }else if(class_id === 'updateModal') {
+                    $('#updateBoardForm')[0].reset();
+                }
+                
+            });
+
+        });
+
+        // 기안문 작성 시 endDate 값 변경 시 startDate 날짜 비교 예외처리
+        $("#writeEndDate").on('propertychange change keyup paste input', function(){
+
+            var startDate = $("#writeStartDate").val();
+            var endDate = $("#writeEndDate").val();
+
+            if(startDate > endDate){
+                alert("종료일이 시작일 보다 빠릅니다! 다시 입력 해주세요");
+                $('#writeEndDate').val('');
+            };
+
+        });
+
+        // 기안문 수정 시 endDate 값 변경 시 startDate 날짜 비교 예외처리
+        $("#findEndDate").on('propertychange change keyup paste input', function(){
+
+            var startDate = $("#findStartDate").val();
+            var endDate = $("#findEndDate").val();
+
+            if(startDate > endDate){
+                alert("종료일이 시작일 보다 빠릅니다! 다시 입력 해주세요");
+                $('#findEndDate').val('');
+            };
+
+        });
+    </script>
+
+    <!-- 2023.04.05 추가 End-->
+
     <!-- 기안문 작성 비동기방식 처리하기-->
     <script th:inline="javascript">
-   
+    
 
     <!--  modal에서 작성된 기안문 저장  -->
     $('button#submitBoard').on('click',function writeBoard(){

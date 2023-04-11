@@ -195,10 +195,10 @@ public class BoardController {
         board.setStartDate(Date.valueOf(dto.getStartDate()));
 
         // 반차 : 종료일 == 시작일
-        if(dto.getEndDate().isEmpty() || dto.getEndDate().length() == 0 || dto.getEndDate() == null) {
-            board.setEndDate(Date.valueOf(dto.getStartDate()));
-        }else{
+        if(dto.getEndDate() != null) {
             board.setEndDate(Date.valueOf(dto.getEndDate()));
+        }else{
+            board.setEndDate(Date.valueOf(dto.getStartDate()));
         }
 
         board.setEmpNum(dto.getEmpNum());
