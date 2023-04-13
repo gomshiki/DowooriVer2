@@ -1,6 +1,9 @@
 package com.jun.DowooriVer2;
 
+import com.jun.DowooriVer2.DTO.ChartDTO;
 import com.jun.DowooriVer2.domain.Board;
+import com.jun.DowooriVer2.domain.Department;
+import com.jun.DowooriVer2.domain.Member;
 import com.jun.DowooriVer2.domain.Pagination;
 import com.jun.DowooriVer2.service.BoardService;
 import com.jun.DowooriVer2.service.MemberService;
@@ -17,44 +20,25 @@ import java.util.List;
 @RequiredArgsConstructor
 @Controller
 class DowooriVer2ApplicationTests {
+
 	@Autowired
 	BoardService boardService;
 
+	@Autowired
+	MemberService memberService;
+
 	@Test
-	void contextLoads() {
+	void chartTest01() {
+
+		Member member = new Member(1L, "gomshiki@gmail.com", "1234", "김준성", 300L, "사원", "사원");
 
 
-		Long empNum = 4L;
+		Long empNum = member.getEmpNum();
+		Long deptNum = member.getDeptNum();
 
-		int totalListCnt = 30;
-		int page = 1;
+		List<ChartDTO> chartDTOS = boardService.dayoffCnt(empNum, deptNum);
 
-		Pagination pagination = new Pagination(totalListCnt, page);
-
-		// DB select start index
-		int startIndex = pagination.getStartIndex();
-
-		// 페이지 당 보여지는 게시글의 최대 개수
-		int pageSize = pagination.getPageSize();
-
-		List<Board> boards = boardService.findAllPaging(empNum, startIndex, pageSize);
-
-		page = 3;
-
-		pagination = new Pagination(totalListCnt, page);
-
-		// DB select start index
-		startIndex = pagination.getStartIndex();
-
-		// 페이지 당 보여지는 게시글의 최대 개수
-		pageSize = pagination.getPageSize();
-
-		boards = boardService.findAllPaging(empNum, startIndex, pageSize);
-
-
-
-
-
+		System.out.println("chartDTOS = " + chartDTOS.toString());
 	}
 
 }

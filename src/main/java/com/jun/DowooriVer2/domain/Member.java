@@ -58,5 +58,13 @@ public class Member {
     }
 
 
-
+    public Member(Long empNum, String email, String password, String userName, Long deptNum, String position, String spot) {
+        this.empNum = empNum;
+        this.email = email;
+        this.password = password;
+        this.userName = userName;
+        this.deptNum = deptNum;
+        this.position = position;
+        this.spot = spot;
+    }
 }

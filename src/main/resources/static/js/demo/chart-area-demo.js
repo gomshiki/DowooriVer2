@@ -49,37 +49,7 @@ var myLineChart = new Chart(ctx, {
       pointBorderWidth: 2,
       data: [5, 2, 3, 10, 1, 1, 2, 1, 2, 1, 1, 2],
           
-    },{
-    
-    label: "김병준",
-    lineTension: 0.3,
-    borderColor: '#FF6384',
-    backgroundColor: '#ffffff',
-    pointRadius: 3,
-    pointBackgroundColor: '#FF6384',
-    pointBorderColor: '#FF6384',
-    pointHoverRadius: 3,
-    pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-    pointHoverBorderColor: "rgba(78, 115, 223, 1)",
-    pointHitRadius: 10,
-    pointBorderWidth: 2,
-    data: [1, 1, 2, 3, 4, 5, 2, 2, 2, 2, 3, 2],
-    },{
-    
-      label: "이영춘",
-      lineTension: 0.3,
-      borderColor: '#008000',
-      backgroundColor: '#ffffff',
-      pointRadius: 3,
-      pointBackgroundColor: '#008000',
-      pointBorderColor: '#008000',
-      pointHoverRadius: 3,
-      pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-      pointHoverBorderColor: "rgba(78, 115, 223, 1)",
-      pointHitRadius: 10,
-      pointBorderWidth: 2,
-      data: [5, 5, 5, 5, 4, 5, 3, 10, 8, 0, 1, 1],
-      }
+    }
   ],
 
   },

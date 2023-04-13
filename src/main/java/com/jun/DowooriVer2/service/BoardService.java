@@ -1,10 +1,9 @@
 package com.jun.DowooriVer2.service;
 
 import com.jun.DowooriVer2.DTO.CalendarDTO;
+import com.jun.DowooriVer2.DTO.ChartDTO;
 import com.jun.DowooriVer2.domain.Board;
 import com.jun.DowooriVer2.repository.BoardRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,4 +52,8 @@ public class BoardService {
     }
 
 
+    public List<ChartDTO> dayoffCnt(Long empNum, Long deptNum) {
+
+        return boardRepository.dayoffCnt(empNum, deptNum);
+    }
 }

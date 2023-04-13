@@ -1,16 +1,15 @@
 package com.jun.DowooriVer2.repository;
 
 import com.jun.DowooriVer2.DTO.CalendarDTO;
+import com.jun.DowooriVer2.DTO.ChartDTO;
 import com.jun.DowooriVer2.domain.Board;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Pageable;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,7 +61,9 @@ public class JpaBoardRepository implements BoardRepository {
             return resultList;
 
         } else {
-            sql = "select b from Board b join fetch b.member where b.empNum = :number or b.approveLevel='부서장' and b.deptNum = :deptNum and b.status in ('결재중','결재완료') order by b.id asc ";
+            sql = "select b from Board b join fetch b.member " +
+                    "where b.empNum = :number or b.approveLevel='부서장' and b.deptNum = :deptNum and b.status in ('결재중','결재완료') " +
+                    "order by b.id asc ";
             List<Board> resultList = em.createQuery(sql, Board.class)
                     .setParameter("number", empNum)
                     .setParameter("deptNum", checkDeptNum)
@@ -172,7 +173,9 @@ public class JpaBoardRepository implements BoardRepository {
             return resultList;
 
         } else {
-            sql = "select b from Board b join fetch b.member where b.empNum = :number or b.approveLevel='부서장' and b.deptNum = :deptNum and b.status in ('결재중','결재완료') ORDER BY b.writeDate DESC ";
+            sql = "select b from Board b join fetch b.member where b.empNum = :number " +
+                    "or b.approveLevel='부서장' and b.deptNum = :deptNum and b.status in ('결재중','결재완료') " +
+                    "ORDER BY b.writeDate DESC ";
             List<Board> resultList = em.createQuery(sql, Board.class)
                     .setParameter("number", empNum)
                     .setParameter("deptNum", checkDeptNum)
@@ -186,6 +189,34 @@ public class JpaBoardRepository implements BoardRepository {
             
             return resultList;
         }
+
+
+    }
+
+
+    /**
+     * 연차 갯수 조회
+     *
+     * @return
+     */
+    @Override
+    public List<ChartDTO> dayoffCnt(Long empNum, Long deptNum) {
+
+        String sql;
+
+        sql = "select NEW com.jun.DowooriVer2.DTO.ChartDTO(date_format(b.startDate, '%m월'), count(b)) " +
+                "from Board b " +
+                "where b.empNum = :number and b.deptNum = :deptNum " +
+                "and year(b.startDate) = 2023 " +
+                "group by date_format(b.startDate, '%m월')"
+        ;
+
+        List<ChartDTO> resultList = em.createQuery(sql, ChartDTO.class)
+                .setParameter("number", empNum)
+                .setParameter("deptNum", deptNum)
+                .getResultList();
+
+        return resultList;
 
 
     }
