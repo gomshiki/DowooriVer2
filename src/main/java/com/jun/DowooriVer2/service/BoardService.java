@@ -55,5 +55,6 @@ public class BoardService {
     public List<ChartDTO> dayoffCnt(Long empNum, Long deptNum) {
 
         return boardRepository.dayoffCnt(empNum, deptNum);
+
     }
 }

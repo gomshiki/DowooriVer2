@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -46,13 +47,26 @@ public class ChartController {
 
         Long empNum = loginMember.getEmpNum();
         Long deptNum = loginMember.getDeptNum();
-
+        String userName = loginMember.getUserName();
 
         List<ChartDTO> chartDTOS = boardService.dayoffCnt(empNum, deptNum);
+        List<String> months = new ArrayList<>();
+        List<Long> totalCnts = new ArrayList<>();
 
-        model.addAttribute("chartDTOS", chartDTOS);
+        for (ChartDTO chartDTO : chartDTOS) {
+            String month = chartDTO.getMonths();
+            Long totalCnt = chartDTO.getTotalCnt();
+            months.add(month);
+            totalCnts.add(totalCnt);
+        }
+
+        log.info("totalCnts: " + totalCnts);
+        log.info("months: " + months);
+
+        model.addAttribute("totalCnts", totalCnts);
+        model.addAttribute("months", months);
+
         model.addAttribute("member", loginMember);
-
 
         return "monthStatics";
 

@@ -32,11 +32,10 @@ var ctx = document.getElementById("myAreaChart");
 var myLineChart = new Chart(ctx, {
   type: 'line',
   data: {
-    labels: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+    labels: months,
     datasets: [{
-      label: "김준성",
+      label: userName,
       lineTension: 0.3,
-      //backgroundColor: "rgba(78, 115, 223, 0.05)",
       backgroundColor: '#ffffff',
       borderColor: "rgba(78, 115, 223, 1)",
       pointRadius: 3,
@@ -47,8 +46,8 @@ var myLineChart = new Chart(ctx, {
       pointHoverBorderColor: "rgba(78, 115, 223, 1)",
       pointHitRadius: 10,
       pointBorderWidth: 2,
-      data: [5, 2, 3, 10, 1, 1, 2, 1, 2, 1, 1, 2],
-          
+      data: totalCnts,
+      
     }
   ],
 
