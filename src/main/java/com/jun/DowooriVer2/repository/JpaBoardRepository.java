@@ -2,14 +2,18 @@ package com.jun.DowooriVer2.repository;
 
 import com.jun.DowooriVer2.DTO.CalendarDTO;
 import com.jun.DowooriVer2.DTO.ChartDTO;
+import com.jun.DowooriVer2.DTO.ChartTeamDTO;
 import com.jun.DowooriVer2.domain.Board;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +22,11 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional
 public class JpaBoardRepository implements BoardRepository {
+
+    // 로컬 날짜 생성
+    LocalDate now = LocalDate.now();
+
+
 
     private final EntityManager em;
 
@@ -202,22 +211,52 @@ public class JpaBoardRepository implements BoardRepository {
     @Override
     public List<ChartDTO> dayoffCnt(Long empNum, Long deptNum) {
 
+
+        // 현재 연도 출력
+        int nowYear = now.getYear();
+
+
         String sql;
 
         sql = "select NEW com.jun.DowooriVer2.DTO.ChartDTO(date_format(b.startDate, '%m월'), count(b)) " +
                 "from Board b " +
-                "where b.empNum = :number and b.deptNum = :deptNum " +
-                "and year(b.startDate) = 2023 " +
+                "where b.empNum = :empNum and b.deptNum = :deptNum " +
+                "and year(b.startDate) = :nowYear " +
                 "group by date_format(b.startDate, '%m월')"
         ;
 
         List<ChartDTO> resultList = em.createQuery(sql, ChartDTO.class)
-                .setParameter("number", empNum)
+                .setParameter("empNum", empNum)
                 .setParameter("deptNum", deptNum)
+                .setParameter("nowYear", nowYear)
                 .getResultList();
 
         return resultList;
 
 
+    }
+
+    @Override
+    public List<ChartTeamDTO> dayoffTeamCnt(Long empNum, Long deptNum) {
+
+        // 현재 연도 출력
+        int nowYear = now.getYear();
+
+
+        String sql;
+
+        sql = "select NEW com.jun.DowooriVer2.DTO.ChartTeamDTO(b.member.userName , count(*))" +
+                "from Board b " +
+                "where b.deptNum = :deptNum " +
+                "and year(b.startDate) =: nowYear " +
+                "group by b.member.userName";
+
+        List<ChartTeamDTO> resultList = em.createQuery(sql, ChartTeamDTO.class)
+                .setParameter("deptNum", deptNum)
+                .setParameter("nowYear", nowYear)
+                .getResultList();
+
+
+        return resultList;
     }
 }

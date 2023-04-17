@@ -2,6 +2,7 @@ package com.jun.DowooriVer2.repository;
 
 import com.jun.DowooriVer2.DTO.CalendarDTO;
 import com.jun.DowooriVer2.DTO.ChartDTO;
+import com.jun.DowooriVer2.DTO.ChartTeamDTO;
 import com.jun.DowooriVer2.domain.Board;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,4 +34,6 @@ public interface BoardRepository {
     List<Board> findAllPaging(Long empNum, int startIndex, int pageSize);
 
     List<ChartDTO> dayoffCnt(Long empNum, Long deptNum);
+
+    List<ChartTeamDTO> dayoffTeamCnt(Long empNum, Long deptNum);
 }

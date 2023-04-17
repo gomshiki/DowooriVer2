@@ -1,6 +1,7 @@
 package com.jun.DowooriVer2.controller;
 
 import com.jun.DowooriVer2.DTO.ChartDTO;
+import com.jun.DowooriVer2.DTO.ChartTeamDTO;
 import com.jun.DowooriVer2.Session.SessionConst;
 import com.jun.DowooriVer2.domain.Member;
 import com.jun.DowooriVer2.service.BoardService;
@@ -49,7 +50,12 @@ public class ChartController {
         Long deptNum = loginMember.getDeptNum();
         String userName = loginMember.getUserName();
 
-        List<ChartDTO> chartDTOS = boardService.dayoffCnt(empNum, deptNum);
+
+        List<ChartDTO> chartDTOS = boardService.dayoffCnt(empNum, deptNum); // 개인 연차 사용량
+        List<ChartTeamDTO> dayoffTeamCnts = boardService.dayoffTeamCnt(empNum, deptNum); // 부서원 간 연차 사용량
+
+        log.info("dayoff teams >> " + dayoffTeamCnts.toString()); // 결과 로그 확인
+
         List<String> months = new ArrayList<>();
         List<Long> totalCnts = new ArrayList<>();
 

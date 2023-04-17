@@ -32,9 +32,9 @@ var ctx = document.getElementById("myAreaChart");
 var myLineChart = new Chart(ctx, {
   type: 'line',
   data: {
-    labels: months,
+    labels: months, // 서버에서 데이터 전달
     datasets: [{
-      label: userName,
+      label: userName, // 세션 데이터 적용
       lineTension: 0.3,
       backgroundColor: '#ffffff',
       borderColor: "rgba(78, 115, 223, 1)",
@@ -46,7 +46,7 @@ var myLineChart = new Chart(ctx, {
       pointHoverBorderColor: "rgba(78, 115, 223, 1)",
       pointHitRadius: 10,
       pointBorderWidth: 2,
-      data: totalCnts,
+      data: totalCnts, // 서버에서 데이터 전달
       
     }
   ],
