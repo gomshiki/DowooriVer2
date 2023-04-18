@@ -48,31 +48,16 @@ public class ChartController {
 
         Long empNum = loginMember.getEmpNum();
         Long deptNum = loginMember.getDeptNum();
-        String userName = loginMember.getUserName();
-
 
         List<ChartDTO> chartDTOS = boardService.dayoffCnt(empNum, deptNum); // 개인 연차 사용량
         List<ChartTeamDTO> dayoffTeamCnts = boardService.dayoffTeamCnt(empNum, deptNum); // 부서원 간 연차 사용량
 
-        log.info("dayoff teams >> " + dayoffTeamCnts.toString()); // 결과 로그 확인
+        log.info("dayoff teams >> " + dayoffTeamCnts.toString()); // 팀 연차 결과 로그 확인
 
-        List<String> months = new ArrayList<>();
-        List<Long> totalCnts = new ArrayList<>();
-
-        for (ChartDTO chartDTO : chartDTOS) {
-            String month = chartDTO.getMonths();
-            Long totalCnt = chartDTO.getTotalCnt();
-            months.add(month);
-            totalCnts.add(totalCnt);
-        }
-
-        log.info("totalCnts: " + totalCnts);
-        log.info("months: " + months);
-
-        model.addAttribute("totalCnts", totalCnts);
-        model.addAttribute("months", months);
 
         model.addAttribute("member", loginMember);
+        model.addAttribute("chartDTOS", chartDTOS);
+        model.addAttribute("dayoffTeamCnts", dayoffTeamCnts);
 
         return "monthStatics";
 
