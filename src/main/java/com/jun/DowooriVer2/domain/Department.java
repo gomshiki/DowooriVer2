@@ -19,4 +19,7 @@ public class Department {
 
     @Column
     private String deptName;
+
+    @Column(name = "use_yn")
+    private String useYn;
 }

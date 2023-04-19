@@ -3,8 +3,10 @@ package com.jun.DowooriVer2.controller;
 import com.jun.DowooriVer2.DTO.ChartDTO;
 import com.jun.DowooriVer2.DTO.ChartTeamDTO;
 import com.jun.DowooriVer2.Session.SessionConst;
+import com.jun.DowooriVer2.domain.Department;
 import com.jun.DowooriVer2.domain.Member;
 import com.jun.DowooriVer2.service.BoardService;
+import com.jun.DowooriVer2.service.DeptService;
 import com.jun.DowooriVer2.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -23,10 +25,12 @@ public class ChartController {
 
     private final BoardService boardService;
     private final MemberService memberService;
+    private final DeptService  deptService;
 
-    public ChartController(BoardService boardService, MemberService memberService) {
+    public ChartController(BoardService boardService, MemberService memberService, DeptService deptService) {
         this.boardService = boardService;
         this.memberService = memberService;
+        this.deptService = deptService;
     }
 
     /*
@@ -54,10 +58,13 @@ public class ChartController {
 
         log.info("dayoff teams >> " + dayoffTeamCnts.toString()); // 팀 연차 결과 로그 확인
 
+        List<Department> depts = deptService.totalCntDept();
+
 
         model.addAttribute("member", loginMember);
         model.addAttribute("chartDTOS", chartDTOS);
         model.addAttribute("dayoffTeamCnts", dayoffTeamCnts);
+        model.addAttribute("depts", depts);
 
         return "monthStatics";
 
