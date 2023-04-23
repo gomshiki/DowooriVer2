@@ -3,6 +3,7 @@ package com.jun.DowooriVer2.service;
 import com.jun.DowooriVer2.DTO.CalendarDTO;
 import com.jun.DowooriVer2.DTO.ChartDTO;
 import com.jun.DowooriVer2.DTO.ChartTeamDTO;
+import com.jun.DowooriVer2.DTO.DayoffTeamDTO;
 import com.jun.DowooriVer2.domain.Board;
 import com.jun.DowooriVer2.repository.BoardRepository;
 import org.springframework.stereotype.Service;
@@ -59,7 +60,16 @@ public class BoardService {
 
     }
 
-    public List<ChartTeamDTO> dayoffTeamCnt(Long empNum, Long deptNum) {
-        return boardRepository.dayoffTeamCnt(empNum, deptNum);
+    public List<ChartTeamDTO> teamCnt(Long empNum, Long deptNum) {
+        return boardRepository.teamCnt(empNum, deptNum);
+    }
+
+    public List<DayoffTeamDTO> totalDayoffCnt() {
+
+        return boardRepository.totalDayoffCnt();
+    }
+
+    public List<DayoffTeamDTO> totalDayoff(String id) {
+        return boardRepository.totalDayoffCnt(id);
     }
 }

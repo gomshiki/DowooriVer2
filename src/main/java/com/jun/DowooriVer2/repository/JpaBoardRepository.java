@@ -3,6 +3,7 @@ package com.jun.DowooriVer2.repository;
 import com.jun.DowooriVer2.DTO.CalendarDTO;
 import com.jun.DowooriVer2.DTO.ChartDTO;
 import com.jun.DowooriVer2.DTO.ChartTeamDTO;
+import com.jun.DowooriVer2.DTO.DayoffTeamDTO;
 import com.jun.DowooriVer2.domain.Board;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -222,6 +223,7 @@ public class JpaBoardRepository implements BoardRepository {
                 "from Board b " +
                 "where b.empNum = :empNum and b.deptNum = :deptNum " +
                 "and year(b.startDate) = :nowYear " +
+                "and title = '연차'" +
                 "group by date_format(b.startDate, '%m월')"
         ;
 
@@ -237,7 +239,7 @@ public class JpaBoardRepository implements BoardRepository {
     }
 
     @Override
-    public List<ChartTeamDTO> dayoffTeamCnt(Long empNum, Long deptNum) {
+    public List<ChartTeamDTO> teamCnt(Long empNum, Long deptNum) {
 
         // 현재 연도 출력
         int nowYear = now.getYear();
@@ -249,6 +251,7 @@ public class JpaBoardRepository implements BoardRepository {
                 "from Board b " +
                 "where b.deptNum = :deptNum " +
                 "and year(b.startDate) =: nowYear " +
+                "and title = '연차'" +
                 "group by b.member.userName";
 
         List<ChartTeamDTO> resultList = em.createQuery(sql, ChartTeamDTO.class)
@@ -256,6 +259,48 @@ public class JpaBoardRepository implements BoardRepository {
                 .setParameter("nowYear", nowYear)
                 .getResultList();
 
+
+        return resultList;
+    }
+
+    @Override
+    public List<DayoffTeamDTO> totalDayoffCnt() {
+
+        // 현재 연도 출력
+        int nowYear = now.getYear();
+
+        String sql = "select NEW com.jun.DowooriVer2.DTO.DayoffTeamDTO(date_format(b.startDate, '%m월'), b.department.deptName , count(*)) " +
+                "from Board b " +
+                "where year(b.startDate) =: nowYear and title = '연차' " +
+                "group by date_format(b.startDate, '%m월'), b.department.deptName";
+
+        List<DayoffTeamDTO> resultList = em.createQuery(sql, DayoffTeamDTO.class)
+                                        .setParameter("nowYear", nowYear)
+                                        .getResultList();
+
+        return resultList;
+    }
+
+    @Override
+    public List<DayoffTeamDTO> totalDayoffCnt(String id) {
+
+        // 현재 연도 출력
+        int nowYear = now.getYear();
+
+        // 형변환(String -> Long)
+        long deptNum = Long.parseLong(id);
+
+        String sql = "select NEW com.jun.DowooriVer2.DTO.DayoffTeamDTO(date_format(b.startDate, '%m월'), b.department.deptName, count(*)) " +
+                "from Board b " +
+                "where year(b.startDate) =: nowYear " +
+                "and title = '연차' " +
+                "and b.deptNum =: deptNum " +
+                "group by date_format(b.startDate, '%m월'), b.department.deptName";
+
+        List<DayoffTeamDTO> resultList = em.createQuery(sql, DayoffTeamDTO.class)
+                .setParameter("nowYear", nowYear)
+                .setParameter("deptNum", deptNum)
+                .getResultList();
 
         return resultList;
     }

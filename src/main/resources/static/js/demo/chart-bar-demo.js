@@ -32,14 +32,30 @@ var ctx = document.getElementById("myBarChart");
 var myBarChart = new Chart(ctx, {
   type: 'bar',
   data: {
-    labels: ["January", "February", "March", "April", "May", "June"],
-    datasets: [{
-      label: "Revenue",
+    labels: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+    datasets: [
+    {
+      label: "test1",
       backgroundColor: "#4e73df",
       hoverBackgroundColor: "#2e59d9",
       borderColor: "#4e73df",
-      data: [4215, 5312, 6251, 7841, 9821, 14984],
-    }],
+      data: [5, 3, 2, 1, 10, 11],
+    },
+    {
+      label: "test2",
+      backgroundColor: "#1cc88a",
+      hoverBackgroundColor: "#2e59d9",
+      borderColor: "#1cc88a",
+      data: [1, 0, 0, 5, 10, 15],
+    },
+    {
+      label: "test3",
+      backgroundColor: "#36b9cc",
+      hoverBackgroundColor: "#2e59d9",
+      borderColor: "#36b9cc",
+      data: [1, 1, 2, 5, 0, 20],
+    }
+  ],
   },
   options: {
     maintainAspectRatio: false,
@@ -61,19 +77,19 @@ var myBarChart = new Chart(ctx, {
           drawBorder: false
         },
         ticks: {
-          maxTicksLimit: 6
-        },
+          //maxTicksLimit: 6
+        }, 
         maxBarThickness: 25,
       }],
       yAxes: [{
         ticks: {
           min: 0,
-          max: 15000,
-          maxTicksLimit: 5,
+          // max: 15000,
+          // maxTicksLimit: 5,
           padding: 10,
           // Include a dollar sign in the ticks
           callback: function(value, index, values) {
-            return '$' + number_format(value);
+            return number_format(value) + '일';
           }
         },
         gridLines: {

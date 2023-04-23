@@ -54,7 +54,7 @@ public class ChartController {
         Long deptNum = loginMember.getDeptNum();
 
         List<ChartDTO> chartDTOS = boardService.dayoffCnt(empNum, deptNum); // 개인 연차 사용량
-        List<ChartTeamDTO> dayoffTeamCnts = boardService.dayoffTeamCnt(empNum, deptNum); // 부서원 간 연차 사용량
+        List<ChartTeamDTO> dayoffTeamCnts = boardService.teamCnt(empNum, deptNum); // 부서원 간 연차 사용량
 
         log.info("dayoff teams >> " + dayoffTeamCnts.toString()); // 팀 연차 결과 로그 확인
 

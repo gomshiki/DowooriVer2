@@ -65,19 +65,19 @@ var myLineChart = new Chart(ctx, {
     scales: {
       xAxes: [{
         time: {
-          unit: 'date'
+          unit: 'month'
         },
         gridLines: {
           display: false,
           drawBorder: false
         },
         ticks: {
-          maxTicksLimit: 7
+          maxTicksLimit: 12
         }
       }],
       yAxes: [{
         ticks: {
-          maxTicksLimit: 5,
+          // maxTicksLimit: 5,
           padding: 10,
           // Include a dollar sign in the ticks
           callback: function(value, index, values) {
