@@ -34,10 +34,10 @@ public class ChartController {
     }
 
     /*
-    *  1. 연차 사용 횟수 차트 용 함수
+    *  1. 월별 연차 사용량 통계
     *  */
-    @GetMapping("/staticsMonth")
-    public String selectBoardCnt(Model model, HttpServletRequest request){
+    @GetMapping("/staticsMonthDayoff")
+    public String selectDayoffCnt(Model model, HttpServletRequest request){
 
         HttpSession session = request.getSession(false); //false : 새로 생성 X
 
@@ -58,7 +58,7 @@ public class ChartController {
 
         log.info("dayoff teams >> " + dayoffTeamCnts.toString()); // 팀 연차 결과 로그 확인
 
-        List<Department> depts = deptService.totalCntDept();
+        List<Department> depts = deptService.selectAllDept();
 
 
         model.addAttribute("member", loginMember);
@@ -66,9 +66,47 @@ public class ChartController {
         model.addAttribute("dayoffTeamCnts", dayoffTeamCnts);
         model.addAttribute("depts", depts);
 
-        return "monthStatics";
+        return "staticsMonthDayoff";
 
     }
+
+    /*
+     *  1. 월별 연차 사용량 통계
+     *  */
+    @GetMapping("/staticsMonthHalfDayoff")
+    public String selectHalfDayoffCnt(Model model, HttpServletRequest request){
+
+        HttpSession session = request.getSession(false); //false : 새로 생성 X
+
+        Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+
+        // 세션에 회원데이터가 없으면 로그인창으로
+        if (loginMember == null) {
+            return "/";
+        }
+
+        log.info("loginMember.getEmpNum >> " + loginMember.getEmpNum());
+
+        Long empNum = loginMember.getEmpNum();
+        Long deptNum = loginMember.getDeptNum();
+
+        List<ChartDTO> chartDTOS = boardService.dayoffCnt(empNum, deptNum); // 개인 연차 사용량
+        List<ChartTeamDTO> dayoffTeamCnts = boardService.teamCnt(empNum, deptNum); // 부서원 간 연차 사용량
+
+        log.info("dayoff teams >> " + dayoffTeamCnts.toString()); // 팀 연차 결과 로그 확인
+
+        List<Department> depts = deptService.selectAllDept();
+
+
+        model.addAttribute("member", loginMember);
+        model.addAttribute("chartDTOS", chartDTOS);
+        model.addAttribute("dayoffTeamCnts", dayoffTeamCnts);
+        model.addAttribute("depts", depts);
+
+        return "staticsMonthHalfDayoff";
+
+    }
+
 
 
 }

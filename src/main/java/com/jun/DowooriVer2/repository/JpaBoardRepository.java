@@ -13,10 +13,13 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Tuple;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Repository
@@ -281,6 +284,8 @@ public class JpaBoardRepository implements BoardRepository {
         return resultList;
     }
 
+
+    // 부서별 연차 조회 기능
     @Override
     public List<DayoffTeamDTO> totalDayoffCnt(String id) {
 
@@ -302,6 +307,10 @@ public class JpaBoardRepository implements BoardRepository {
                 .setParameter("deptNum", deptNum)
                 .getResultList();
 
+
         return resultList;
     }
+
+    // 부서 전체 연차 조회
+
 }

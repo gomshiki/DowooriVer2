@@ -21,9 +21,9 @@ public class JpaDeptRepository implements DeptRepository{
 
 
     @Override
-    public List<Department> totalCntDept() {
+    public List<Department> selectAllDept() {
 
-        String sql = "select d  from Department d where d.useYn = 'y'";
+        String sql = "select d from Department d where d.useYn = 'y'";
 
         List<Department> resultList = em.createQuery(sql, Department.class).getResultList();
 
@@ -32,4 +32,6 @@ public class JpaDeptRepository implements DeptRepository{
 
         return resultList;
     }
+
+
 }

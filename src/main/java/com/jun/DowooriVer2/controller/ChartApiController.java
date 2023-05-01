@@ -29,27 +29,62 @@ public class ChartApiController {
     };
 
     @GetMapping("/dayoff/select.do")
-    public Map selectTeamTotalCnt(HttpServletRequest request) throws Exception {
+    public Map selectTeamTotalCntDayoff(HttpServletRequest request) throws Exception {
 
-        String id = request.getParameter("id");
+        String deptNum = request.getParameter("id");
 
         Map<String, Object> resultMap = new HashMap<String, Object>();
 
-        log.info("id >> " +  id);
+        log.info("deptNum >> " +  deptNum);
 
         try {
 
-            if(id.equals("AllDept")){
-                List<DayoffTeamDTO> resultList =  boardService.totalDayoffCnt();
+            if(deptNum.equals("AllDept")){
+                List resultList =  boardService.allDeptTotalDayoff();
                 log.info("resultList >> " +  resultList.toString());
-                resultMap.put("resultList",resultList);
-                resultMap.put("msg", "전체 조회 성공");
+                resultMap.put("resultList", resultList);
+                resultMap.put("msg", "success");
 
             }else{
-                List<DayoffTeamDTO> resultList = boardService.totalDayoff(id);
+                List resultList = boardService.totalDayoff(deptNum);
                 log.info("resultList >> " +  resultList.toString());
                 resultMap.put("resultList",resultList);
-                resultMap.put("msg", id +"부서 조회 성공");
+                resultMap.put("msg", deptNum +"부서 조회 성공");
+            }
+
+        } catch(Exception e){
+            log.error("에러 발생!");
+            e.printStackTrace();
+            resultMap.put("msg","에러발생");
+        }
+
+
+
+        return resultMap;
+    };
+
+    @GetMapping("/halfdayoff/select.do")
+    public Map selectTeamTotalCntHalfDayoff(HttpServletRequest request) throws Exception {
+
+        String deptNum = request.getParameter("id");
+
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+
+        log.info("deptNum >> " +  deptNum);
+
+        try {
+
+            if(deptNum.equals("AllDept")){
+                List resultList =  boardService.allDeptTotalDayoff();
+                log.info("resultList >> " +  resultList.toString());
+                resultMap.put("resultList", resultList);
+                resultMap.put("msg", "success");
+
+            }else{
+                List resultList = boardService.totalDayoff(deptNum);
+                log.info("resultList >> " +  resultList.toString());
+                resultMap.put("resultList",resultList);
+                resultMap.put("msg", deptNum +"부서 조회 성공");
             }
 
         } catch(Exception e){

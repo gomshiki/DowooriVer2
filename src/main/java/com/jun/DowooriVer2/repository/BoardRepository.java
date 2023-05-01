@@ -40,5 +40,5 @@ public interface BoardRepository {
 
     List<DayoffTeamDTO> totalDayoffCnt();
 
-    List<DayoffTeamDTO> totalDayoffCnt(String id);
+    List<DayoffTeamDTO> totalDayoffCnt(String deptNum);
 }

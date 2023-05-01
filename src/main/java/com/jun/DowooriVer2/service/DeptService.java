@@ -19,7 +19,7 @@ public class DeptService {
         this.deptRepository = deptRepository;
     }
 
-    public List<Department> totalCntDept() {
-        return deptRepository.totalCntDept();
+    public List<Department> selectAllDept() {
+        return deptRepository.selectAllDept();
     };
 }

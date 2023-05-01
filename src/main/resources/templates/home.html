@@ -91,13 +91,6 @@
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link" href="home.html" th:href="@{/home}">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>홈페이지 커스텀용 메뉴</span></a>
-            </li>
-
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -111,13 +104,12 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Components</span>
+                    <span>조직도</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Components:</h6>
-                        <a class="collapse-item" href="buttons.html">Buttons</a>
-                        <a class="collapse-item" href="cards.html">Cards</a>
+                        <h6 class="collapse-header">조직도:</h6>
+                        <a class="collapse-item" href="buttons.html">전사 조직도</a>
                     </div>
                 </div>
             </li>
@@ -133,57 +125,14 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="monthStatics.html" th:href="@{/staticsMonth}" >월별 사용 통계</a>
-                        <a class="collapse-item" href="quaterStatics.html" >분기별 연차 사용 통계</a>
+                        <a class="collapse-item" href="monthStatics.html" th:href="@{/staticsMonthDayoff}" >월별 연차 사용 통계</a>
+                        <a class="collapse-item" href="quaterStatics.html" th:href="@{/staticsMonthHalfDayoff}">월별 반차 사용 통계</a>
                     </div>
                 </div>
             </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Addons
-            </div>
-
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Pages</span>
-                </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login.html">Login</a>
-                        <a class="collapse-item" href="register.html">Register</a>
-                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-                        <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="404.html">404 Page</a>
-                        <a class="collapse-item" href="blank.html">Blank Page</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="charts.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
-            </li>
-
-            <!-- Nav Item - Tables -->
-            <li class="nav-item">
-                <a class="nav-link" href="tables.html" th:href="@{/board}">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>기안문 리스트</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
 
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
@@ -737,7 +686,7 @@
                     <div class="form-group">
                         <label for="title">문서 종류</label>
                         <select class="form-control" name="title" th:onchange="checkType(this.value)">
-                            <option value="연차">연차</option>
+                            <option value="연차" selected>연차</option>
                             <option value="반차">반차</option>
                         </select>
                     </div>
@@ -754,7 +703,7 @@
 
                     <div class="form-group">
                         <label for="ampm">사용시간 구분</label>
-                        <select class="form-control" name="ampm">
+                        <select class="form-control" name="ampm" disabled>
                             <option value="종일" class="allDay">종일</option>
                             <option value="오전">오전</option>
                             <option value="오후">오후</option>
@@ -875,6 +824,7 @@
                 
                 if(class_id === 'exampleModal') {
                     $('#boardForm')[0].reset();
+
                 }else if(class_id === 'updateModal') {
                     $('#updateBoardForm')[0].reset();
                 }
@@ -976,7 +926,10 @@
      <!-- 기안문 수정 해당 게시글 가져오기 -->
 
         $('button#selectBoard').on('click', function selectBoard(){
+
             event.preventDefault(); // 고유 이벤트 중지
+
+
 
             var boardId = {'id' : $(this).val()};
 
@@ -1006,6 +959,9 @@
                         $('#findEndDate').val(endDate);
                         $('#findAmpm').val(ampm);
                         $('#findReason').val(reason);
+
+                        checkType(title)
+                        
 
                         alert("해당 기안문 정보를 불러왔습니다.");
 
@@ -1049,7 +1005,7 @@
 
     <!-- 기안문 결재하기 -->
     
-        $('button#approveBoard').on('click', function deleteBoard(){
+    $('button#approveBoard').on('click', function deleteBoard(){
 
             var boardId = {'id' : $(this).val()};
 

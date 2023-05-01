@@ -10,5 +10,6 @@ import java.util.List;
 @Repository
 public interface DeptRepository {
     @Transactional(readOnly = true)
-    List<Department> totalCntDept();
+    List<Department> selectAllDept();
+
 }
