@@ -34,11 +34,5 @@ public interface BoardRepository {
     @Transactional(readOnly = true)
     List<Board> findAllPaging(Long empNum, int startIndex, int pageSize);
 
-    List<ChartDTO> dayoffCnt(Long empNum, Long deptNum);
 
-    List<ChartTeamDTO> teamCnt(Long empNum, Long deptNum);
-
-    List<DayoffTeamDTO> totalDayoffCnt();
-
-    List<DayoffTeamDTO> totalDayoffCnt(String deptNum);
 }

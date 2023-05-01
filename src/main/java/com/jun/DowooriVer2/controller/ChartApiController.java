@@ -3,8 +3,7 @@ package com.jun.DowooriVer2.controller;
 
 import com.jun.DowooriVer2.DTO.ChartDTO;
 import com.jun.DowooriVer2.DTO.DayoffTeamDTO;
-import com.jun.DowooriVer2.service.BoardService;
-import com.jun.DowooriVer2.service.MemberService;
+import com.jun.DowooriVer2.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,14 +19,17 @@ import java.util.Map;
 @Slf4j
 public class ChartApiController {
 
-    private BoardService boardService;
-    private MemberService memberService;
+    private final DayoffChartService dayoffChartService;
+    private final HalfDayoffChartService halfDayoffChartService;
+    private final DeptService deptService;
 
-    public ChartApiController(BoardService boardService, MemberService memberService) {
-        this.boardService = boardService;
-        this.memberService = memberService;
-    };
+    public ChartApiController(DayoffChartService dayoffChartService, HalfDayoffChartService halfDayoffChartService, DeptService deptService) {
+        this.dayoffChartService = dayoffChartService;
+        this.halfDayoffChartService = halfDayoffChartService;
+        this.deptService = deptService;
+    }
 
+    // 연차
     @GetMapping("/dayoff/select.do")
     public Map selectTeamTotalCntDayoff(HttpServletRequest request) throws Exception {
 
@@ -40,13 +42,13 @@ public class ChartApiController {
         try {
 
             if(deptNum.equals("AllDept")){
-                List resultList =  boardService.allDeptTotalDayoff();
+                List resultList =  dayoffChartService.allDeptTotalDayoff();
                 log.info("resultList >> " +  resultList.toString());
                 resultMap.put("resultList", resultList);
                 resultMap.put("msg", "success");
 
             }else{
-                List resultList = boardService.totalDayoff(deptNum);
+                List resultList = dayoffChartService.totalDayoff(deptNum);
                 log.info("resultList >> " +  resultList.toString());
                 resultMap.put("resultList",resultList);
                 resultMap.put("msg", deptNum +"부서 조회 성공");
@@ -63,6 +65,7 @@ public class ChartApiController {
         return resultMap;
     };
 
+    // 반차
     @GetMapping("/halfdayoff/select.do")
     public Map selectTeamTotalCntHalfDayoff(HttpServletRequest request) throws Exception {
 
@@ -75,13 +78,13 @@ public class ChartApiController {
         try {
 
             if(deptNum.equals("AllDept")){
-                List resultList =  boardService.allDeptTotalDayoff();
+                List resultList =  halfDayoffChartService.allDeptTotalDayoff();
                 log.info("resultList >> " +  resultList.toString());
                 resultMap.put("resultList", resultList);
                 resultMap.put("msg", "success");
 
             }else{
-                List resultList = boardService.totalDayoff(deptNum);
+                List resultList = halfDayoffChartService.totalDayoff(deptNum);
                 log.info("resultList >> " +  resultList.toString());
                 resultMap.put("resultList",resultList);
                 resultMap.put("msg", deptNum +"부서 조회 성공");

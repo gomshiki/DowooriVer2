@@ -30,15 +30,6 @@ class DowooriVer2ApplicationTests {
 	@Test
 	void chartTest01() {
 
-		Member member = new Member(1L, "gomshiki@gmail.com", "1234", "김준성", 300L, "사원", "사원");
-
-
-		Long empNum = member.getEmpNum();
-		Long deptNum = member.getDeptNum();
-
-		List<ChartDTO> chartDTOS = boardService.dayoffCnt(empNum, deptNum);
-
-		System.out.println("chartDTOS = " + chartDTOS.toString());
 	}
 
 }
