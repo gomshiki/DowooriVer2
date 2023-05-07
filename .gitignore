@@ -11,6 +11,9 @@
 src/main/resources/application.properties
 src/main/resources/application-aws.properties
 
+# spring security 설정
+src/main/java/com.jun.DowooriVer2/securingweb/WebSecurityConfig
+
 # front단 불필요한 폴더 추가
 # src/main/resources/static/
 
