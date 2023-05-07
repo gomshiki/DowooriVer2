@@ -29,7 +29,7 @@ public class WebSecurityConfig {
         http
                 .csrf().disable() // CSRF토큰 비활성화
                 .authorizeHttpRequests()
-                    .antMatchers("/", "/css/**" , "/vendor/**").permitAll()
+                    .antMatchers("/", "/css/**" , "/vendor/**", "/register").permitAll()
                     .anyRequest().authenticated() // 나머지 요청은 허용된(로그인된) 인원만 사용 가능
                     .and()
                 .formLogin()
