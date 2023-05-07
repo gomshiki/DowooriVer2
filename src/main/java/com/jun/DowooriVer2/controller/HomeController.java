@@ -27,14 +27,20 @@ public class HomeController {
     private final BoardService boardService;
 
     @GetMapping("/")
-    public String login(Model model) {
+    public String index() {
+
+        return "login";
+    }
+
+    @GetMapping("/selectAccount")
+    public String selectAccount(Model model) {
 
         List<homeDTO> homeDTOS = memberService.findAll();
 
         model.addAttribute("homeDTOS", homeDTOS);
         model.addAttribute("member", new Member());
 
-        return "login";
+        return "selectAccount";
     }
 
     @GetMapping("/home")

@@ -25,12 +25,12 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	// 유효성 검사 : 클라이언트 검증을 위해 사용 (ex: 아이디 or 비밀번호에 적용될 형식 등)
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	// Spring Security 추가
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 
 	// jsonObject 사용으로 추가 2023.02.01
-// https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
 	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
     testImplementation 'org.projectlombok:lombok:1.18.22'
-
 
     compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -38,6 +38,9 @@ dependencies {
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+
+
 
 }
 
