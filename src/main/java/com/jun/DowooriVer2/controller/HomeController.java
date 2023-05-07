@@ -32,6 +32,11 @@ public class HomeController {
         return "login";
     }
 
+    @GetMapping("/register")
+    public String register() {
+        return "userRegister";
+    }
+
     @GetMapping("/selectAccount")
     public String selectAccount(Model model) {
 
