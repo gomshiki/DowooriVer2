@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>도우리 ver2</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+    <!-- fullcalendar 추가부분-->
+    <script src='/fullcalendar/dist/index.global.js'></script>
+    <script>
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+
+            $(function () {
+
+                // DB에 결재완료된 기안문 가져오기
+                var request = $.ajax({
+                    url: "/board/findall.do", // 변경하기
+                    method: "GET",
+                    dataType: "json"
+                });
+
+                request.done(function (data) {
+
+                    //console.log(data); // log 로 데이터 찍어주기.
+                
+
+                    var calendarButton = document.getElementById('calendarButton');
+                    var calendarEl = document.getElementById('calendar');
+                
+                    var calendar = new FullCalendar.Calendar(calendarEl, {
+                        editable: false,
+                        selectable: false,
+                        businessHours: true,
+                        dayMaxEvents: true, // allow "more" link when too many events
+
+                        // 가져온 기안문 정보 event에 넣기  형태 => [ { key : value }, { key : value }]
+                        events: data
+                        
+                        });
+                    <!-- 랜더링 에러 해결방법 : 랜더링 시점 조정 -->
+                    calendarButton.addEventListener('click', e => {
+                        setTimeout(() => {calendar.render()}, 1);
+                    });
+                    
+                });
+        
+       
+          });
+        });
+
+    </script>
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="home.html" th:href="@{/home}">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">도우리<sup>ver.2</sup></div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" href="home.html" th:href="@{/home}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>홈페이지 커스텀용 메뉴</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Interface
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Components</span>
+                </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom Components:</h6>
+                        <a class="collapse-item" href="buttons.html">Buttons</a>
+                        <a class="collapse-item" href="cards.html">Cards</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Utilities Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>통계</span>
+                </a>
+                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom Utilities:</h6>
+                        <a class="collapse-item" href="monthStatics.html" th:href="@{/staticsMonth}" >월별 사용 통계</a>
+                        <a class="collapse-item" href="quaterStatics.html" >분기별 연차 사용 통계</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Addons
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Pages</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Login Screens:</h6>
+                        <a class="collapse-item" href="login.html">Login</a>
+                        <a class="collapse-item" href="register.html">Register</a>
+                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+                        <div class="collapse-divider"></div>
+                        <h6 class="collapse-header">Other Pages:</h6>
+                        <a class="collapse-item" href="404.html">404 Page</a>
+                        <a class="collapse-item" href="blank.html">Blank Page</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" href="charts.html">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Charts</span></a>
+            </li>
+
+            <!-- Nav Item - Tables -->
+            <li class="nav-item">
+                <a class="nav-link" href="tables.html" th:href="@{/board}">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>기안문 리스트</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <!-- Topbar Search -->
+                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group">
+                            <div class="input-group-append">
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                            placeholder="Search for..." aria-label="Search"
+                                            aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
+                        <!-- Nav Item - Alerts -->
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-bell fa-fw"></i>
+                                <!-- Counter - Alerts -->
+                                <span class="badge badge-danger badge-counter">3+</span>
+                            </a>
+                            <!-- Dropdown - Alerts -->
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="alertsDropdown">
+                                <h6 class="dropdown-header">
+                                    Alerts Center
+                                </h6>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-primary">
+                                            <i class="fas fa-file-alt text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-500">December 12, 2019</div>
+                                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-success">
+                                            <i class="fas fa-donate text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-500">December 7, 2019</div>
+                                        $290.29 has been deposited into your account!
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-warning">
+                                            <i class="fas fa-exclamation-triangle text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-500">December 2, 2019</div>
+                                        Spending Alert: We've noticed unusually high spending for your account.
+                                    </div>
+                                </a>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                            </div>
+                        </li>
+
+                        <!-- Nav Item - Messages -->
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-envelope fa-fw"></i>
+                                <!-- Counter - Messages -->
+                                <span class="badge badge-danger badge-counter">7</span>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="messagesDropdown">
+                                <h6 class="dropdown-header">
+                                    Message Center
+                                </h6>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="img/undraw_profile_1.svg"
+                                            alt="...">
+                                        <div class="status-indicator bg-success"></div>
+                                    </div>
+                                    <div class="font-weight-bold">
+                                        <div class="text-truncate">Hi there! I am wondering if you can help me with a
+                                            problem I've been having.</div>
+                                        <div class="small text-gray-500">Emily Fowler · 58m</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="img/undraw_profile_2.svg"
+                                            alt="...">
+                                        <div class="status-indicator"></div>
+                                    </div>
+                                    <div>
+                                        <div class="text-truncate">I have the photos that you ordered last month, how
+                                            would you like them sent to you?</div>
+                                        <div class="small text-gray-500">Jae Chun · 1d</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="img/undraw_profile_3.svg"
+                                            alt="...">
+                                        <div class="status-indicator bg-warning"></div>
+                                    </div>
+                                    <div>
+                                        <div class="text-truncate">Last month's report looks great, I am very happy with
+                                            the progress so far, keep up the good work!</div>
+                                        <div class="small text-gray-500">Morgan Alvarez · 2d</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
+                                            alt="...">
+                                        <div class="status-indicator bg-success"></div>
+                                    </div>
+                                    <div>
+                                        <div class="text-truncate">Am I a good boy? The reason I ask is because someone
+                                            told me that people say this to all dogs, even if they aren't good...</div>
+                                        <div class="small text-gray-500">Chicken the Dog · 2w</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+                            </div>
+                        </li>
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${session.loginMember.getUserName}">UserName</span>
+                                <input="hidden" th:name="deptNum" th:value="${session.loginMember.getDeptNum}" id="deptNum">
+                                <img class="img-profile rounded-circle"
+                                    src="img/undraw_profile.svg">
+                            </a>
+
+
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Profile
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Settings
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Activity Log
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <form th:action="@{/logout}" method="post">
+                                    <button class="dropdown-item" data-toggle="modal" data-target="#logoutModal">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Logout</button>
+                                </form>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+               
+                    <!-- Begin Page Content -->
+                    <div class="container-fluid">
+
+                        <!-- Page Heading -->
+                        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        </div>
+
+                        <!-- card -->
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-tabs" id="calendarTab">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" data-toggle="tab" href="#tab1">
+                                            <h6 class="m-0 font-weight-bold text-primary">기안문</h6>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="calendarButton"data-toggle="tab" href="#tab2">
+                                            <h6 class="m-0 font-weight-bold text-primary">연차달력</h6>
+                                        </a>
+                                    </li>
+                                </ul>
+            
+                            </div>
+
+                           
+
+                                <!-- card-body -->
+                                <div class="card-body">
+
+                                     <!-- tab-content -->
+                                    <div class="tab-content">
+                                
+                                    <!-- tab-content1 -->
+                                    <div class="tab-pane active" id="tab1">
+                                        
+                                        <!-- modal trigger 기안문 작성-->
+                                        <div style="float: right; padding-bottom: 0.5rem;">
+                                            <button id="myModal" class="btn btn-primary btn-icon-split" data-toggle="modal" data-target="#exampleModal" >
+                                                <span class="text">기안문 작성하기</span>
+                                            </button>
+                                        </div>
+
+                                        <!-- table-reponsive -->
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>문서번호</th>
+                                                        <th>문서종류</th>
+                                                        <th>작성자</th>
+                                                        <th>작성날짜</th>
+                                                        <th>진행상태</th>
+                                                    </tr>
+                                                </thead>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th>문서번호</th>
+                                                        <th>문서종류</th>
+                                                        <th>작성자</th>
+                                                        <th>작성날짜</th>
+                                                        <th>진행상태</th>
+                                                    </tr>
+                                                </tfoot>
+                                                <tbody>
+                                                    <th:block th:each="board : ${boards}">
+                                                        
+                                                        <tr data-toggle="collapse" th:attr="data-target='#accordion_'+${board.id}" class="clickable" >
+                                                            <td th:text="${board.id}">문서번호</td>
+                                                            <td th:text="${board.title}">문서종류</td>
+                                                            <td th:text="${board.getMember.userName}">작성자이름</td>
+                                                            <!-- 날짜 포맷 변경 2023-02-01 -->
+                                                            <td th:text="${#dates.format(board.writeDate, 'yyyy년 MM월 dd일')}"> 작성날짜 </td>
+                                                            <td>
+                                                                <span class="text btn btn-secondary" th:text="${board.status}" th:if="${board.status.equals('작성중')}">
+                                                                    결재현황1
+                                                                </span>
+                                                                <span class="text btn btn-primary" th:text="${board.status}" th:if="${board.status.equals('결재중')}">
+                                                                    결재현황2
+                                                                </span>
+                                                                <span class="text btn btn-btn-success" th:text="${board.status}" th:if="${board.status.equals('결재완료')}">
+                                                                    결재현황3
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="5" class="collapse" th:id="'accordion_'+${board.id}">
+                                                                
+                                                                <!-- detail information -->
+                                                                <div class="row">
+                                                                    <div class="col-xl-12 col-md-12 mb-4">
+                                                                        <div class="card border-left-primary shadow h-100 py-2">
+                                                                            <div class="card-body" style="display: flex;">
+                                                                                    <div style="width: 50%;">
+                                                                                        <div class="row no-gutters align-items-center">
+                                                                                            <div class="col mr-2">
+                                                                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">시작일</div>
+                                                                                                <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${board.startDate}">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="row no-gutters align-items-center">
+                                                                                            <div class="col mr-2">
+                                                                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">종료일</div>
+                                                                                                <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${board.endDate}" >
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div style="width: 50%;">
+                                                                                        <div class="row no-gutters align-items-center">
+                                                                                            <div class="col mr-2">
+                                                                                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">분류</div>
+                                                                                                <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${board.ampm}">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="row no-gutters align-items-center">
+                                                                                            <div class="col mr-2">
+                                                                                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">사유</div>
+                                                                                                <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${board.reason}">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                <!-- End of detail information -->
+                                                                </div>
+
+                                                                <!-- start of 기안문 결재, 수정, 삭제 버튼  -->
+                                                                <div th:if="${board.status.equals('작성중')}" style="display: flex; justify-content: space-between; align-items: space-between;" >
+                                                                    <div class="mb-4" style="padding-left: 0.5rem;">
+                                                                        <button type="submit" class="btn btn-primary btn-icon-split col-xl-auto" th:value="${board.id}" id="approveBoard">
+                                                                            <span class="text">결재하기</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div style="float: right;display: flex;">
+                                                                        <div class="mb-4" style="padding-left: 0.5rem;">
+                                                                            <button type="button" class="btn btn-danger btn-icon-split col-xl-auto" th:value="${board.id}" id="deleteBoard">
+                                                                                <span class="text">삭제하기</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="mb-4" style="padding-left: 0.5rem;">
+                                                                            <button type="button" class="btn btn-success btn-icon-split col-xl-auto" th:value="${board.id}" id="selectBoard"
+                                                                                data-toggle="modal" data-target="#updateModal">
+                                                                                <span class="text">수정하기</span>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div th:if="${board.status.equals('결재중')} and ${board.approveLevel.equals(session.loginMember.getSpot)}" style="display: flex; justify-content: space-between; align-items: space-between;" >
+                                                                    <div class="mb-4" style="padding-left: 0.5rem;">
+                                                                        <button type="submit" class="btn btn-primary btn-icon-split col-xl-auto" th:value="${board.id}" id="approveBoard">
+                                                                            <span class="text">결재하기</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div style="float: right;display: flex;">
+                                                                        <div class="mb-4" style="padding-left: 0.5rem;">
+                                                                            <button type="button" class="btn btn-danger btn-icon-split col-xl-auto" th:value="${board.id}" id="deleteBoard">
+                                                                                <span class="text">삭제하기</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="mb-4" style="padding-left: 0.5rem;">
+                                                                            <button type="button" class="btn btn-success btn-icon-split col-xl-auto" th:value="${board.id}" id="selectBoard"
+                                                                                data-toggle="modal" data-target="#updateModal">
+                                                                                <span class="text">수정하기</span>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div th:if="${board.status.equals('결재완료')}" style="display: none;" >
+                                                                    <div class="mb-4" style="padding-left: 0.5rem;">
+                                                                        <button type="submit" class="btn btn-primary btn-icon-split col-xl-auto" th:value="${board.id}" id="approveBoard">
+                                                                            <span class="text">결재하기</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div style="float: right;display: flex;">
+                                                                        <div class="mb-4" style="padding-left: 0.5rem;">
+                                                                            <button type="button" class="btn btn-danger btn-icon-split col-xl-auto" th:value="${board.id}" id="deleteBoard">
+                                                                                <span class="text">삭제하기</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="mb-4" style="padding-left: 0.5rem;">
+                                                                            <button type="button" class="btn btn-success btn-icon-split col-xl-auto" th:value="${board.id}" id="selectBoard"
+                                                                                data-toggle="modal" data-target="#updateModal">
+                                                                                <span class="text">수정하기</span>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                                <!-- End of 기안문 결재, 수정, 삭제 버튼  -->
+                                                                
+                                                            </td>
+                                                        </tr>
+                                                        
+                                                    </th:block>
+                                                </tbody>
+
+                                            <!-- End of table  -->
+                                            </table>
+
+                                            <!-- pagination -->
+
+                                            <nav aria-label="Page navigation example">
+                                                <ul class="pagination justify-content-center">
+
+                                                    <li class="page-item">
+                                                        <a class="page-link"  th:href="@{/home?page=1}" aria-label="Previous">처음</a>
+                                                    </li>
+
+                                                    <li class="page-item">
+                                                        <a class="page-link" th:href="@{/home?page={page} (page = ${pagination.prevBlock})}" aria-label="Previous">
+                                                        이전
+                                                        </a>
+                                                    </li>
+                                                    
+                                                    <!-- start of 페이징 버튼 -->
+
+                                                    <!-- thymeleaf 문법 ->>  #numbers.sequence(0,3) : 0~3까지 숫자 생성 -->
+                                                    <th:block  th:with="start = ${pagination.startPage}, end = ${pagination.endPage}">
+                                                        <li class="page-item" 
+                                                                
+                                                                th:each="pageButton : ${#numbers.sequence(start, end)}">
+                                                                <a class="page-link" th:href="@{/home?page={page} (page = ${pageButton})}" th:text=${pageButton}></a>
+                                                        </li>
+                                                    </th:block>
+                                                    <!-- End of 페이징 버튼 -->
+
+                                                    <li class="page-item">
+                                                        <a class="page-link" th:href="@{/home?page={page} (page = ${pagination.nextBlock})}" aria-label="Next">
+                                                        다음
+                                                        </a>
+                                                      </li>
+
+                                                      <li class="page-item">
+                                                        <a class="page-link" th:href="@{/home?page={page} (page = ${pagination.totalPageCnt})}" aria-label="Previous">
+                                                        끝
+                                                        </a>
+                                                      </li>
+
+                                                </ul>
+                                            </nav>
+
+                                        <!-- End of table-reponsive -->
+                                        </div>
+                                    <!-- End of tab-content1 -->
+                                    </div>
+
+                                    <!-- tab-content2 -->
+                                    <div class="tab-pane" id="tab2">
+                                        
+                                        <div id="calendar"></div>
+                                    
+                                    <!-- End of tab-content2 -->
+                                    </div>
+                                <!-- End of tab-content -->
+                                </div>
+
+                                <!-- End of card-body -->
+                            </div>
+                        
+                        <!-- End of card -->
+                        </div>
+
+                    </div>
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2021</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 게시글 작성 Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">기안문 작성하기</h1>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form action="#" id="boardForm">
+                    <div class="form-group" style="display:none;">
+                        <label for="empNum">사원번호</label>
+                        <input="hidden" th:name="empNum" th:value="${session.loginMember.getEmpNum}">
+                    </div>
+                    <div class="form-group">
+                        <label for="title">문서 종류</label>
+                        <select class="form-control" name="title" th:onchange="checkType(this.value)">
+                            <option value="연차">연차</option>
+                            <option value="반차">반차</option>
+                        </select>
+                    </div>
+                
+                    <div class="form-group">
+                        <label for="startDate">시작일</label>
+                        <input type="date" class="form-control" name="startDate" id="writeStartDate"></input>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="endDate">종료일</label>
+                        <input type="date" class="form-control" name="endDate" id="writeEndDate"></input>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ampm">사용시간 구분</label>
+                        <select class="form-control" name="ampm">
+                            <option value="종일" class="allDay">종일</option>
+                            <option value="오전">오전</option>
+                            <option value="오후">오후</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reason">사유</label>
+                        <input type="text" class="form-control" name="reason"></input>
+                    </div>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary close-btn" data-dismiss="modal">종료</button>
+                <button type="button" class="btn btn-primary" id="submitBoard">작성완료</button>
+            </div>
+            </form>
+            </div>
+        </div>
+    </div>
+
+        <!-- 게시글 수정 Modal -->
+        <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">기안문 수정하기</h1>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <form action="#" id="updateBoardForm">
+                        <div class="form-group" style="display:none;">
+                            <label for="boardId">문서번호</label>
+                            <input type="hidden" name="id" id="findId"></input>
+                        </div>
+                        <div class="form-group">
+                            <label for="title">문서 종류</label>
+                            <select class="form-control" name="title" id="findTitle" th:onchange="checkType(this.value)">
+                                <option value="연차">연차</option>
+                                <option value="반차">반차</option>
+                            </select>
+                        </div>
+                    
+                        <div class="form-group">
+                            <label for="startDate">시작일</label>
+                            <input type="date" class="form-control startDate" name="startDate" id="findStartDate" ></input>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="endDate">종료일</label>
+                            <input type="date" class="form-control endDate" name="endDate" id="findEndDate"></input>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ampm">사용시간 구분</label>
+                            <select class="form-control" name="ampm" id="findAmpm">
+                                <option value="종일" class="allDay">종일</option>
+                                <option value="오전">오전</option>
+                                <option value="오후">오후</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reason">사유</label>
+                            <input type="text" class="form-control" name="reason" id="findReason"></input>
+                        </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary close-btn" data-dismiss="modal">종료</button>
+                    <button type="button" class="btn btn-primary" id="updateBoard">수정완료</button>
+                </div>
+                </form>
+                </div>
+            </div>
+        </div>
+
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <!--
+    <script src="vendor/chart.js/Chart.min.js"></script>
+    -->
+    <!--  추가  -->
+    <!--
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="js/demo/datatables-demo.js"></script>
+    -->
+    <!-- Page level custom scripts -->
+    <!--
+    <script src="js/demo/chart-area-demo.js"></script>
+    <script src="js/demo/chart-pie-demo.js"></script>
+    -->
+    
+
+    <!-- 2023.04.05 추가 start-->
+    <script src="js/custom.js"></script>
+
+    <script>
+
+        $(document).ready(function(){
+
+            // 2. hidden.bs.modal : 모달 종료 시 form 태그 데이터 초기화 
+            $(".modal").on('hidden.bs.modal', function(){
+                
+                var class_id = $(this).attr('id');
+                
+                if(class_id === 'exampleModal') {
+                    $('#boardForm')[0].reset();
+                }else if(class_id === 'updateModal') {
+                    $('#updateBoardForm')[0].reset();
+                }
+                
+            });
+
+        });
+
+        // 기안문 작성 시 endDate 값 변경 시 startDate 날짜 비교 예외처리
+        $("#writeEndDate").on('propertychange change keyup paste input', function(){
+
+            var startDate = $("#writeStartDate").val();
+            var endDate = $("#writeEndDate").val();
+
+            if(startDate > endDate){
+                alert("종료일이 시작일 보다 빠릅니다! 다시 입력 해주세요");
+                $('#writeEndDate').val('');
+            };
+
+        });
+
+        // 기안문 수정 시 endDate 값 변경 시 startDate 날짜 비교 예외처리
+        $("#findEndDate").on('propertychange change keyup paste input', function(){
+
+            var startDate = $("#findStartDate").val();
+            var endDate = $("#findEndDate").val();
+
+            if(startDate > endDate){
+                alert("종료일이 시작일 보다 빠릅니다! 다시 입력 해주세요");
+                $('#findEndDate').val('');
+            };
+
+        });
+    </script>
+
+    <!-- 2023.04.05 추가 End-->
+
+    <!-- 기안문 작성 비동기방식 처리하기-->
+    <script th:inline="javascript">
+    
+
+    <!--  modal에서 작성된 기안문 저장  -->
+    $('button#submitBoard').on('click',function writeBoard(){
+
+            var boardData = $('#boardForm').serialize();
+
+            console.log(boardData)
+
+            $.ajax({
+                    url : "/board/write.do",
+                    type : "POST",
+                    data: boardData,
+                    dataType : "JSON",
+                    success: function(data){
+                        if(data != null)
+                        alert("등록이 완료됐습니다");
+                        console.log(data.msg)
+                        let url = '/home';
+                        location.replace(url);
+
+                    },
+                    error: function(){
+                        alert("등록 에러");
+                    }
+
+            })
+    })
+        
+
+     <!-- 기안문 삭제 -->
+    
+        $('button#deleteBoard').on('click', function deleteBoard(){
+
+            var boardId = {'id' : $(this).val()};
+
+            console.log(boardId)
+
+            $.ajax({
+                    url : "/board/delete.do",
+                    type : "DELETE",
+                    data: boardId,
+                    dataType :"JSON",
+                    success: function(data){
+                        if(data != null)
+                        alert("삭제가 완료됐습니다");
+                        console.log(data.msg)
+
+                        let url = '/home';
+                        location.replace(url);
+
+                    },
+                    error: function(){
+                        alert("삭제 에러");
+                    }
+
+            })
+    })
+
+     <!-- 기안문 수정 해당 게시글 가져오기 -->
+
+        $('button#selectBoard').on('click', function selectBoard(){
+            event.preventDefault(); // 고유 이벤트 중지
+
+            var boardId = {'id' : $(this).val()};
+
+            console.log(boardId)
+
+            $.ajax({
+                    url : "/board/find.do",
+                    type : "GET",
+                    data: boardId,
+                    dataType :"JSON",
+                    success: function(data){
+
+                        console.log(data);
+
+                        if(data != null)
+
+                        boardId=data.id;
+                        title = data.title;
+                        startDate = data.startDate;
+                        endDate = data.endDate;
+                        ampm = data.ampm;
+                        reason = data.reason;
+
+                        $("#findId").val(boardId);
+                        $('#findTitle').val(title);
+                        $('#findStartDate').val(startDate);
+                        $('#findEndDate').val(endDate);
+                        $('#findAmpm').val(ampm);
+                        $('#findReason').val(reason);
+
+                        alert("해당 기안문 정보를 불러왔습니다.");
+
+                        $("#updateModal").modal('show');
+
+                    },
+                    error: function(){
+                        alert("기안문을 불러오지 못했습니다.");
+                    }
+
+            })
+    })
+      
+    <!-- 기안문 수정 저장하기-->
+
+    $('button#updateBoard').on('click',function writeBoard(){
+
+        var boardData = $('#updateBoardForm').serialize();
+
+        console.log(boardData)
+
+        $.ajax({
+                url : "/board/update.do",
+                type : "POST",
+                data: boardData,
+                dataType : "JSON",
+                success: function(data){
+                    if(data != null)
+                    alert("수정이 완료됐습니다");
+                    console.log(data.msg)
+                    let url = '/home';
+                    location.replace(url);
+
+                },
+                error: function(){
+                    alert("등록 에러");
+                }
+
+        })
+    })
+
+    <!-- 기안문 결재하기 -->
+    
+        $('button#approveBoard').on('click', function deleteBoard(){
+
+            var boardId = {'id' : $(this).val()};
+
+            console.log(boardId)
+
+            $.ajax({
+                    url : "/board/approve.do",
+                    type : "POST",
+                    data: boardId,
+                    dataType :"JSON",
+                    success: function(data){
+                        if(data != null)
+                        alert("결재가 완료됐습니다");
+
+                        console.log(data.msg)
+                        
+                        let url = '/home';
+                        location.replace(url);
+
+                    },
+                    error: function(){
+                        alert("결재 에러");
+                    }
+
+            })
+    })
+
+
+    
+    </script>
+</body>
+
+</html>
