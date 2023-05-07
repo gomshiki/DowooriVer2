@@ -42,6 +42,7 @@ public class WebSecurityConfig {
         return http.build();
     }
 
+
     public void configureGlobal(AuthenticationManagerBuilder auth)
             throws Exception {
         auth.jdbcAuthentication()
