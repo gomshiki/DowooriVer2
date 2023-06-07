@@ -48,12 +48,12 @@ public class WebSecurityConfig {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
                 .passwordEncoder(passwordEncoder())
-                .usersByUsernameQuery("select username, password, enabled, email "
-                        + "from user_table "
+                .usersByUsernameQuery("select username, password, enabled, email, create_time "
+                        + "from account_table "
                         + "where email = ?")
-                .authoritiesByUsernameQuery("select username, name  "
-                        + "from user_role_table ur inner join user_table ut on ur.role_id = ut.id "
-                        + "inner join role_table rt on ur.user_id = rt.id "
+                .authoritiesByUsernameQuery("select user_name, name  "
+                        + "from user_role_table ur inner join account_table at on ur.role_id = at.account_id "
+                        + "inner join role_table rt on ur.user_id = rt.role_id "
                         + "where email = ?");
     }
 
