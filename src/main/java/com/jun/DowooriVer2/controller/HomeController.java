@@ -31,7 +31,6 @@ public class HomeController {
 
         return "login";
     }
-
     @GetMapping("/selectAccount")
     public String selectAccount(Model model) {
 
