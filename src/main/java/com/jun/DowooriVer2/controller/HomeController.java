@@ -27,11 +27,6 @@ public class HomeController {
     private final BoardService boardService;
 
     @GetMapping("/")
-    public String index() {
-
-        return "login";
-    }
-    @GetMapping("/selectAccount")
     public String selectAccount(Model model) {
 
         List<homeDTO> homeDTOS = memberService.findAll();
