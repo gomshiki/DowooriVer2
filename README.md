@@ -56,4 +56,10 @@
 <br>
 <br>
 
+## 추가 개선 및 개발 계획
+- package convention 자바 스타일로 수정
+- 약어 변수 -> Full name으로 수정
+- JPA -> Spring Data Jpa 로 개선
+- 서비스 이중화 및 스케일 아웃 학습 후 적용
+
 
