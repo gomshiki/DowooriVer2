@@ -1,20 +1,57 @@
+# 근태 작성 및 결재 그룹웨어 (프로젝트 : DoWooRi_ver.2)
+<br>
 <div align="center">
-  <h2>"Springboo와 JPA 실습 토이프로젝트"</h2>
-  <h3>근태 등록 및 결재 그룹웨어 (프로젝트 : DoWooRi_ver.2)</h3>
-  <img width="100%" alt="image" src="https://github.com/gomshiki/DowooriVer2/assets/105576721/6c2bc785-dd11-4e64-98cf-ed8336bd7cab">
+  <a href="http://3.22.221.9:8080/" target="_blank">
+    <img width="100%" alt="image" src="https://github.com/gomshiki/DowooriVer2/assets/105576721/6c2bc785-dd11-4e64-98cf-ed8336bd7cab">
+    <figcaption>이미지 클릭 시 프로젝트 페이지로 이동</figcaption>
+  </a>
 </div>
 
+<br>
+<br>
 
+### 주요 개발 이슈
+- [페이징 개발](https://better-tomorrow-than-today.tistory.com/35)
+- [Fullcalendar 랜더링 에러](https://better-tomorrow-than-today.tistory.com/33)
+
+
+### 개발배경 및 과정
+- [Rasa 오픈소스를 활용한 대화형 업무비서 챗봇](https://github.com/2022-SMHRD-KDT-BigData-6/DoWoori) 챗봇 토크나이저와 오픈소스 개발을 담당
+- Spring 프레임워크에 대한 스터디가 부족하다고 생각해 Springboot와 JPA를 이용하여 프로젝트 리빌딩을 하기로 결정
+- [블로그 기록](https://better-tomorrow-than-today.tistory.com/category/%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC/Spring%20boot%EB%A5%BC%20%EC%9D%B4%EC%9A%A9%ED%95%9C%20%EC%9B%B9%EC%82%AC%EC%9D%B4%ED%8A%B8%20%EA%B0%9C%EB%B0%9C?page=3)
+  
+<br>
+
+### 개발목표
+- Springboot와 JPA의 기반으로 프로젝트 개발
+- 기안문 작성 및 결재 시스템 개발
+- 결재된 기안문 통계 차트 개발
+
+<br>
+<br>
+
+## 프로젝트 구조
+<div align="center">
+  <img width="100%" alt="image" src="https://github.com/gomshiki/DowooriVer2/assets/105576721/c6d72650-492c-4c51-ac1a-704cec0f2462">
+</div>
+
+<br>
+<br>
+
+## ER 다이어그램
+<div align="center">
+  <img width="50%" alt="image" src="https://github.com/gomshiki/DowooriVer2/assets/105576721/c359652a-8d16-4588-8e81-21668caa7129">
+</div>
+
+<br>
+<br>
+
+## 워크플로우
+<div align="center">
+  <img width="100%" alt="image" src="https://github.com/gomshiki/DowooriVer2/assets/105576721/d5742a3b-e189-47d2-9035-f1def0a23e3f">
+</div>
 
 <br>
 <br>
 
 
-## 프로젝트 설명
-
-### 프로젝트 목적 : Spring boot 와 JPA 기반 애플리케이션 개발
-### 애플리케이션이 무엇을 하는지
-- 직원이 근태 기안문을 작성하고 결재하면 부서장이 결재 내용을 확인 후 최종 결재
-- 결재된 기안문은 부서 달력에서 볼 수 있으며, 근태 통계를 확인할 수 있음
-### 당면한 문제나 나중에 추가하고 싶은 기능이 무엇인지
-- 
