@@ -1,10 +1,10 @@
 # 근태 작성 및 결재 그룹웨어 (프로젝트 : DoWooRi_ver.2)
 <br>
 <div align="center">
-  <a href="http://3.22.221.9:8080/" target="_blank">
     <img width="100%" alt="image" src="https://github.com/gomshiki/DowooriVer2/assets/105576721/6c2bc785-dd11-4e64-98cf-ed8336bd7cab">
-    <figcaption>이미지 클릭 시 프로젝트 페이지로 이동</figcaption>
-  </a>
+    <a href="http://3.22.221.9:8080/">
+      프로젝트 페이지 이동
+    </a>
 </div>
 
 <br>
