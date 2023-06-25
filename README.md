@@ -56,10 +56,12 @@
 <br>
 <br>
 
-## 추가 개선 및 개발 계획
-- package convention 자바 스타일로 수정
-- 약어 변수 -> Full name으로 수정
-- JPA -> Spring Data Jpa 로 개선
-- 서비스 이중화 및 스케일 아웃 학습 후 적용
+## 아쉬운 점과 개선해야할 사항
+- package convention 자바 스타일로!  -> [링크 내용 참고하여 불로그 정리](https://stackoverflow.com/questions/49890803/naming-conventions-of-composed-package-names)
+- class, method convention 또한 자바 스타일로 ! -> [링크 내용 참고하여 블로그 정리](https://sas-study.tistory.com/445)
+- 변수 선언 시 약어 사용 -> Full name 으로 선언할 것!
+- @Data 사용 보단 필요한 조건에 따라 @Getter, @Setter 사용
+- System.out.println 사용 지양 -> Logger 사용 지향!
+- Hashmap 사용 지양 -> DTO를 사용 지향!
 
 
