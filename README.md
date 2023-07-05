@@ -57,7 +57,7 @@
 <br>
 
 ## 아쉬운 점과 개선해야할 사항
-- package convention 자바 스타일로!  -> [링크 내용 참고하여 불로그 정리](https://stackoverflow.com/questions/49890803/naming-conventions-of-composed-package-names)
+- package convention 자바 스타일로!  -> [링크 내용 참고하여 블로그 정리](https://stackoverflow.com/questions/49890803/naming-conventions-of-composed-package-names)
 - class, method convention 또한 자바 스타일로 ! -> [링크 내용 참고하여 블로그 정리](https://sas-study.tistory.com/445)
 - 변수 선언 시 약어 사용 -> Full name 으로 선언할 것!
 - @Data 사용 보단 필요한 조건에 따라 @Getter, @Setter 사용
