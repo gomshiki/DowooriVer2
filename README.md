@@ -2,9 +2,6 @@
 <br>
 <div align="center">
     <img width="100%" alt="image" src="https://github.com/gomshiki/DowooriVer2/assets/105576721/6c2bc785-dd11-4e64-98cf-ed8336bd7cab">
-    <a href="http://3.22.221.9:8080/">
-      프로젝트 페이지 이동
-    </a>
 </div>
 
 <br>
