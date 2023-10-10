@@ -2,7 +2,7 @@ package com.jun.DowooriVer2.service;
 
 import com.jun.DowooriVer2.dto.HomeDTO;
 import com.jun.DowooriVer2.domain.Member;
-import com.jun.DowooriVer2.repository.MemberRepository;
+import com.jun.DowooriVer2.repository.origin.MemberRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

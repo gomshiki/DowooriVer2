@@ -2,8 +2,8 @@ package com.jun.DowooriVer2.service;
 
 import com.jun.DowooriVer2.dto.CalendarDTO;
 import com.jun.DowooriVer2.domain.Board;
-import com.jun.DowooriVer2.repository.BoardRepository;
-import com.jun.DowooriVer2.repository.DeptRepository;
+import com.jun.DowooriVer2.repository.origin.BoardRepository;
+import com.jun.DowooriVer2.repository.origin.DeptRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

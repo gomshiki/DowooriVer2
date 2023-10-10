@@ -1,8 +1,7 @@
-package com.jun.DowooriVer2.repository;
+package com.jun.DowooriVer2.repository.origin;
 
 import com.jun.DowooriVer2.domain.Department;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

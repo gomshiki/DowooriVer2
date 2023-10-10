@@ -1,4 +1,4 @@
-package com.jun.DowooriVer2.repository;
+package com.jun.DowooriVer2.repository.origin;
 
 import com.jun.DowooriVer2.dto.ChartDTO;
 import com.jun.DowooriVer2.dto.ChartTeamDTO;

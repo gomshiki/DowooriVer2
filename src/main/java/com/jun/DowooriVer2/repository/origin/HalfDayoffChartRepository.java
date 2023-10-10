@@ -1,4 +1,4 @@
-package com.jun.DowooriVer2.repository;
+package com.jun.DowooriVer2.repository.origin;
 
 import com.jun.DowooriVer2.dto.ChartDTO;
 import com.jun.DowooriVer2.dto.ChartTeamDTO;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface DayoffChartRepository {
+public interface HalfDayoffChartRepository {
 
 
     List<ChartDTO> dayoffCnt(Long empNum, Long deptNum);
