@@ -1,14 +1,11 @@
 package com.jun.DowooriVer2.service;
 
-import com.jun.DowooriVer2.DTO.homeDTO;
+import com.jun.DowooriVer2.dto.HomeDTO;
 import com.jun.DowooriVer2.domain.Member;
 import com.jun.DowooriVer2.repository.MemberRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 @Service
@@ -26,7 +23,7 @@ public class MemberService {
         return memberRepository.findById(empNum);
     }
 
-    public List<homeDTO> findAll() {
+    public List<HomeDTO> findAll() {
         return memberRepository.findAll();
     }
 

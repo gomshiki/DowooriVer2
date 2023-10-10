@@ -1,6 +1,6 @@
 package com.jun.DowooriVer2.controller;
 
-import com.jun.DowooriVer2.DTO.homeDTO;
+import com.jun.DowooriVer2.dto.HomeDTO;
 import com.jun.DowooriVer2.Session.SessionConst;
 import com.jun.DowooriVer2.domain.Board;
 import com.jun.DowooriVer2.domain.Member;
@@ -26,18 +26,18 @@ public class HomeController {
     private final MemberService memberService;
     private final BoardService boardService;
 
-    @GetMapping("/")
-    public String index() {
-
-        return "login";
-    }
+//    @GetMapping("/")
+//    public String index() {
+//
+//        return "login";
+//    }
 
     @GetMapping("/selectAccount")
     public String selectAccount(Model model) {
 
-        List<homeDTO> homeDTOS = memberService.findAll();
+        List<HomeDTO> HomeDTOS = memberService.findAll();
 
-        model.addAttribute("homeDTOS", homeDTOS);
+        model.addAttribute("HomeDTOS", HomeDTOS);
         model.addAttribute("member", new Member());
 
         return "selectAccount";

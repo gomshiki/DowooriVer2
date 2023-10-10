@@ -1,8 +1,8 @@
 package com.jun.DowooriVer2.repository;
 
-import com.jun.DowooriVer2.DTO.ChartDTO;
-import com.jun.DowooriVer2.DTO.ChartTeamDTO;
-import com.jun.DowooriVer2.DTO.DayoffTeamDTO;
+import com.jun.DowooriVer2.dto.ChartDTO;
+import com.jun.DowooriVer2.dto.ChartTeamDTO;
+import com.jun.DowooriVer2.dto.DayoffTeamDTO;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

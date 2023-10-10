@@ -1,9 +1,6 @@
 package com.jun.DowooriVer2.repository;
 
-import com.jun.DowooriVer2.DTO.CalendarDTO;
-import com.jun.DowooriVer2.DTO.ChartDTO;
-import com.jun.DowooriVer2.DTO.ChartTeamDTO;
-import com.jun.DowooriVer2.DTO.DayoffTeamDTO;
+import com.jun.DowooriVer2.dto.CalendarDTO;
 import com.jun.DowooriVer2.domain.Board;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 

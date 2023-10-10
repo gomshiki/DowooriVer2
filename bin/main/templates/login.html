@@ -42,7 +42,7 @@
                                         <h1 class="h4 text-gray-900 mb-4">계정을 선택해주세요</h1>
                                     </div>
                                     <!--                 선택할 계정 선택하기위한 form 태그                   -->
-                                        <div th:each="homeDTO : ${homeDTOS}">
+                                        <div th:each="homeDTO : ${HomeDTOS}">
 
                                                 <form class="user" th:action="@{/login.do}" method="post">
                                                     <p th:text="${homeDTO.userName}">userName</p>

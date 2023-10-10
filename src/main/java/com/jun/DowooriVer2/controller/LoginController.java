@@ -46,6 +46,6 @@ public class LoginController {
             session.invalidate(); //세션안의 데이터를 지워버림
         }
 
-        return "redirect:/";
+        return "redirect:/selectAccount";
     }
 }

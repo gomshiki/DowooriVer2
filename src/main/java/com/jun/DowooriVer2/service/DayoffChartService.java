@@ -1,10 +1,9 @@
 package com.jun.DowooriVer2.service;
 
-import com.jun.DowooriVer2.DTO.ChartDTO;
-import com.jun.DowooriVer2.DTO.ChartTeamDTO;
-import com.jun.DowooriVer2.DTO.DayoffTeamDTO;
+import com.jun.DowooriVer2.dto.ChartDTO;
+import com.jun.DowooriVer2.dto.ChartTeamDTO;
+import com.jun.DowooriVer2.dto.DayoffTeamDTO;
 import com.jun.DowooriVer2.domain.Department;
-import com.jun.DowooriVer2.repository.BoardRepository;
 import com.jun.DowooriVer2.repository.DayoffChartRepository;
 import com.jun.DowooriVer2.repository.DeptRepository;
 import lombok.extern.slf4j.Slf4j;

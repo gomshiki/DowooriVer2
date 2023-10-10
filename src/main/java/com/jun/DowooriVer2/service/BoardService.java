@@ -1,14 +1,9 @@
 package com.jun.DowooriVer2.service;
 
-import com.jun.DowooriVer2.DTO.CalendarDTO;
-import com.jun.DowooriVer2.DTO.ChartDTO;
-import com.jun.DowooriVer2.DTO.ChartTeamDTO;
-import com.jun.DowooriVer2.DTO.DayoffTeamDTO;
+import com.jun.DowooriVer2.dto.CalendarDTO;
 import com.jun.DowooriVer2.domain.Board;
-import com.jun.DowooriVer2.domain.Department;
 import com.jun.DowooriVer2.repository.BoardRepository;
 import com.jun.DowooriVer2.repository.DeptRepository;
-import com.jun.DowooriVer2.repository.MemberRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -26,7 +26,7 @@ dependencies {
 	// 유효성 검사 : 클라이언트 검증을 위해 사용 (ex: 아이디 or 비밀번호에 적용될 형식 등)
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	// Spring Security 추가
-	implementation 'org.springframework.boot:spring-boot-starter-security'
+//	implementation 'org.springframework.boot:spring-boot-starter-'
 
 	// jsonObject 사용으로 추가 2023.02.01
 	implementation 'com.googlecode.json-simple:json-simple:1.1.1'

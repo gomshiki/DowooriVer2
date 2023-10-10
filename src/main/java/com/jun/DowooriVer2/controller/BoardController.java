@@ -1,22 +1,17 @@
 package com.jun.DowooriVer2.controller;
 
-import com.jun.DowooriVer2.DTO.BoardDTO;
-import com.jun.DowooriVer2.DTO.CalendarDTO;
+import com.jun.DowooriVer2.dto.BoardDTO;
+import com.jun.DowooriVer2.dto.CalendarDTO;
 import com.jun.DowooriVer2.Session.SessionConst;
 import com.jun.DowooriVer2.domain.Board;
 import com.jun.DowooriVer2.domain.Member;
-import com.jun.DowooriVer2.domain.Pagination;
 import com.jun.DowooriVer2.service.BoardService;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.lang.model.SourceVersion;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.Date;

@@ -1,4 +1,4 @@
-package com.jun.DowooriVer2.DTO;
+package com.jun.DowooriVer2.dto;
 
 
 import lombok.Data;
