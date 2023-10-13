@@ -28,7 +28,7 @@ public class JpaMemberRepository implements MemberRepository {
 
     @Override
     public List<HomeDTO> findAll() {
-        List<HomeDTO> resultList = em.createQuery("SELECT NEW com.jun.DowooriVer2.DTO.HomeDTO(m.userName, m.empNum, m.email, m.position, d.deptName) " +
+        List<HomeDTO> resultList = em.createQuery("SELECT NEW com.jun.DowooriVer2.dto.HomeDTO(m.userName, m.empNum, m.email, m.position, d.deptName) " +
                 "FROM Member m LEFT JOIN m.department d", HomeDTO.class).getResultList();
         return resultList;
     }

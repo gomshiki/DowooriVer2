@@ -34,7 +34,7 @@ public class JpaDayoffChartRepository implements DayoffChartRepository{
 
         String sql;
 
-        sql = "select NEW com.jun.DowooriVer2.DTO.ChartDTO(date_format(b.startDate, '%m월'), count(b)) " +
+        sql = "select NEW com.jun.DowooriVer2.dto.ChartDTO(date_format(b.startDate, '%m월'), count(b)) " +
                 "from Board b " +
                 "where b.empNum = :empNum and b.deptNum = :deptNum " +
                 "and year(b.startDate) = :nowYear " +
@@ -62,7 +62,7 @@ public class JpaDayoffChartRepository implements DayoffChartRepository{
 
         String sql;
 
-        sql = "select NEW com.jun.DowooriVer2.DTO.ChartTeamDTO(b.member.userName , count(*))" +
+        sql = "select NEW com.jun.DowooriVer2.dto.ChartTeamDTO(b.member.userName , count(*))" +
                 "from Board b " +
                 "where b.deptNum = :deptNum " +
                 "and year(b.startDate) =: nowYear " +
@@ -84,7 +84,7 @@ public class JpaDayoffChartRepository implements DayoffChartRepository{
         // 현재 연도 출력
         int nowYear = now.getYear();
 
-        String sql = "select NEW com.jun.DowooriVer2.DTO.DayoffTeamDTO(date_format(b.startDate, '%m월'), b.department.deptName , count(*)) " +
+        String sql = "select NEW com.jun.DowooriVer2.dto.DayoffTeamDTO(date_format(b.startDate, '%m월'), b.department.deptName , count(*)) " +
                 "from Board b " +
                 "where year(b.startDate) =: nowYear and title = '연차' " +
                 "group by date_format(b.startDate, '%m월'), b.department.deptName";
@@ -107,7 +107,7 @@ public class JpaDayoffChartRepository implements DayoffChartRepository{
         // 형변환(String -> Long)
         long deptNum = Long.parseLong(id);
 
-        String sql = "select NEW com.jun.DowooriVer2.DTO.DayoffTeamDTO(date_format(b.startDate, '%m월'), b.department.deptName, count(*)) " +
+        String sql = "select NEW com.jun.DowooriVer2.dto.DayoffTeamDTO(date_format(b.startDate, '%m월'), b.department.deptName, count(*)) " +
                 "from Board b " +
                 "where year(b.startDate) =: nowYear " +
                 "and title = '연차' " +

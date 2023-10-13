@@ -27,7 +27,7 @@ public class JpaBoardRepository implements BoardRepository {
     @Transactional(readOnly = true)
     public List<CalendarDTO> findAllByDept(Long deptNum) {
 
-        String jpql  = "SELECT NEW com.jun.DowooriVer2.DTO.CalendarDTO(b.title, b.startDate, b.endDate, m.userName, b.ampm) " +
+        String jpql  = "SELECT NEW com.jun.DowooriVer2.dto.CalendarDTO(b.title, b.startDate, b.endDate, m.userName, b.ampm) " +
                 "FROM Board b RIGHT JOIN b.member m ON b.empNum = m.empNum WHERE b.status = '결재완료' AND b.deptNum = :deptNum";
 
         List<CalendarDTO> boards = em.createQuery(jpql, CalendarDTO.class).setParameter("deptNum", deptNum).getResultList();

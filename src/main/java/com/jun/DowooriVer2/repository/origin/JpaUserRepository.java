@@ -16,6 +16,4 @@ public class JpaUserRepository implements UserRepository{
     private EntityManager em;
 
 
-
-
 }
