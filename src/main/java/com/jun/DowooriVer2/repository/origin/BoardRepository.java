@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
+
 public interface BoardRepository {
 
     @Transactional(readOnly = true)

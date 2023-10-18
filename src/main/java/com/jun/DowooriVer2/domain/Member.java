@@ -1,6 +1,7 @@
 package com.jun.DowooriVer2.domain;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -13,7 +14,7 @@ import java.util.Date;
 // data :getter, setter, constructer 등 한꺼번에 생성해주는 어노테이
 // JPA에서는 @entity를 설정해줘야함
 @Entity
-@Data
+@Getter
 @Table(name = "emp_table")
 public class Member {
 

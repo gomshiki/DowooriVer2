@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Repository
+
 public interface DeptRepository {
     @Transactional(readOnly = true)
     List<Department> selectAllDept();

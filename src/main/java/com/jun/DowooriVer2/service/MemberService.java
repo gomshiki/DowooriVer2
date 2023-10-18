@@ -12,7 +12,6 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class MemberService {
 
-
     private MemberRepository memberRepository;
 
     public MemberService(MemberRepository memberRepository) {

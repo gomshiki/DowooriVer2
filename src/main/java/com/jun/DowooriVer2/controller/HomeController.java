@@ -26,12 +26,6 @@ public class HomeController {
     private final MemberService memberService;
     private final BoardService boardService;
 
-//    @GetMapping("/")
-//    public String index() {
-//
-//        return "login";
-//    }
-
     @GetMapping("/selectAccount")
     public String selectAccount(Model model) {
 

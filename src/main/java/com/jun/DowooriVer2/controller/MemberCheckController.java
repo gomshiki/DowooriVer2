@@ -3,6 +3,7 @@
 //import com.jun.DowooriVer2.domain.Member;
 //import com.jun.DowooriVer2.service.MemberService;
 //import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.stereotype.Controller;
 //import org.springframework.web.bind.annotation.ModelAttribute;
 //import org.springframework.web.bind.annotation.PostMapping;
 //import org.springframework.web.bind.annotation.RequestParam;
@@ -10,7 +11,7 @@
 //
 //import java.util.Optional;
 //
-//@RestController
+//@Controller
 //public class MemberCheckController {
 //
 //    // autowired : bean으로 등록된 클래스들을 스프링이 시작할때 자동으로 주입
