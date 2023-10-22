@@ -1,13 +1,16 @@
 package com.jun.DowooriVer2.dto;
 
 
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.Data;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class CalendarDTO {
 
     private String title;
@@ -19,6 +22,7 @@ public class CalendarDTO {
 
     private String ampm;
 
+    @QueryProjection
     public CalendarDTO(String title, Date startDate, Date endDate, String userName, String ampm) {
         this.title = title;
         this.startDate = startDate;

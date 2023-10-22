@@ -1,5 +1,6 @@
 package com.jun.DowooriVer2.dto;
 
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.Data;
 
 @Data
@@ -16,6 +17,7 @@ public class HomeDTO {
     private String deptName;
 
     // join 작성 시 생성자 parameter 순서도 쿼리문과 동일해야함!
+    @QueryProjection
     public HomeDTO(String userName, Long empNum, String email,  String position, String deptName) {
         this.empNum = empNum;
         this.email = email;
