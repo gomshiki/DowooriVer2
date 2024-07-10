@@ -1,4 +1,4 @@
-# 근태 작성 및 결재 그룹웨어 (프로젝트 : DoWooRi_ver.2)
+# 근태 작성 및 결재 그룹웨어 서비스
 <br>
 <div align="center">
     <img width="100%" alt="image" src="https://github.com/gomshiki/DowooriVer2/assets/105576721/6c2bc785-dd11-4e64-98cf-ed8336bd7cab">
